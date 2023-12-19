@@ -11,71 +11,83 @@ options {
 @members {
 }
 
-LETTER : 'a' .. 'z' | 'A' .. 'Z';
-DIGIT : '0' .. '9';
+/* Caractères de formatage */
+
 EOL : '\n';
 
-IDENT : (LETTER | '$' | '_') (LETTER | DIGIT | '$' | '_')*;
+/* Mots réservés */
 
-STRING_CAR : ~ ('\n' | '\\' | '"');
-
-STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
-MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
-
-
-NUM : DIGIT+;
-SIGN : '+' | '-';
-EXP : ('E' | 'e') SIGN NUM;
-DEC : NUM '.' NUM;
-FLOATDEC : (DEC | DEC EXP) ('F' | 'f');
-DIGITHEX : '0' ..'9' | 'A' .. 'F' | 'a' .. 'f';
-NUMHEX : DIGITHEX+;
-FLOATHEX : ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f');
-FLOAT : FLOATDEC | FLOATHEX;
-
-OBRACE : '{';
-CBRACE : '}';
-SEMI : ';';
-COMMA : ',';
-EQUALS : '=';
+ASM : 'asm';
+CLASS : 'class';
+EXTENDS : 'extends';
+ELSE : 'else';
+FALSE : 'false';
+IF : 'if';
+INSTANCEOF : 'instanceof';
+NEW : 'new';
+NULL : 'null';
+READINT : 'readInt';
+READFLOAT : 'readFloat';
 PRINT : 'print';
 PRINTLN : 'println';
 PRINTLNX : 'printlnx';
 PRINTX : 'printx';
-WHILE : 'while';
+PROTECTED : 'protected';
 RETURN : 'return';
-OPARENT : '(';
-CPARENT : ')';
-ELSE : 'else';
-ELSEIF : 'elseif';
-IF : 'if';
-SPACE : ' ';
-OR : '||';
-AND : '&&';
-EQEQ : '==';
-NEQ : '!=';
-LEQ : '<=';
-GEQ : '>=';
-GT : '>';
+THIS : 'this';
+TRUE : 'true';
+WHILE : 'while';
+
+/* Identificateur */
+
+fragment LETTER : 'a' .. 'z' | 'A' .. 'Z';
+fragment DIGIT : '0' .. '9';
+IDENT : (LETTER | '$' | '_') (LETTER | DIGIT | '$' | '_')*;
+
+/* Symboles spéciaux */
+
 LT : '<';
-INSTANCEOF : 'instanceof';
-PLUS : '+' ;
-MINUS : '-' ;
-TIMES : '*' ;
+GT : '>';
+EQUALS : '=';
+PLUS : '+';
+MINUS : '-';
+TIMES : '*';
 SLASH : '/';
 PERCENT : '%';
-EXCLAM : '!';
 DOT : '.';
-READINT : 'readInt';
-READFLOAT : 'readFloat';
-NEW : 'new';
-INT : DIGIT+;
-TRUE : 'true';
-FALSE : 'false';
-THIS : 'this';
-NULL : 'null';
-CLASS : 'class';
-EXTENDS : 'extends';
-PROTECTED : 'protected';
-ASM : 'asm';
+COMMA : ',';
+OPARENT : '(';
+CPARENT : ')';
+OBRACE : '{';
+CBRACE : '}';
+EXCLAM : '!';
+SEMI : ';';
+EQEQ : '==';
+NEQ : '!=';
+GEQ : '>=';
+LEQ : '<=';
+AND : '&&';
+OR : '||';
 
+/* Littéraux entiers */
+
+fragment POSITIVE_DIGIT : '1' .. '9';
+INT : '0' | POSITIVE_DIGIT DIGIT*;
+
+/* Littéraux flottants */
+
+fragment NUM : DIGIT+;
+fragment SIGN : '+' | '-';
+fragment EXP : ('E' | 'e') SIGN NUM;
+fragment DEC : NUM '.' NUM;
+fragment FLOATDEC : (DEC | DEC EXP) ('F' | 'f');
+fragment DIGITHEX : '0' .. '9' | 'A' .. 'F' | 'a' .. 'f';
+fragment NUMHEX : DIGITHEX+;
+fragment FLOATHEX : ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f');
+FLOAT : FLOATDEC | FLOATHEX;
+
+/* Chaînes de caractères */
+
+fragment STRING_CAR : ~ ('"' | '\\' | '\n');
+STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
+MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
