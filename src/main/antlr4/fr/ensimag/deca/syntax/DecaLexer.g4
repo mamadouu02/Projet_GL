@@ -12,8 +12,8 @@ options {
 
 /* Caractères de formatage */
 
-EOL: '\n';
-SPACE: ' ' | '\t' | '\r' | '\f';
+EOL: '\n' -> skip;
+FORMAT: (' ' | '\t' | '\r' | '\f') -> skip;
 
 /* Mots réservés */
 
@@ -84,11 +84,7 @@ fragment DEC: NUM '.' NUM;
 fragment FLOATDEC: (DEC | DEC EXP) ('F' | 'f' |);
 fragment DIGITHEX: '0' .. '9' | 'A' .. 'F' | 'a' .. 'f';
 fragment NUMHEX: DIGITHEX+;
-fragment FLOATHEX: ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM (
-		'F'
-		| 'f'
-		|
-	);
+fragment FLOATHEX: ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f' |);
 FLOAT: FLOATDEC | FLOATHEX;
 
 /* Chaînes de caractères */
