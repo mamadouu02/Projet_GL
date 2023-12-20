@@ -27,11 +27,11 @@
       <task id="3" name="Comprendre le sujet et le cahier des charges" note="" work="57600" start="20231218T000000Z" end="20231219T170000Z" work-start="20231218T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
       <task id="4" name="Mettre en place l'environnement de d&#xE9;veloppement" note="" work="57600" start="20231218T000000Z" end="20231219T170000Z" work-start="20231218T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
     </task>
-    <task id="5" name="Analyse lexicosyntaxique" note="" work="230400" start="20231219T000000Z" end="20231220T104000Z" work-start="20231219T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <task id="6" name="Lexeur" note="" work="115200" start="20231219T000000Z" end="20231220T104000Z" work-start="20231219T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+    <task id="5" name="Analyse lexicosyntaxique" note="" work="223200" start="20231219T000000Z" end="20231220T104000Z" work-start="20231219T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="6" name="Lexeur" note="" work="115200" start="20231219T000000Z" end="20231220T104000Z" work-start="20231219T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="must-start-on" time="20231219T000000Z"/>
       </task>
-      <task id="7" name="Parseur" note="" work="115200" start="20231219T000000Z" end="20231220T104000Z" work-start="20231219T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
+      <task id="7" name="Parseur" note="" work="108000" start="20231219T000000Z" end="20231220T100000Z" work-start="20231219T080000Z" percent-complete="50" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="must-start-on" time="20231219T000000Z"/>
       </task>
     </task>
@@ -40,7 +40,7 @@
         <predecessor id="1" predecessor-id="5" type="FS"/>
       </predecessors>
       <task id="9" name="Tests" note="" work="76800" start="20231220T104000Z" end="20231222T170000Z" work-start="20231220T104000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="10" name="Analyse contextuelle" note="" work="74700" start="20231220T104000Z" end="20231222T162500Z" work-start="20231220T104000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="10" name="Analyse contextuelle" note="" work="74700" start="20231220T104000Z" end="20231222T162500Z" work-start="20231220T104000Z" percent-complete="25" priority="0" type="normal" scheduling="fixed-work"/>
       <task id="11" name="G&#xE9;n&#xE9;ration de code" note="" work="72000" start="20231220T104000Z" end="20231222T154000Z" work-start="20231220T104000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
     </task>
     <task id="12" name="Compilateur sans objet" note="" work="214200" start="20231222T170000Z" end="20231229T114500Z" work-start="20231225T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
