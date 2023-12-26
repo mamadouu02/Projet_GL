@@ -115,7 +115,7 @@ inst
 	| PRINTLN OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Println(false, $list_expr.tree);
-            
+            setLocation($tree, $PRINTLN);
         }
 	| PRINTX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
@@ -171,6 +171,7 @@ expr
 	assign_expr {
             assert($assign_expr.tree != null);
                 $tree = $assign_expr.tree;
+                setLocation($tree, $assign_expr.start);
         };
 
 assign_expr
