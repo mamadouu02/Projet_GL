@@ -8,5 +8,7 @@
 .project
 .metadata
 .settings
-*.antlr
+
 *.DS_Store
+*.antlr
+*.ass
