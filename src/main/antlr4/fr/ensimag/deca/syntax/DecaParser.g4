@@ -84,8 +84,7 @@ decl_var[AbstractIdentifier t]
 	i = ident {
         } (
 		EQUALS e = expr {
-
-                $tree = new DeclVar($t, $i.tree, $e.tree);
+                $tree = new DeclVar($t, $i.tree, new Initialization($e.tree));
         }
 	)? {
         };
@@ -419,7 +418,7 @@ literal
 ident
 	returns[AbstractIdentifier tree]:
 	IDENT {
-                $tree = new Identifier($IDENT.text);
+                $tree = new Identifier(getDecacCompiler().createSymbol($IDENT.text));
         };
 
 /****     Class related rules     ****/
