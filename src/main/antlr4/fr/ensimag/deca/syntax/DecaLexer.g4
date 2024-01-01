@@ -10,7 +10,7 @@ options {
 @members {
 }
 
-/* Caractères de formatage */
+/* Fin de ligne */
 
 fragment EOL: '\n';
 
