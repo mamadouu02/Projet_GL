@@ -84,7 +84,11 @@ fragment DEC: NUM '.' NUM;
 fragment FLOATDEC: (DEC | DEC EXP) ('F' | 'f' |);
 fragment DIGITHEX: '0' .. '9' | 'A' .. 'F' | 'a' .. 'f';
 fragment NUMHEX: DIGITHEX+;
-fragment FLOATHEX: ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f' |);
+fragment FLOATHEX: ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM (
+		'F'
+		| 'f'
+		|
+	);
 FLOAT: FLOATDEC | FLOATHEX;
 
 /* Chaînes de caractères */
@@ -92,6 +96,14 @@ FLOAT: FLOATDEC | FLOATHEX;
 fragment STRING_CAR: ~ ('"' | '\\' | '\n');
 STRING: '"' (STRING_CAR | '\\"' | '\\\\')* '"';
 MULTI_LINE_STRING: '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
+
+// /* Boolean */
+
+// BOOLEAN: 'true' | 'false';
+
+// /* Void */
+
+// VOID: 'void';
 
 /* Commentaires */
 

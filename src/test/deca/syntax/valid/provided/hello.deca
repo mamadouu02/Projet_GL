@@ -8,5 +8,6 @@
 //    cree le 01/01/2024
 
 {
-        println("Hello");
+        int i;
+        i = 0;
 }
