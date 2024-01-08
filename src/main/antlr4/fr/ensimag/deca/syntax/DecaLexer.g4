@@ -83,19 +83,35 @@ fragment DEC: NUM '.' NUM;
 fragment FLOATDEC: (DEC | DEC EXP) ('F' | 'f' |);
 fragment DIGITHEX: '0' .. '9' | 'A' .. 'F' | 'a' .. 'f';
 fragment NUMHEX: DIGITHEX+;
-fragment FLOATHEX: ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f' |);
+fragment FLOATHEX: ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM (
+		'F'
+		| 'f'
+		|
+	);
 FLOAT: FLOATDEC | FLOATHEX;
 
 /* Chaînes de caractères */
 
 fragment STRING_CAR: ~ ('"' | '\\' | '\n');
-STRING: '"' (STRING_CAR | '\\"' | '\\\\')* '"' { setText(getText().substring(1, getText().length() - 1)); };
-MULTI_LINE_STRING: '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"' { setText(getText().substring(1, getText().length() - 1)); };
+STRING:
+	'"' (STRING_CAR | '\\"' | '\\\\')* '"' { setText(getText().substring(1, getText().length() - 1)); 
+		};
+MULTI_LINE_STRING:
+	'"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"' { setText(getText().substring(1, getText().length() - 1)); 
+		};
+
+// /* Boolean */
+
+// BOOLEAN: 'true' | 'false';
+
+// /* Void */
+
+// VOID: 'void';
 
 /* Commentaires */
 
+LINE_COMMENT: '//' ~ ('\n' | '\r')* EOL -> skip;
 COMMENT: '/*' .*? '*/' -> skip;
-LINE_COMMENT: '//' ~ ('\n' | '\r')* -> skip;
 
 /* Séparateurs */
 
@@ -105,4 +121,5 @@ FORMAT: ('\t' | '\r' | EOL) -> skip;
 /* Inclusion de fichier */
 
 fragment FILENAME: (LETTER | DIGIT | '.' | '-' | '_')+;
-INCLUDE: '#include' (' ')* '"' FILENAME '"' { doInclude(getText()); };
+INCLUDE:
+	'#include' (' ')* '"' FILENAME '"' { doInclude(getText()); };

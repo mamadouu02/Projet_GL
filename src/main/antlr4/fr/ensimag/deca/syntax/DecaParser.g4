@@ -35,7 +35,7 @@ prog
             assert($list_classes.tree != null);
             assert($main.tree != null);
             $tree = new Program($list_classes.tree, $main.tree);
-            setLocation($tree, $list_classes.start);
+            setLocation($tree, $main.start);
         };
 
 main
@@ -69,25 +69,21 @@ decl_var_set[ListDeclVar l]:
 	type list_decl_var[$l,$type.tree] SEMI;
 
 list_decl_var[ListDeclVar l, AbstractIdentifier t]:
-	dv1 = decl_var[$t] {
-        $l.add($dv1.tree);
-        } (
-		COMMA dv2 = decl_var[$t] {
-                $l.add($dv2.tree);
-        }
-	)*;
+	decl_var[$t] (COMMA decl_var[$t])*;
 
 decl_var[AbstractIdentifier t]
 	returns[AbstractDeclVar tree]
-	@init {
+	@init { 
         }:
 	i = ident {
+            assert($i.tree != null);
+            $tree = new DeclVar($t, $i.tree, new Initialization($i.tree));
         } (
 		EQUALS e = expr {
+                assert($e.tree != null);
                 $tree = new DeclVar($t, $i.tree, new Initialization($e.tree));
         }
-	)? {
-        };
+	)?;
 
 list_inst
 	returns[ListInst tree]
@@ -110,32 +106,38 @@ inst
 	| PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Print(false, $list_expr.tree);
+            setLocation($tree, $PRINT);
         }
 	| PRINTLN OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Println(false, $list_expr.tree);
-            setLocation($tree, $PRINTLN);
+            setLocation($tree, $PRINTLN);            
         }
 	| PRINTX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Print(true, $list_expr.tree);
+            setLocation($tree, $PRINTX);
         }
 	| PRINTLNX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Println(true, $list_expr.tree);
+            setLocation($tree, $PRINTLNX);
         }
 	| if_then_else {
             assert($if_then_else.tree != null);
+            $tree = $if_then_else.tree;
+            setLocation($tree, $if_then_else.start);
         }
 	| WHILE OPARENT condition = expr CPARENT OBRACE body = list_inst CBRACE {
             assert($condition.tree != null);
             assert($body.tree != null);
             $tree = new While($condition.tree, $body.tree);
+            setLocation($tree, $WHILE);
         }
 	| RETURN expr SEMI {
             assert($expr.tree != null);
-            // $tree = new Return($expr.tree);
-            
+            $tree = $expr.tree;
+            setLocation($tree, $RETURN);
         };
 
 if_then_else
@@ -387,7 +389,9 @@ primary_expr
         };
 
 type
-	returns[AbstractIdentifier tree]:
+	returns[AbstractIdentifier tree]
+	@init {
+        }:
 	ident {
             assert($ident.tree != null);
                 $tree = $ident.tree;
@@ -411,14 +415,17 @@ literal
                 $tree = new BooleanLiteral(false);
         }
 	| THIS {
+                $tree = $tree;
         }
 	| NULL {
+                $tree = $tree;
         };
 
 ident
 	returns[AbstractIdentifier tree]:
 	IDENT {
                 $tree = new Identifier(getDecacCompiler().createSymbol($IDENT.text));
+                setLocation($tree, $IDENT);
         };
 
 /****     Class related rules     ****/
