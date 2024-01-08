@@ -1,19 +1,28 @@
 // Grenoble INP - Ensimag projet GL -*- mode: java -*-
 // Library for class Math of Deca, coded in Deca
 
+#include "Tools.decah"
+
 class Math {
+    float pi =3.1415927410125732421875; 
+    
+    // Calcul de pi à partir du cosinus
     float sin(float f) {
-        println("sin(f) not yet implemented");
+        return cos(f - pi/2);
     }
+
     float cos(float f) {
         println("cos(f) not yet implemented");
     }
+    
     float asin(float f) {
         println("asin(f) not yet implemented");
     }
+    
     float atan(float f) {
         println("atan(f) not yet implemented");
     }
+    
     float ulp(float f) {
         println("ulp(f) not yet implemented");
     }

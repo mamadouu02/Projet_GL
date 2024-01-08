@@ -1,0 +1,41 @@
+class Tools {
+    
+    // returns an approximation of the square root of x thaks to the Heron method in O(1)
+    float _sqrt(float x) {
+        float u0 = x/2.0f;
+        float u1;
+        int n = 0;
+
+        while (n < 100) {
+            u1 = (u0 + x/u0)/2.0f;
+            u0 = u1;
+            n++;
+        }
+
+    }
+
+    // returns x to the power of n in O(log(n))
+    float _pow(float x, int n) {
+        if (n == 0) {
+            return 1.0f;
+        }
+
+        if (n == 1) {
+            return x;
+        }
+        
+        if n%2 == 0 {
+            return _pow(x*x, n/2);
+        }
+        return x*_pow(x*x, (n-1)/2);
+    }
+
+    // returns the absolute value of x in O(1)
+    float _abs(float x) {
+        if (x < 0.0) {
+            return -x;
+        }
+        return x;
+    }
+
+}
