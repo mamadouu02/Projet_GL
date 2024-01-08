@@ -24,7 +24,9 @@ class Math {
     }
     
     float ulp(float f) {
-        println("ulp(f) not yet implemented");
+        if (f == 0.0f) {
+            return _pow(2, -149);
+        }
     }
 }
 
