@@ -1,3 +1,7 @@
+Groupe: 9
+Equipe:42
+version: 20/12/2023
+
 (TYPE ERREURS & MESSAGE)
     BIEN_DEFINI : "Error: Affectation with Variable Not defined"
     EGALITE_DEFINITION : "Error: Not equal by definition"
