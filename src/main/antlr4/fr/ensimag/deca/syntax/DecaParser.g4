@@ -77,7 +77,7 @@ decl_var[AbstractIdentifier t]
         }:
 	i = ident {
             assert($i.tree != null);
-            $tree = new DeclVar($t, $i.tree);
+            $tree = new DeclVar($t, $i.tree, new Initialization($i.tree));
         } (
 		EQUALS e = expr {
                 assert($e.tree != null);
@@ -397,16 +397,16 @@ type
                 $tree = $ident.tree;
         }
 	| INT {
-                $tree = new Identifier(literal("int"));
+                $tree = new Identifier(getDecacCompiler().createSymbol($INT.text));
         }
 	| FLOAT {
-                $tree = new Identifier("float");
+                $tree = new Identifier(getDecacCompiler().createSymbol($FLOAT.text));
         }
 	| STRING {
-                $tree = new Identifier("string");
+                $tree = new Identifier(getDecacCompiler().createSymbol($STRING.text));
         }
 	| IDENT {
-                $tree = new Identifier($IDENT.text);
+                $tree = new Identifier(getDecacCompiler().createSymbol($IDENT.text));
         };
 
 literal
