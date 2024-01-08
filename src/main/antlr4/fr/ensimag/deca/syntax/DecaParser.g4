@@ -395,18 +395,6 @@ type
 	ident {
             assert($ident.tree != null);
                 $tree = $ident.tree;
-        }
-	| INT {
-                $tree = new Identifier(getDecacCompiler().createSymbol($INT.text));
-        }
-	| FLOAT {
-                $tree = new Identifier(getDecacCompiler().createSymbol($FLOAT.text));
-        }
-	| STRING {
-                $tree = new Identifier(getDecacCompiler().createSymbol($STRING.text));
-        }
-	| IDENT {
-                $tree = new Identifier(getDecacCompiler().createSymbol($IDENT.text));
         };
 
 literal
@@ -437,6 +425,7 @@ ident
 	returns[AbstractIdentifier tree]:
 	IDENT {
                 $tree = new Identifier(getDecacCompiler().createSymbol($IDENT.text));
+                setLocation($tree, $IDENT);
         };
 
 /****     Class related rules     ****/
