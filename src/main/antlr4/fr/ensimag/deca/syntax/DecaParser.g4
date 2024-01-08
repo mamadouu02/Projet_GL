@@ -80,8 +80,8 @@ decl_var[AbstractIdentifier t]
             $tree = new DeclVar($t, $i.tree);
         } (
 		EQUALS e = expr {
-            assert($e.tree != null);
-            $tree = new DeclVar($t, $i.tree, $e.tree);
+                assert($e.tree != null);
+                $tree = new DeclVar($t, $i.tree, new Initialization($e.tree));
         }
 	)?;
 
@@ -111,8 +111,7 @@ inst
 	| PRINTLN OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
             $tree = new Println(false, $list_expr.tree);
-            setLocation($tree, $PRINTLN);
-            
+            setLocation($tree, $PRINTLN);            
         }
 	| PRINTX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
@@ -173,6 +172,7 @@ expr
 	assign_expr {
             assert($assign_expr.tree != null);
                 $tree = $assign_expr.tree;
+                setLocation($tree, $assign_expr.start);
         };
 
 assign_expr
@@ -436,7 +436,7 @@ literal
 ident
 	returns[AbstractIdentifier tree]:
 	IDENT {
-                $tree = new Identifier($IDENT.text);
+                $tree = new Identifier(getDecacCompiler().createSymbol($IDENT.text));
         };
 
 /****     Class related rules     ****/

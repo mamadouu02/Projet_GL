@@ -10,10 +10,9 @@ options {
 @members {
 }
 
-/* Caractères de formatage */
+/* Fin de ligne */
 
-EOL: '\n' -> skip;
-FORMAT: (' ' | '\t' | '\r' | '\f') -> skip;
+fragment EOL: '\n';
 
 /* Mots réservés */
 
@@ -38,7 +37,7 @@ THIS: 'this';
 TRUE: 'true';
 WHILE: 'while';
 
-/* Identificateur */
+/* Identificateurs */
 
 fragment LETTER: 'a' .. 'z' | 'A' .. 'Z';
 fragment DIGIT: '0' .. '9';
@@ -94,8 +93,12 @@ FLOAT: FLOATDEC | FLOATHEX;
 /* Chaînes de caractères */
 
 fragment STRING_CAR: ~ ('"' | '\\' | '\n');
-STRING: '"' (STRING_CAR | '\\"' | '\\\\')* '"';
-MULTI_LINE_STRING: '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
+STRING:
+	'"' (STRING_CAR | '\\"' | '\\\\')* '"' { setText(getText().substring(1, getText().length() - 1)); 
+		};
+MULTI_LINE_STRING:
+	'"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"' { setText(getText().substring(1, getText().length() - 1)); 
+		};
 
 // /* Boolean */
 
@@ -108,3 +111,15 @@ MULTI_LINE_STRING: '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
 /* Commentaires */
 
 LINE_COMMENT: '//' ~ ('\n' | '\r')* EOL -> skip;
+COMMENT: '/*' .*? '*/' -> skip;
+
+/* Séparateurs */
+
+SPACE: ' ' -> skip;
+FORMAT: ('\t' | '\r' | EOL) -> skip;
+
+/* Inclusion de fichier */
+
+fragment FILENAME: (LETTER | DIGIT | '.' | '-' | '_')+;
+INCLUDE:
+	'#include' (' ')* '"' FILENAME '"' { doInclude(getText()); };
