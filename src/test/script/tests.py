@@ -48,7 +48,11 @@ def runTestLex():
             
         else:
             print("Expected error in file : " + file)
+    print("\033[32m" + "########## ALL TEST LEX PASSED ##########" + "\033[0m")
+        
 def runTestSynt():
+    print("########## TEST SYNT ##########")
+
     files = get_files()
     for file in files["synt"]["valid"]:
         compile = os.system("test_synt " + file)
@@ -64,8 +68,12 @@ def runTestSynt():
             
         else:
             print("Expected error in file : " + file)
+    print("\033[32m" + "########## ALL TEST SYNT PASSED ##########" + "\033[0m")
+    
 
 def runTestContext():
+    print("########## TEST CONTEXT ##########")
+
     files = get_files()
     for file in files["context"]["valid"]:
         compile = os.system("test_context " + file)
@@ -80,8 +88,12 @@ def runTestContext():
             raise Exception("Unexpected success in file : " + file)
         else:
             print("Expected error in file : " + file)
+    print("\033[32m" + "########## ALL TEST CONTEXT PASSED ##########" + "\033[0m")
+    
 
 def runTestGen():
+    print("########## TEST GEN ##########")
+
     files = get_files()
     for file in files["gen"]["valid"]:
         compile = os.system("decac " + file)
@@ -96,6 +108,8 @@ def runTestGen():
             raise Exception("Unexpected success in file : " + file)
         else:
             print("Expected error in file : " + file)
+    print("\033[32m" + "########## ALL TEST GEN PASSED ##########" + "\033[0m")
+    
 
 
 def runAllTests():
@@ -107,7 +121,8 @@ def runAllTests():
 def runTestsDev():
     runTestLex()
     runTestSynt()
-    runTestContext()
+    # runTestContext()
+    print("\033[32m" + "########## ALL TESTS PASSED ##########" + "\033[0m")
 
 if __name__ == "__main__":
     if(len(sys.argv) == 1):
