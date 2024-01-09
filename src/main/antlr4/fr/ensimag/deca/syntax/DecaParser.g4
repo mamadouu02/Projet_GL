@@ -69,7 +69,15 @@ decl_var_set[ListDeclVar l]:
 	type list_decl_var[$l,$type.tree] SEMI;
 
 list_decl_var[ListDeclVar l, AbstractIdentifier t]:
-	decl_var[$t] (COMMA decl_var[$t])*;
+	decl_var[$t]{
+                assert($decl_var.tree != null);
+                $l.add($decl_var.tree);
+        } (
+		COMMA decl_var[$t] {
+                assert($decl_var.tree != null);
+                $l.add($decl_var.tree);
+        }
+	)*;
 
 decl_var[AbstractIdentifier t]
 	returns[AbstractDeclVar tree]
@@ -77,7 +85,7 @@ decl_var[AbstractIdentifier t]
         }:
 	i = ident {
             assert($i.tree != null);
-            $tree = new DeclVar($t, $i.tree, new Initialization($i.tree));
+            $tree = new DeclVar($t, $i.tree, new NoInitialization());
         } (
 		EQUALS e = expr {
                 assert($e.tree != null);
@@ -143,13 +151,30 @@ inst
 if_then_else
 	returns[IfThenElse tree]
 	@init {
+                ListInst LastThen = new ListInst();
+                AbstractExpr LastCondition = null;
 }:
 	if1 = IF OPARENT condition = expr CPARENT OBRACE li_if = list_inst CBRACE {
+                assert($condition.tree != null);
+                assert($li_if.tree != null);
+                $tree = new IfThenElse($condition.tree, $li_if.tree, new ListInst());
+                LastThen = $li_if.tree;
+                LastCondition = $condition.tree;
+                
         } (
 		ELSE elsif = IF OPARENT elsif_cond = expr CPARENT OBRACE elsif_li = list_inst CBRACE {
+                assert($elsif_cond.tree != null);
+                assert($elsif_li.tree != null);
+                ListInst list_inst = new ListInst();
+                list_inst.add(new IfThenElse($elsif_cond.tree, $elsif_li.tree, new ListInst()));
+                $tree = new IfThenElse(LastCondition, LastThen, list_inst);
+                LastThen = $elsif_li.tree;
+                LastCondition = $elsif_cond.tree;
         }
 	)* (
 		ELSE OBRACE li_else = list_inst CBRACE {
+                assert($li_else.tree != null);
+                $tree = new IfThenElse(LastCondition, LastThen, $li_else.tree);
         }
 	)?;
 
