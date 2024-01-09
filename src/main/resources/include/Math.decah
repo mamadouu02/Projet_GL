@@ -4,7 +4,8 @@
 #include "Tools.decah"
 
 class Math {
-    float pi =3.1415927410125732421875; 
+    float pi =3.1415927410125732421875;
+    Tools t = new Tools();
     
     // Calcul de pi à partir du cosinus
     float sin(float f) {
@@ -23,10 +24,12 @@ class Math {
         println("atan(f) not yet implemented");
     }
     
+    // return the ulp of f
     float ulp(float f) {
         if (f == 0.0f) {
-            return _pow(2, -149);
+            return t._pow(2, -149);
         }
+        return t._pow(2, t._pow32(f))*t._pow(2, -23);
     }
 }
 
