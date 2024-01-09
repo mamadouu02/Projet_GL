@@ -106,11 +106,11 @@ MULTI_LINE_STRING:
 
 // /* Void */
 
-// VOID: 'void';
+VOID: 'void';
 
 /* Commentaires */
 
-LINE_COMMENT: '//' ~ ('\n' | '\r')* EOL -> skip;
+LINE_COMMENT: '//' ~ ('\n' | '\r')* (EOL | EOF) -> skip;
 COMMENT: '/*' .*? '*/' -> skip;
 
 /* Séparateurs */

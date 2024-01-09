@@ -2,12 +2,12 @@
 //    Programme minimaliste utilisant println.
 //
 // Resultats:
-//    Hello
+//    Hello World!
 //
 // Historique:
 //    cree le 01/01/2024
 
 {
-        int i;
-        i = 0;
+        println("Hello World!");
+
 }
