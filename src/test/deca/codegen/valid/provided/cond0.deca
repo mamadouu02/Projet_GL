@@ -10,8 +10,10 @@
 {
    if (1 >= 0) {
       println("ok"); 
-   } else { 
-      println("erreur");
+   } else if(2 < 5){
+      println("ok2");
+   } else if(4 < 5){
+      println("ok3");
    }
 }
 
