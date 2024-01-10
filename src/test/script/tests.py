@@ -127,7 +127,7 @@ def runTestsDev():
 if __name__ == "__main__":
     if(len(sys.argv) == 1):
         runAllTests()
-    elif(sys.argv[1] == "-p"):
+    elif(sys.argv[1] == "-f"):
         runTestsDev()
     else:
         print("error: invalid argument")
