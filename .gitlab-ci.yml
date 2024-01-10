@@ -20,5 +20,7 @@ deploy-prod:
     - PATH=$HOME/ensimag/GL/Projet_GL/src/test/script:"$PATH" 
     - PATH=$HOME/ensimag/GL/Projet_GL/src/test/script/launchers:"$PATH" 
     - export PATH
+    - apt update
+    - apt-get install -y python3
     - mvn compile
     - ./src/test/script/tests.py -f
