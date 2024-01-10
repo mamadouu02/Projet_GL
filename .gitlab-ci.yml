@@ -20,13 +20,4 @@ deploy-prod:
     - PATH=$HOME/ensimag/GL/Projet_GL/src/test/script:"$PATH" 
     - PATH=$HOME/ensimag/GL/Projet_GL/src/test/script/launchers:"$PATH" 
     - export PATH
-    - wget https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tgz && \
-    - tar -zxvf Python-3.11.1.tgz && \
-    - cd Python-3.11.1 && \
-    - ls -lhR && \
-    - ./configure --enable-optimizations && \
-    - make install && \
-    - rm -rf /python
-    - cd $HOME/ensimag/GL/Projet_GL/
-    - mvn compile
-    - ./src/test/script/tests.py -f
+    - make test-python
