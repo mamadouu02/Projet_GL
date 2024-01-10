@@ -27,5 +27,6 @@ deploy-prod:
     - ./configure --enable-optimizations && \
     - make install && \
     - rm -rf /python
+    - cd $HOME/ensimag/GL/Projet_GL/
     - mvn compile
     - ./src/test/script/tests.py -f
