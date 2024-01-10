@@ -7,6 +7,7 @@ deploy-prod:
       - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
   before_script:
     - git checkout $CI_DEFAULT_BRANCH
+    - git config --global --add safe.directory /builds/gl2024/gr9/gl42
   script:
     - export PATH=$HOME/ensimag/GL/global/bin:$PATH
     - export PATH=$JAVA_HOME/bin:"$PATH"
