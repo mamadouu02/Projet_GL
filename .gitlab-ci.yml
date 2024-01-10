@@ -16,8 +16,8 @@ deploy-prod:
     - PATH=$M2_HOME/bin:"$PATH" 
     - PATH=/matieres/4MMPGL/GL/global/bin:"$PATH" 
     - PATH=$JAVA_HOME/bin:"$PATH" 
-    - PATH=$HOME/ensimag/GL/Projet_GL/src/main/bin:"$PATH" 
-    - PATH=$HOME/ensimag/GL/Projet_GL/src/test/script:"$PATH" 
-    - PATH=$HOME/ensimag/GL/Projet_GL/src/test/script/launchers:"$PATH" 
+    - PATH=/home/gl/Projet_GL/src/main/bin:"$PATH" 
+    - PATH=/home/gl/Projet_GL/src/test/script:"$PATH" 
+    - PATH=/home/gl/Projet_GL/src/test/script/launchers:"$PATH" 
     - export PATH
     - make test-python
