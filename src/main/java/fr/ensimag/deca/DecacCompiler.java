@@ -37,6 +37,8 @@ import org.apache.log4j.Logger;
  * @date 01/01/2024
  */
 public class DecacCompiler {
+    private int d;
+    
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
     /**
@@ -48,11 +50,23 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
+        this.d = 1;
     }
 
     /**
      * Source file associated with this compiler instance.
      */
+    public int getD(){
+        return this.d;
+    }
+
+    public void incrD(){
+        this.d += 1;
+    }
+    public void decrD(){
+        this.d -= 1;
+    }
+    
     public File getSource() {
         return source;
     }
