@@ -12,3 +12,4 @@
 *.DS_Store
 *.antlr
 *.ass
+*src/main/resources/log4j.properties

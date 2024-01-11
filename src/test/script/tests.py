@@ -35,14 +35,14 @@ def runTestLex():
     print("########## TEST LEX ##########")
     files = get_files()
     for file in files["lex"]["valid"]:
-        compile = os.system("test_lex " + file)
+        compile = os.system("./src/test/script/launchers/test_lex " + file)
         if(compile != 0):
             raise Exception("Unexpected error in file : " + file)
             
         else:
             print("Expected success in file : " + file)
     for file in files["lex"]["invalid"]:
-        compile = os.system("test_lex " + file)
+        compile = os.system("./src/test/script/launchers/test_lex " + file)
         if(compile == 0):
             raise Exception("Unexpected success in file : " + file)
             
@@ -55,14 +55,14 @@ def runTestSynt():
 
     files = get_files()
     for file in files["synt"]["valid"]:
-        compile = os.system("test_synt " + file)
+        compile = os.system("./src/test/script/launchers/test_synt " + file)
         if(compile != 0):
             raise Exception("Unexpected error in file : " + file)
             
         else:
             print("Expected success in file : " + file)
     for file in files["synt"]["invalid"]:
-        compile = os.system("test_synt " + file)
+        compile = os.system("./src/test/script/launchers/test_synt " + file)
         if(compile == 0):
             raise Exception("Unexpected success in file : " + file)
             
@@ -76,14 +76,14 @@ def runTestContext():
 
     files = get_files()
     for file in files["context"]["valid"]:
-        compile = os.system("test_context " + file)
+        compile = os.system("./src/test/script/launchers/test_context " + file)
         if(compile != 0):
             raise Exception("Unexpected error in file : " + file)
             
         else:
             print("Expected success in file : " + file)
     for file in files["context"]["invalid"]:
-        compile = os.system("test_context " + file)
+        compile = os.system("./src/test/script/launchers/test_context " + file)
         if(compile == 0):
             raise Exception("Unexpected success in file : " + file)
         else:
@@ -96,14 +96,14 @@ def runTestGen():
 
     files = get_files()
     for file in files["gen"]["valid"]:
-        compile = os.system("decac " + file)
+        compile = os.system("./src/test/script/launchers/decac " + file)
         if(compile != 0):
             raise Exception("Unexpected error in file : " + file)
             
         else:
             print("Expected success in file : " + file)
     for file in files["gen"]["invalid"]:
-        compile = os.system("decac " + file)
+        compile = os.system("./src/test/script/launchers/decac " + file)
         if(compile == 0):
             raise Exception("Unexpected success in file : " + file)
         else:
