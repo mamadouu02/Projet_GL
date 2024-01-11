@@ -26,7 +26,8 @@ public class DecacMain {
             System.exit(1);
         }
         if (options.getPrintBanner()) {
-            throw new UnsupportedOperationException("decac -b not yet implemented");
+            System.out.println("BANNIERE: GR9, GL42, 2024");
+            System.out.println("          senameg, bouihih, thiongam, guessouso, ahjaous");
         }
         if (options.getSourceFiles().isEmpty()) {
             throw new UnsupportedOperationException("decac without argument not yet implemented");

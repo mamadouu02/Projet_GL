@@ -47,6 +47,26 @@ public class CompilerOptions {
 
         for (String arg : args) {
             sourceFiles.add(new File(arg));
+            switch (arg) {
+                case "-b":
+                    printBanner = true;
+                    break;
+                case "-p":
+                    throw new UnsupportedOperationException("not yet implemented");
+                case "-v":
+                    throw new UnsupportedOperationException("not yet implemented");
+                case "-n":
+                    throw new UnsupportedOperationException("not yet implemented");
+                case "-r": // X : registres dispo: de R0 à R{X-1}:
+                    throw new UnsupportedOperationException("not yet implemented");
+                case "-d":
+                    debug ++;
+                    break;
+                case "-P":
+                    throw new UnsupportedOperationException("not yet implemented");
+                default:
+                    break;
+            }
         }
 
         Logger logger = Logger.getRootLogger();
