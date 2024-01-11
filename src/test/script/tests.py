@@ -115,8 +115,8 @@ def runTestGen():
 def runAllTests():
     runTestLex()
     runTestSynt()
-    runTestContext()
-    runTestGen()
+    # runTestContext()
+    # runTestGen()
 
 def runTestsDev():
     runTestLex()

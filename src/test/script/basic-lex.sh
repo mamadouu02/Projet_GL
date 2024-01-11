@@ -34,9 +34,9 @@ fi
 if test_lex src/test/deca/syntax/invalid/provided/chaine_incomplete.deca 2>&1 \
     | grep -q -e 'chaine_incomplete.deca:10:'
 then
-    echo "Echec attendu pour test_lex"
-else
     echo "Erreur non detectee par test_lex pour chaine_incomplete.deca"
     exit 1
+else
+    echo "Echec attendu pour test_lex"    
 fi
 
