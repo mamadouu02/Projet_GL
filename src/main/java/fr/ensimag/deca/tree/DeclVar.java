@@ -62,8 +62,12 @@ public class DeclVar extends AbstractDeclVar {
         initialization.prettyPrint(s, prefix, true);
     }
 
+    @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
         this.varName.getExpDefinition().setOperand(new RegisterOffset(compiler.getD(), Register.GB));
         compiler.incrD();
+        if (this.initialization instanceof Initialization) {
+            this.initialization.codeGenInit(compiler, this.varName.getExpDefinition().getOperand());
+        }
     }
 }
