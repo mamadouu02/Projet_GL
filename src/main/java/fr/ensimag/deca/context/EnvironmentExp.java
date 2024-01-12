@@ -1,6 +1,6 @@
 package fr.ensimag.deca.context;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 
@@ -28,7 +28,8 @@ public class EnvironmentExp {
     // d'empilement).
 
     EnvironmentExp parentEnvironment;
-    // Map<Symbol, ExpDefinition> environmentDefinitions;
+
+     private HashMap<Symbol, ExpDefinition> environmentDefinitions = new HashMap<Symbol, ExpDefinition>();
 
     public EnvironmentExp(EnvironmentExp parentEnvironment) {
         // environmentDefinitions = new java.util.HashMap<Symbol, ExpDefinition>();
@@ -65,10 +66,10 @@ public class EnvironmentExp {
      *
      */
     public void declare(Symbol name, ExpDefinition def) throws DoubleDefException {
-        // if (environmentDefinitions.containsKey(name)) {
-        // throw new DoubleDefException();
-        // }
-        // environmentDefinitions.put(name, def);
+         if (environmentDefinitions.containsKey(name)) {
+         throw new DoubleDefException();
+         }
+         environmentDefinitions.put(name, def);
     }
 
 }

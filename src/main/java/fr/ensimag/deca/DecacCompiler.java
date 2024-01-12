@@ -1,5 +1,6 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -148,6 +149,7 @@ public class DecacCompiler {
     public final SymbolTable symbolTable = new SymbolTable();
     public final EnvironmentType environmentType = new EnvironmentType(this);
 
+    public final EnvironmentExp environmentExp = new EnvironmentExp(null);
     public Symbol createSymbol(String name) {
         return symbolTable.create(name);
     }
