@@ -87,27 +87,18 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        int regMax = compiler.getCompilerOptions().getRegMax();
-        int idReg = compiler.getIdreg();
-        int d = compiler.getD();
-
         this.varName.getExpDefinition().setOperand(new RegisterOffset(compiler.getD(), Register.GB));
         compiler.incrD();
+        // A FAIRE: INCREMENTER SP
+
         if (this.initialization instanceof Initialization) {
-            Type currentInit = this.varName.getExpDefinition().getType();
-            // Inititialisation d'entiers
-            if (currentInit.isInt()) {
-                compiler.addInstruction(new LOAD( 0 , Register.getR(idReg)));
-                compiler.addInstruction(new STORE(Register.getR(idReg), this.varName.getExpDefinition().getOperand()));
-                this.varName.getExpDefinition().getOperand();
-            } else if (currentInit.isFloat()) {
-                throw new UnsupportedOperationException("not yet implemented");
-            } else if (currentInit.isString()) {
-                throw new UnsupportedOperationException("not yet implemented");
-            } else if (currentInit.isBoolean()) {
-                throw new UnsupportedOperationException("not yet implemented");
+            this.initialization.codeGenInit(compiler);
+            compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()),this.varName.getExpDefinition().getOperand()));
+            
+            if (compiler.getIdReg() == compiler.getCompilerOptions().getRegMax()) {
+                compiler.setIdReg(2);
             } else {
-                throw new UnsupportedOperationException("not yet implemented (Maybe for the class part)");
+                compiler.setIdReg(compiler.getIdReg() + 1);
             }
         }
     }

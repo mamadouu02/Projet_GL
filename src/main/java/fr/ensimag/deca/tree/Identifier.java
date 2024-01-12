@@ -5,6 +5,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import fr.ensimag.ima.pseudocode.DAddr;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -213,4 +215,7 @@ public class Identifier extends AbstractIdentifier {
         }
     }
 
+    public void codeGenExpr(DecacCompiler compiler, DAddr addr) {
+        addr = this.getExpDefinition().getOperand();
+    }
 }
