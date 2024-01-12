@@ -87,7 +87,7 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        this.varName.getExpDefinition().setOperand(new RegisterOffset(compiler.getD(), Register.GB));
+        this.varName.codeGenExpr(compiler);
         compiler.incrD();
         // A FAIRE: INCREMENTER SP
 

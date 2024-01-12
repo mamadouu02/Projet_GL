@@ -64,7 +64,6 @@ public class Initialization extends AbstractInitialization {
 
     @Override
     protected void codeGenInit(DecacCompiler compiler) {
-        DAddr addr = null;
-        expression.codeGenExpr(compiler, addr);
+        expression.codeGenExpr(compiler);
     }
 }

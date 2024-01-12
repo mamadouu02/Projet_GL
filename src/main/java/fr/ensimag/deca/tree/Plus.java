@@ -1,5 +1,7 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.DAddr;
 
 /**
  * @author gl42
@@ -14,5 +16,11 @@ public class Plus extends AbstractOpArith {
     @Override
     protected String getOperatorName() {
         return "+";
+    }
+
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, DAddr addr) {
+        throw new UnsupportedOperationException("Unimplemented method 'codeGenExpr'");
     }
 }

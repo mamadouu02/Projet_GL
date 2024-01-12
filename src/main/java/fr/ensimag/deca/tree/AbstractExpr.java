@@ -142,7 +142,7 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
@@ -150,7 +150,7 @@ public abstract class AbstractExpr extends AbstractInst {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-    protected abstract void codeGenExpr(DecacCompiler compiler, DAddr addr);    
+    protected abstract void codeGenExpr(DecacCompiler compiler);    
 
     @Override
     protected void decompileInst(IndentPrintStream s) {

@@ -1,8 +1,6 @@
 {
     int x = 1;
-    int y;
-    int z = 2;
-    int a = 3;
-    int b = 4;
-    float c = 0.1;
+    int y = 2;
+    println(1.5,y);
+    println(x,2.5);
 }
