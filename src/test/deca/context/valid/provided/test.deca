@@ -1,6 +1,4 @@
 {
-
-float x ;
-x = 1 ;
-
+float x = 1;
+int x ;
 }
