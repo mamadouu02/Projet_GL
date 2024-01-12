@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
@@ -68,10 +69,28 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
+        int regMax = compiler.getCompilerOptions().getRegMax();
+        int idReg = compiler.getIdreg();
+        int d = compiler.getD();
+
         this.varName.getExpDefinition().setOperand(new RegisterOffset(compiler.getD(), Register.GB));
         compiler.incrD();
         if (this.initialization instanceof Initialization) {
-            //this.initialization.codeGenInit(compiler, this.varName.getExpDefinition().getType());
+            Type currentInit = this.varName.getExpDefinition().getType();
+            // Inititialisation d'entiers
+            if (currentInit.isInt()) {
+                compiler.addInstruction(new LOAD( 0 , Register.getR(idReg)));
+                compiler.addInstruction(new STORE(Register.getR(idReg), this.varName.getExpDefinition().getOperand()));
+                this.varName.getExpDefinition().getOperand();
+            } else if (currentInit.isFloat()) {
+                throw new UnsupportedOperationException("not yet implemented");
+            } else if (currentInit.isString()) {
+                throw new UnsupportedOperationException("not yet implemented");
+            } else if (currentInit.isBoolean()) {
+                throw new UnsupportedOperationException("not yet implemented");
+            } else {
+                throw new UnsupportedOperationException("not yet implemented (Maybe for the class part)");
+            }
         }
     }
 }

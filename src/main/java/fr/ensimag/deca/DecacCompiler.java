@@ -38,6 +38,7 @@ import org.apache.log4j.Logger;
  */
 public class DecacCompiler {
     private int d;
+    private int idReg;
     
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
@@ -50,7 +51,8 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        this.d = 1;
+        this.d = 2;
+        this.idReg = 2;
     }
 
     /**
@@ -65,6 +67,14 @@ public class DecacCompiler {
     }
     public void decrD(){
         this.d -= 1;
+    }
+
+    public int getIdreg(){
+        return this.idReg;
+    }
+
+    public void setIdreg(int i){
+        this.idReg = i;
     }
     
     public File getSource() {

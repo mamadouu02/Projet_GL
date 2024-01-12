@@ -53,8 +53,6 @@ public class Program extends AbstractProgram {
         main.codeGenMain(compiler);
         
         compiler.addInstruction(new HALT());
-
-        compiler.addComment("End main program");
     }
 
     @Override
