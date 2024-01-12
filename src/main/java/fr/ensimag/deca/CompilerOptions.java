@@ -119,13 +119,17 @@ public class CompilerOptions {
             throw new CLIException("Les options -p et -v sont incompatibles");
         }
 
-        if (printBanner) {
-            if (!sourceFiles.isEmpty()) {
-                throw new CLIException("L'option -b doit être utilisée sans fichier source");
+        if (printBanner && !sourceFiles.isEmpty()) {
+            throw new CLIException("L'option -b doit être utilisée sans fichier source");
+        }
+        
+        if (debug != 0 || regMax != 15 || parallel || parse || verif || !check) {
+            if (printBanner) {
+                throw new CLIException("L'option -b doit être utilisée sans autre option");
             }
-
-            if (debug != 0 || regMax != 15 || parallel || parse || verif || !check) {
-                throw new CLIException("L'option -b doit être être utilisée sans autre option");
+        
+            if (sourceFiles.isEmpty()) {
+                throw new CLIException("<fichier deca> est manquant");
             }
         }
 

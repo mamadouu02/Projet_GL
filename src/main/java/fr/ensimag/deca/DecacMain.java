@@ -29,16 +29,15 @@ public class DecacMain {
         if (options.getPrintBanner()) {
             System.out.println();
             System.out.println("=========== ProjetGL2024, GR9, GL42 ===========");
-            System.out.println(" ahjaous, bouihih, guessous, senameg, thiongam ");
+            System.out.println(" ahjaous, bouihih, guessouo, senameg, thiongam ");
             System.out.println("===============================================");
             System.out.println();
             System.exit(0);
         }
 
         if (options.getSourceFiles().isEmpty()) {
-            System.err.println("Error during option parsing:\n" + "<fichier deca> est manquant");
             options.displayUsage();
-            System.exit(1);
+            System.exit(0);
         }
 
         if (options.getParallel()) {
