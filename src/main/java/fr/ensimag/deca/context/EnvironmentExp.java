@@ -45,8 +45,8 @@ public class EnvironmentExp {
      * symbol is undefined.
      */
     public ExpDefinition get(Symbol key) {
-        // return environmentDefinitions.get(key);
-        return null;
+         return environmentDefinitions.get(key);
+        //return null;
     }
 
     /**
