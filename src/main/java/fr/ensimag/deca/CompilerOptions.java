@@ -73,7 +73,6 @@ public class CompilerOptions {
                     printBanner = true;
                     break;
                 case "-p":
-                    // TODO: decac -p
                     parse = true;
                     break;
                 case "-v":
@@ -125,7 +124,7 @@ public class CompilerOptions {
                 throw new CLIException("L'option -b doit être utilisée sans fichier source");
             }
 
-            if (debug != 0 || regMax != 15 || parallel || printBanner || parse || verif || !check) {
+            if (debug != 0 || regMax != 15 || parallel || parse || verif || !check) {
                 throw new CLIException("L'option -b doit être être utilisée sans autre option");
             }
         }

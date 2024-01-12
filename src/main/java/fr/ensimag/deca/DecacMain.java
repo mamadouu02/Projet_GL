@@ -36,7 +36,9 @@ public class DecacMain {
         }
 
         if (options.getSourceFiles().isEmpty()) {
+            System.err.println("Error during option parsing:\n" + "<fichier deca> est manquant");
             options.displayUsage();
+            System.exit(1);
         }
 
         if (options.getParallel()) {
