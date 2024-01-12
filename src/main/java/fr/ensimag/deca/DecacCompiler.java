@@ -193,7 +193,7 @@ public class DecacCompiler {
         prog.verifyProgram(this);
         assert (prog.checkAllDecorations());
             
-        if (!compilerOptions.getVerif()) {
+        if (compilerOptions.getVerif()) {
             return false;
         }
 
