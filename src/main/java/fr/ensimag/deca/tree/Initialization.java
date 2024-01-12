@@ -57,8 +57,8 @@ public class Initialization extends AbstractInitialization {
 
     protected void codeGenInit(DecacCompiler compiler, AbstractIdentifier varName) {
         //A FAIRE
-        expression.codeGenExpr(compiler);
-        compiler.addInstruction(new LOAD(Register.getR(2), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(varName.getFieldDefinition().getIndex(), Register.LB)));
+        //expression.codeGenExpr(compiler);
+        //compiler.addInstruction(new LOAD(Register.getR(2), Register.getR(0)));
+        //compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(varName.getFieldDefinition().getIndex(), Register.LB)));
     }
 }

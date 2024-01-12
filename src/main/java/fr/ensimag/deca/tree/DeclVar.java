@@ -67,7 +67,7 @@ public class DeclVar extends AbstractDeclVar {
         this.varName.getExpDefinition().setOperand(new RegisterOffset(compiler.getD(), Register.GB));
         compiler.incrD();
         if (this.initialization instanceof Initialization) {
-            this.initialization.codeGenInit(compiler, this.varName.getExpDefinition().getOperand());
+            //this.initialization.codeGenInit(compiler, this.varName.getExpDefinition().getType());
         }
     }
 }
