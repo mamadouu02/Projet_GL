@@ -4,7 +4,7 @@ default:
 deploy-prod:
   stage: deploy
   rules:     
-      - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
   before_script:
     - git config --global --add safe.directory /builds/gl2024/gr9/gl42
     - git fetch origin $CI_COMMIT_BRANCH

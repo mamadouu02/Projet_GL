@@ -11,26 +11,35 @@ import org.apache.log4j.Logger;
  */
 public class DecacMain {
     private static Logger LOG = Logger.getLogger(DecacMain.class);
-    
+
     public static void main(String[] args) {
         // example log4j message.
         LOG.info("Decac compiler started");
         boolean error = false;
         final CompilerOptions options = new CompilerOptions();
+
         try {
             options.parseArgs(args);
         } catch (CLIException e) {
-            System.err.println("Error during option parsing:\n"
-                    + e.getMessage());
+            System.err.println("Error during option parsing:\n" + e.getMessage());
             options.displayUsage();
             System.exit(1);
         }
+
         if (options.getPrintBanner()) {
-            throw new UnsupportedOperationException("decac -b not yet implemented");
+            System.out.println();
+            System.out.println("=========== ProjetGL2024, GR9, GL42 ===========");
+            System.out.println(" ahjaous, bouihih, guessouo, senameg, thiongam ");
+            System.out.println("===============================================");
+            System.out.println();
+            System.exit(0);
         }
+
         if (options.getSourceFiles().isEmpty()) {
-            throw new UnsupportedOperationException("decac without argument not yet implemented");
+            options.displayUsage();
+            System.exit(0);
         }
+
         if (options.getParallel()) {
             // A FAIRE : instancier DecacCompiler pour chaque fichier à
             // compiler, et lancer l'exécution des méthodes compile() de chaque
@@ -45,6 +54,7 @@ public class DecacMain {
                 }
             }
         }
+
         System.exit(error ? 1 : 0);
     }
 }

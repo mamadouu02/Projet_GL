@@ -5,6 +5,9 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+
+import static org.mockito.Mockito.lenient;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -41,6 +44,7 @@ public class Main extends AbstractMain {
     protected void codeGenMain(DecacCompiler compiler) {
         // A FAIRE: traiter les déclarations de variables.
         compiler.addComment("Beginning of main instructions:");
+        declVariables.codeGenListDeclVar(compiler);
         insts.codeGenListInst(compiler);
     }
 

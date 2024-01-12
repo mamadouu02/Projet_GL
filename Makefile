@@ -1,4 +1,3 @@
-
 test-python:
 	src/test/script/install-python.sh
 	mvn clean

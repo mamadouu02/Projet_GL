@@ -38,6 +38,9 @@ import org.apache.log4j.Logger;
  * @date 01/01/2024
  */
 public class DecacCompiler {
+    private int d;
+    private int idReg;
+    
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
     /**
@@ -49,11 +52,32 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
+        this.d = 2;
+        this.idReg = 2;
     }
 
     /**
      * Source file associated with this compiler instance.
      */
+    public int getD(){
+        return this.d;
+    }
+
+    public void incrD(){
+        this.d += 1;
+    }
+    public void decrD(){
+        this.d -= 1;
+    }
+
+    public int getIdreg(){
+        return this.idReg;
+    }
+
+    public void setIdreg(int i){
+        this.idReg = i;
+    }
+    
     public File getSource() {
         return source;
     }
@@ -141,6 +165,7 @@ public class DecacCompiler {
         PrintStream err = System.err;
         PrintStream out = System.out;
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
+
         try {
             return doCompile(sourceFile, destFile, out, err);
         } catch (LocationException e) {
@@ -154,13 +179,11 @@ public class DecacCompiler {
             err.println("Stack overflow while compiling file " + sourceFile + ".");
             return true;
         } catch (Exception e) {
-            LOG.fatal("Exception raised while compiling file " + sourceFile
-                    + ":", e);
+            LOG.fatal("Exception raised while compiling file " + sourceFile + ":", e);
             err.println("Internal compiler error while compiling file " + sourceFile + ", sorry.");
             return true;
         } catch (AssertionError e) {
-            LOG.fatal("Assertion failed while compiling file " + sourceFile
-                    + ":", e);
+            LOG.fatal("Assertion failed while compiling file " + sourceFile + ":", e);
             err.println("Internal compiler error while compiling file " + sourceFile + ", sorry.");
             return true;
         }
@@ -188,8 +211,17 @@ public class DecacCompiler {
         }
         assert (prog.checkAllLocations());
 
+        if (compilerOptions.getParse()) {
+            prog.decompile(out);
+            return false;
+        }
+
         prog.verifyProgram(this);
         assert (prog.checkAllDecorations());
+            
+        if (compilerOptions.getVerif()) {
+            return false;
+        }
 
 
         addComment("start main program");
@@ -197,18 +229,19 @@ public class DecacCompiler {
         addComment("end main program");
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
-
+        
         FileOutputStream fstream = null;
         try {
             fstream = new FileOutputStream(destName);
         } catch (FileNotFoundException e) {
             throw new DecacFatalError("Failed to open output file: " + e.getLocalizedMessage());
         }
-
+        
         LOG.info("Writing assembler file ...");
-
+        
         program.display(new PrintStream(fstream));
         LOG.info("Compilation of " + sourceName + " successful.");
+
         return false;
     }
 
