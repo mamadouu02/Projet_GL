@@ -1,5 +1,0 @@
-{
-    int x = 3;
-    float y =1.5;
-    print(2.0);
-}
