@@ -20,7 +20,7 @@ public class Plus extends AbstractOpArith {
 
 
     @Override
-    protected void codeGenExpr(DecacCompiler compiler, DAddr addr) {
+    protected void codeGenExpr(DecacCompiler compiler) {
         throw new UnsupportedOperationException("Unimplemented method 'codeGenExpr'");
     }
 }

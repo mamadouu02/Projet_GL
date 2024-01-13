@@ -20,7 +20,4 @@ public class LOAD extends BinaryInstructionDValToReg {
         this(new ImmediateInteger(i), r);
     }
 
-    public LOAD(float f, GPRegister r) {
-        this(new ImmediateFloat(f), r);
-    }
 }

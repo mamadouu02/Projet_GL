@@ -234,6 +234,5 @@ public class Identifier extends AbstractIdentifier {
 
     protected void codeGenPrint(DecacCompiler compiler) {
         compiler.addInstruction(new LOAD(this.getExpDefinition().getOperand(), Register.R1));
-        compiler.addInstruction(new WINT());
     }
 }
