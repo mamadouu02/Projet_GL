@@ -151,10 +151,34 @@ def runTestsDev(execFunction):
 if __name__ == "__main__":
     if(len(sys.argv) == 1):
         runAllTests(exec_test)
-    elif(sys.argv[1] == "-f"):
-        runTestsDev(exec_test)
-    elif(sys.argv[1] == "-w"):
-        runAllTests(exec_test_write_result)
+        sys.exit(0)
+    if(sys.argv.__contains__("-h")):
+        print("Usage : python3 tests.py [options]")
+        print("Options :")
+        print("no option : run all tests");
+        print("-h : help")
+        print("-w : write result in .lis and .res files instead of printing them in the terminal")
+        print("-dev : run all tests in developpement mode")
+        print("-lex : run only lex tests")
+        print("-synt : run only synt tests")
+        print("-context : run only context tests")
+        print("-gen : run only gen tests")
+        sys.exit(0)
+    if(sys.argv.__contains__("-w")):
+        execMode = exec_test_write_result
     else:
-        print("error: invalid argument")
-        exit(1)
+        execMode = exec_test
+    if(sys.argv.__contains__("-dev")):
+        runTestsDev(execMode)
+    elif(sys.argv.__contains__("-lex")):
+        runTestLex(execMode)
+    elif(sys.argv.__contains__("-synt")):
+        runTestSynt(execMode)
+    elif(sys.argv.__contains__("-context")):
+        runTestContext(execMode)
+    elif(sys.argv.__contains__("-gen")):
+        runTestGen(exec_test_gen)
+    else:
+        print("Usage : python3 tests.py [options]")
+        print("Try 'python3 tests.py -h' for more information.")
+        sys.exit(1)
