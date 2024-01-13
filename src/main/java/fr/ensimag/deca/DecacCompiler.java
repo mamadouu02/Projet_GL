@@ -52,7 +52,7 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        this.d = 2;
+        this.d = 1;
         this.idReg = 2;
     }
 
@@ -70,11 +70,11 @@ public class DecacCompiler {
         this.d -= 1;
     }
 
-    public int getIdreg(){
+    public int getIdReg(){
         return this.idReg;
     }
 
-    public void setIdreg(int i){
+    public void setIdReg(int i){
         this.idReg = i;
     }
     

@@ -6,6 +6,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
+
 import java.io.PrintStream;
 
 /**
@@ -34,7 +37,6 @@ public class IntLiteral extends AbstractExpr {
         return type;
     }
 
-
     @Override
     String prettyPrintNode() {
         return "Int (" + getValue() + ")";
@@ -54,5 +56,15 @@ public class IntLiteral extends AbstractExpr {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do
     }
+    
+    @Override 
+    protected void codeGenPrint(DecacCompiler compiler){
+        compiler.addInstruction(new LOAD(value, Register.R1), "Load in R1 to be able to display");
+        compiler.addInstruction(new WINT());
+    }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler) {    
+        compiler.addInstruction(new LOAD(value, Register.getR(compiler.getIdReg())));
+    }
 }

@@ -42,7 +42,7 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
 
     public void codeGenListDeclVar(DecacCompiler compiler) {
         if (!(getList().isEmpty())) {
-            compiler.addComment("Variables declarations");;
+            compiler.addComment("Variables declarations");
         }
         for (AbstractDeclVar i : getList()) {
             i.codeGenDeclVar(compiler);
