@@ -11,6 +11,9 @@ import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
 
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -48,6 +51,12 @@ public abstract class AbstractExpr extends AbstractInst {
         if (getType() == null) {
             throw new DecacInternalError("Expression " + decompile() + " has no Type decoration");
         }
+    }
+
+    private boolean printHex;
+
+    public void setPrintHex(boolean printHex) {
+        this.printHex = printHex;
     }
 
     /**
@@ -142,7 +151,15 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        //throw new UnsupportedOperationException("not yet implemented");
+        if (getType().isFloat()) {
+            if (printHex) {
+                compiler.addInstruction(new WFLOATX());
+            } else {
+                compiler.addInstruction(new WFLOAT());
+            }
+        } else {
+            compiler.addInstruction(new WINT());
+        }
     }
 
     @Override

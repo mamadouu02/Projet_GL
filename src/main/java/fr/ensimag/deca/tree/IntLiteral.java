@@ -60,7 +60,7 @@ public class IntLiteral extends AbstractExpr {
     @Override 
     protected void codeGenPrint(DecacCompiler compiler){
         compiler.addInstruction(new LOAD(value, Register.R1), "Load in R1 to be able to display");
-        compiler.addInstruction(new WINT());
+        super.codeGenPrint(compiler);
     }
 
     @Override

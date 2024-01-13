@@ -72,7 +72,6 @@ public class FloatLiteral extends AbstractExpr {
     @Override
     protected void codeGenPrint(DecacCompiler compiler){
         compiler.addInstruction(new LOAD(new ImmediateFloat(value), Register.R1), "Load in R1 to be able to display");
-        // TODO: check if it's WFLOAT or WFLOATX
-        compiler.addInstruction(new WFLOAT());
+        super.codeGenPrint(compiler);
     }
 }
