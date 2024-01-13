@@ -228,7 +228,7 @@
                             <goal>java</goal>
                         </goals>
                     </execution>
-                    <!-- <execution>
+                    <execution>
                         <id>basic-context</id>
                         <configuration>
                             <executable>./src/test/script/basic-context.sh</executable>
@@ -238,6 +238,7 @@
                             <goal>exec</goal>
                         </goals>
                     </execution>
+                    <!-- 
                     <execution>
                         <id>basic-gencode</id>
                         <configuration>

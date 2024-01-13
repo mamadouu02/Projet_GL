@@ -115,13 +115,13 @@ def runTestGen():
 def runAllTests():
     runTestLex()
     runTestSynt()
-    # runTestContext()
+    runTestContext()
     # runTestGen()
 
 def runTestsDev():
     runTestLex()
     runTestSynt()
-    # runTestContext()
+    runTestContext()
     print("\033[32m" + "########## ALL TESTS PASSED ##########" + "\033[0m")
 
 if __name__ == "__main__":
