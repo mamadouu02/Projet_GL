@@ -152,6 +152,10 @@ if __name__ == "__main__":
     if(len(sys.argv) == 1):
         runAllTests(exec_test)
         sys.exit(0)
+    if(sys.argv.__contains__("-pipeline")):
+        runAllTests(exec_test)
+        sys.exit(0)
+    
     if(sys.argv.__contains__("-h")):
         print("Usage : python3 tests.py [options]")
         print("Options :")

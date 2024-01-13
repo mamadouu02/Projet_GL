@@ -3,4 +3,4 @@ test-python:
 	mvn clean
 	mvn compile
 	mvn test-compile
-	python3 src/test/script/tests.py -f
+	python3 src/test/script/tests.py -pipeline

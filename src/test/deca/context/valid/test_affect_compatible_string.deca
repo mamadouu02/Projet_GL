@@ -8,5 +8,5 @@
 //    cree le 01/01/2024
 
 {
-   // string S;
+   string S = "Bonjour";
 }
