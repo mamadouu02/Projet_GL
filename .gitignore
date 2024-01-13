@@ -12,4 +12,6 @@
 *.DS_Store
 *.antlr
 *.ass
-*src/main/resources/log4j.properties
+*.idea
+*.iml
+src/main/resources/log4j.properties

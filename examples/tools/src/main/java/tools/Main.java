@@ -6,9 +6,9 @@ import org.apache.log4j.Logger;
  * Example program, just to experiment. Greets the user, in english by default
  * and in French in case a parameter is given.
  *
- * A FAIRE : Alice et Bob rajoutent leurs noms sur la ligne suivante
+ * DONE : Alice et Bob rajoutent leurs noms sur la ligne suivante
  *
- * @author ... and ...
+ * @author Alice and Bob
  * @date 01/01/2024
  */
 public class Main {
@@ -16,8 +16,8 @@ public class Main {
     private static final Logger LOG = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
-        // A FAIRE : lire et modifier le fichier src/main/resources/log4j.properties
-        // A FAIRE : pour controler le comportement de ces affichages.
+        // DONE : lire et modifier le fichier src/main/resources/log4j.properties
+        // DONE : pour controler le comportement de ces affichages.
         LOG.info("Entering main method in App");
         SayHello sayHello;
         String name = null;
@@ -29,7 +29,7 @@ public class Main {
             LOG.debug("Nous allons parler français");
             sayHello = new DireBonjour();
             // Oops, forgot to set the variable 'name' :-(
-            // name = "Pierre Dupont";
+            name = "Pierre Dupont";
         }
         LOG.info("object sayHello instanciated");
         sayHello.sayIt();
@@ -46,14 +46,14 @@ public class Main {
     }
 
     private static void computeAnswer() {
-        // A FAIRE : Alice remplace "print" par "println"
-        System.out.print("I'm computing the answer");
+        // DONE : Alice remplace "print" par "println"
+        System.out.println("I'm computing the answer");
 
         System.out.println("I'm thinking");
 
         System.out.println("I'm thinking again ...");
 
-        // A FAIRE : Bob remplace 43 par 42
-        System.out.println("The answer is 43");
+        // DONE : Bob remplace 43 par 42
+        System.out.println("The answer is 42");
     }
 }
