@@ -41,7 +41,7 @@ public class DeclVar extends AbstractDeclVar {
             Type declVarType = type.verifyType(compiler);
 
             if(declVarType.isVoid()){
-                throw new ContextualError("Votre variable ne peut pas etre de type Void! ",getLocation());
+                throw new ContextualError("Vous ne pouvez pas declarer une variable de type Void!",getLocation());
             }
 
             try {
