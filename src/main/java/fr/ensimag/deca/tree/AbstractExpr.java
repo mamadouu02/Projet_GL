@@ -13,6 +13,7 @@ import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
@@ -149,7 +150,12 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(dVal(), Register.R1), "Load in R1 to be able to display");
+        if (dVal() != null) {
+            compiler.addInstruction(new LOAD(dVal(), Register.R1), "Load in R1 to be able to display");
+        } else {
+            codeGenExpr(compiler);
+            compiler.addInstruction(new LOAD(Register.getR(compiler.getIdReg()), Register.R1), "Load in R1 to be able to display");
+        }
         
         if (getType().isFloat()) {
             if (printHex) {
@@ -164,7 +170,7 @@ public abstract class AbstractExpr extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        codeGenExpr(compiler);
     }
 
     protected void codeGenExpr(DecacCompiler compiler) {

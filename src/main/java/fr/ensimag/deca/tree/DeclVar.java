@@ -87,7 +87,7 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        varName.codeGenExpr(compiler);
+        varName.codeGenInst(compiler);
         compiler.incrD();
         // TODO: incrémenter SP
 
