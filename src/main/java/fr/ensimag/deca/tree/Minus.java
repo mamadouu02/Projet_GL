@@ -1,6 +1,9 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.BinaryInstruction;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.ADD;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
@@ -24,26 +27,7 @@ public class Minus extends AbstractOpArith {
     }
 
     @Override
-    protected void codeGenExpr(DecacCompiler compiler) {
-        if (getRightOperand().dVal() != null) {
-            this.getLeftOperand().codeGenExpr(compiler);
-            compiler.addInstruction(new SUB(getRightOperand().dVal(), Register.getR(compiler.getIdReg())));
-        } else {
-            if (compiler.getIdReg() < compiler.getCompilerOptions().getRegMax()) {
-                this.getLeftOperand().codeGenExpr(compiler);
-                compiler.setIdReg(compiler.getIdReg()+1);
-                this.getRightOperand().codeGenExpr(compiler);
-                compiler.addInstruction(new SUB(Register.getR(compiler.getIdReg()), Register.getR(compiler.getIdReg()-1)));
-                compiler.setIdReg(compiler.getIdReg()-1);
-            } else {
-                this.getLeftOperand().codeGenExpr(compiler);
-                compiler.addInstruction(new PUSH(Register.getR(compiler.getIdReg())), "sauvegarde");
-                this.getRightOperand().codeGenExpr(compiler);
-                compiler.addInstruction(new LOAD(Register.getR(compiler.getIdReg()),Register.R0));
-                compiler.addInstruction(new POP(Register.getR(compiler.getIdReg())), "restauration");
-                compiler.addInstruction(new SUB(Register.R0, Register.getR(compiler.getIdReg())));
-            }
-        }
+    public BinaryInstruction mnemo(DVal op1, GPRegister op2) {
+        return new SUB(op1, op2);
     }
-    
 }
