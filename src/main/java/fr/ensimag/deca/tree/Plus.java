@@ -6,6 +6,9 @@ import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.ADD;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 
 /**
  * @author gl42
@@ -25,7 +28,22 @@ public class Plus extends AbstractOpArith {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler) {
-        this.getLeftOperand().codeGenExpr(compiler);
-        compiler.addInstruction(new ADD(getRightOperand().getDVal(),Register.getR(compiler.getIdReg())));
+        if (getRightOperand().dVal() != null) {
+            this.getLeftOperand().codeGenExpr(compiler);
+            compiler.addInstruction(new ADD(getRightOperand().dVal(), Register.getR(compiler.getIdReg())));
+        } else {
+            if (compiler.getIdReg() < compiler.getCompilerOptions().getRegMax()) {
+                this.getLeftOperand().codeGenExpr(compiler);
+                this.getRightOperand().codeGenExpr(compiler);
+                compiler.addInstruction(new ADD(null, null));
+            } else {
+                this.getLeftOperand().codeGenExpr(compiler);
+                compiler.addInstruction(new PUSH(null), "sauvegarde");
+                this.getRightOperand().codeGenExpr(compiler);
+                compiler.addInstruction(new LOAD(null, null));
+                compiler.addInstruction(new POP(null), "restauration");
+                compiler.addInstruction(new ADD(null, null));
+            }
+        }
     }
 }

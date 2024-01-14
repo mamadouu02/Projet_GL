@@ -87,13 +87,13 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     public void codeGenDeclVar(DecacCompiler compiler) {
-        this.varName.codeGenExpr(compiler);
+        varName.codeGenExpr(compiler);
         compiler.incrD();
-        // A FAIRE: INCREMENTER SP
+        // TODO: incrémenter SP
 
-        if (this.initialization instanceof Initialization) {
-            this.initialization.codeGenInit(compiler);
-            compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()),this.varName.getExpDefinition().getOperand()));
+        if (initialization instanceof Initialization) {
+            initialization.codeGenInit(compiler);
+            compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), varName.getExpDefinition().getOperand()));
             
             if (compiler.getIdReg() == compiler.getCompilerOptions().getRegMax()) {
                 compiler.setIdReg(2);

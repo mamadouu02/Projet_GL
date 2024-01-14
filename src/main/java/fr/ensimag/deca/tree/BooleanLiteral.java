@@ -59,11 +59,11 @@ public class BooleanLiteral extends AbstractExpr {
     }
 
     @Override
-    protected void codeGenExpr(DecacCompiler compiler) {
+    protected DVal dVal() {
         if (value) {
-            compiler.addInstruction(new LOAD(1, Register.getR(compiler.getIdReg())));
-        } else {
-            compiler.addInstruction(new LOAD(0, Register.getR(compiler.getIdReg())));
+            return new ImmediateInteger(1);
         }
+
+        return new ImmediateInteger(0);
     }
 }

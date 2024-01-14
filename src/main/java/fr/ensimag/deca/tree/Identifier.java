@@ -236,7 +236,7 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
-    protected DVal getDVal() {
+    protected DVal dVal() {
         return this.getExpDefinition().getOperand();
     }
 }

@@ -65,12 +65,7 @@ public class FloatLiteral extends AbstractExpr {
     }
 
     @Override
-    protected void codeGenExpr(DecacCompiler compiler) {
-        compiler.addInstruction(new LOAD(new ImmediateFloat(value), Register.getR(compiler.getIdReg())));
-    }
-
-    @Override
-    protected DVal getDVal() {
+    protected DVal dVal() {
         return new ImmediateFloat(value);
     }
 }
