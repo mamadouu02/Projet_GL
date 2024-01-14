@@ -56,15 +56,14 @@ public class IntLiteral extends AbstractExpr {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do
     }
-    
-    @Override 
-    protected void codeGenPrint(DecacCompiler compiler){
-        compiler.addInstruction(new LOAD(value, Register.R1), "Load in R1 to be able to display");
-        super.codeGenPrint(compiler);
-    }
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler) {    
         compiler.addInstruction(new LOAD(value, Register.getR(compiler.getIdReg())));
+    }
+
+    @Override
+    protected DVal getDVal() {
+        return new ImmediateInteger(value);
     }
 }

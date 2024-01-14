@@ -70,8 +70,7 @@ public class FloatLiteral extends AbstractExpr {
     }
 
     @Override
-    protected void codeGenPrint(DecacCompiler compiler){
-        compiler.addInstruction(new LOAD(new ImmediateFloat(value), Register.R1), "Load in R1 to be able to display");
-        super.codeGenPrint(compiler);
+    protected DVal getDVal() {
+        return new ImmediateFloat(value);
     }
 }

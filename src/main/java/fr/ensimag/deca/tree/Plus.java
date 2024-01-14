@@ -2,6 +2,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.ADD;
 
 /**
  * @author gl42
@@ -21,6 +25,7 @@ public class Plus extends AbstractOpArith {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Unimplemented method 'codeGenExpr'");
+        this.getLeftOperand().codeGenExpr(compiler);
+        compiler.addInstruction(new ADD(getRightOperand().getDVal(),Register.getR(compiler.getIdReg())));
     }
 }
