@@ -55,7 +55,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
             return returnType;
         }
         else{
-            throw new ContextualError("operation arithmetique impossible avec ces types", getLocation());
+            throw new ContextualError("operation arithmetique impossible avec ces deux types", getLocation());
         }
     }
 

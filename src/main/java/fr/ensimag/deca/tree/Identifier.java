@@ -169,7 +169,7 @@ public class Identifier extends AbstractIdentifier {
         //throw new UnsupportedOperationException("not yet implemented");
         ExpDefinition vardef = localEnv.get(name);
         if(vardef == null){
-            throw new ContextualError("identifiant invalide ", getLocation());
+            throw new ContextualError("identifiant introuvable ", getLocation());
 
         }
         setDefinition(vardef);

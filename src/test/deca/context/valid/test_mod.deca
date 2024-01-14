@@ -1,12 +1,12 @@
 // Description:
-//    Affectation et typage
+//    operation mod reussi
 //
 // Resultats:
-//    Ligne 11: Type invalide.
-// 
+//    x = 0
+//
 // Historique:
 //    cree le 01/01/2024
 
 {
-   inat a;
+   int x = 42 % 2 ;
 }

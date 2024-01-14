@@ -2,7 +2,7 @@
 //    Programme minimaliste utilisant println.
 //
 // Resultats:
-//    Hello
+//    Hello, world, 12, puis 12,32 en retournant a la ligne a chaque fois
 //
 // Historique:
 //    cree le 01/01/2024

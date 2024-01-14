@@ -140,7 +140,7 @@ public abstract class AbstractExpr extends AbstractInst {
         //throw new UnsupportedOperationException("not yet implemented");
         Type expected = this.verifyExpr(compiler,localEnv,currentClass);
         if(!expected.isBoolean()){
-            throw new ContextualError("Le type attendu est Boolean", getLocation());
+            throw new ContextualError("Votre condition doit être de type Boolean", getLocation());
         }
     }
 

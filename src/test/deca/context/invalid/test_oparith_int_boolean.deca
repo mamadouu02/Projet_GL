@@ -2,11 +2,11 @@
 //    Declaration
 //
 // Resultats:
-//    Ligne 11: Vous ne pouvez pas declarer une variable de type Void
-// 
+//    Ligne 11: operation arithmetique impossible avec ces deux types
+//
 // Historique:
 //    cree le 01/01/2024
 
 {
-   void a ;
+   int a = 1 + true ;
 }
