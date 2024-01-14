@@ -1,11 +1,9 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.BinaryInstruction;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.instructions.MUL;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.POP;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
 
 /**
  * @author gl42
@@ -23,25 +21,7 @@ public class Multiply extends AbstractOpArith {
     }
 
     @Override
-    protected void codeGenExpr(DecacCompiler compiler) {
-        if (getRightOperand().dVal() != null) {
-            this.getLeftOperand().codeGenExpr(compiler);
-            compiler.addInstruction(new MUL(getRightOperand().dVal(), Register.getR(compiler.getIdReg())));
-        } else {
-            if (compiler.getIdReg() < compiler.getCompilerOptions().getRegMax()) {
-                this.getLeftOperand().codeGenExpr(compiler);
-                compiler.setIdReg(compiler.getIdReg()+1);
-                this.getRightOperand().codeGenExpr(compiler);
-                compiler.addInstruction(new MUL(Register.getR(compiler.getIdReg()), Register.getR(compiler.getIdReg()-1)));
-                compiler.setIdReg(compiler.getIdReg()-1);
-            } else {
-                this.getLeftOperand().codeGenExpr(compiler);
-                compiler.addInstruction(new PUSH(Register.getR(compiler.getIdReg())), "sauvegarde");
-                this.getRightOperand().codeGenExpr(compiler);
-                compiler.addInstruction(new LOAD(Register.getR(compiler.getIdReg()),Register.R0));
-                compiler.addInstruction(new POP(Register.getR(compiler.getIdReg())), "restauration");
-                compiler.addInstruction(new MUL(Register.R0, Register.getR(compiler.getIdReg())));
-            }
-        }
+    public BinaryInstruction mnemo(DVal op1, GPRegister op2) {
+        return new MUL(op1, op2);
     }
 }
