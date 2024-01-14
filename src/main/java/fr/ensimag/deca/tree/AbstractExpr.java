@@ -7,7 +7,16 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -46,6 +55,12 @@ public abstract class AbstractExpr extends AbstractInst {
         }
     }
 
+    private boolean printHex;
+
+    public void setPrintHex(boolean printHex) {
+        this.printHex = printHex;
+    }
+
     /**
      * Verify the expression for contextual error.
      * 
@@ -82,15 +97,31 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass, 
             Type expectedType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
+        Type type2 = verifyExpr(compiler,localEnv,currentClass);
+        if(expectedType.isFloat() && type2.isInt()) {
+
+            AbstractExpr floattype = new ConvFloat(this) ;
+            floattype.setType(compiler.environmentType.FLOAT);
+            return floattype;
+
+        }
+        else if (expectedType.sameType(type2)){
+            return this;
+        }
+        else {
+            throw new ContextualError("les deux types ne sont pas compatibles",getLocation());
+        }
     }
-    
-    
+
+
     @Override
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
+                              ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+
+        //throw new UnsupportedOperationException("not yet implemented");
+        this.verifyExpr(compiler,localEnv,currentClass);
     }
 
     /**
@@ -105,7 +136,11 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
+        Type expected = this.verifyExpr(compiler,localEnv,currentClass);
+        if(!expected.isBoolean()){
+            throw new ContextualError("Le type attendu est Boolean", getLocation());
+        }
     }
 
     /**
@@ -114,14 +149,31 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        compiler.addInstruction(new LOAD(dVal(), Register.R1), "Load in R1 to be able to display");
+        
+        if (getType().isFloat()) {
+            if (printHex) {
+                compiler.addInstruction(new WFLOATX());
+            } else {
+                compiler.addInstruction(new WFLOAT());
+            }
+        } else {
+            compiler.addInstruction(new WINT());
+        }
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");
     }
-    
+
+    protected void codeGenExpr(DecacCompiler compiler) {
+        compiler.addInstruction(new LOAD(dVal(), Register.getR(compiler.getIdReg())));
+    }
+
+    protected DVal dVal() {
+        return null;
+    }
 
     @Override
     protected void decompileInst(IndentPrintStream s) {

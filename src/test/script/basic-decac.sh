@@ -24,4 +24,63 @@ fi
 
 echo "Pas de probleme detecte avec decac -b."
 
-# ... et ainsi de suite.
+decac_moins_p=$(decac -p src/test/deca/syntax/invalid/provided/chaine_incomplete.deca)
+
+if [ "$?" -ne 1 ]; then
+    echo "ERREUR: decac -p a termine avec un status different de 1."
+    exit 1
+fi
+
+decac_moins_p=$(decac -p src/test/deca/context/valid/hello-world.deca)
+
+if [ "$?" -ne 0 ]; then
+    echo "ERREUR: decac -p a termine avec un status different de 0."
+    exit 1
+fi
+
+if decac -p src/test/deca/context/valid/hello-world.deca 2>&1 | \
+    grep -q -e 'println("Hello, world!");'
+then
+    echo "Pas de probleme detecte avec decac -p."
+else
+    echo "ERREUR: decac -p n'a pas produit le code attendu."
+    exit 1
+fi
+
+
+decac_moins_v=$(decac -v src/test/deca/syntax/invalid/provided/chaine_incomplete.deca)
+
+if [ "$?" -ne 1 ]; then
+    echo "ERREUR: decac -v a termine avec un status different de 1."
+    exit 1
+fi
+
+decac_moins_v=$(decac -v src/test/deca/context/valid/hello-world.deca)
+
+if [ "$?" -ne 0 ]; then
+    echo "ERREUR: decac -v a termine avec un status different de 0."
+    exit 1
+else
+    echo "Pas de probleme detecte avec decac -v."
+fi
+
+
+if !decac -d src/test/deca/syntax/invalid/provided/chaine_incomplete.deca 2>&1 | \
+    grep -q -e 'INFO'
+then
+    echo "ERREUR: decac -d n'a pas produit le code attendu."
+    exit 1
+fi
+
+if decac -d -d src/test/deca/syntax/invalid/provided/chaine_incomplete.deca 2>&1 | \
+    grep -q -e 'DEBUG'
+then
+    echo "Pas de probleme detecte avec decac -d."
+else
+    echo "ERREUR: decac -d n'a pas produit le code attendu."
+    exit 1
+fi
+
+
+
+# TODO faire les tests pour -r et -P
