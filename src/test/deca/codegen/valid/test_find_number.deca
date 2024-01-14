@@ -1,0 +1,27 @@
+// // Description:
+// //    Utilisation simple de la classe Math
+// //
+// // Resultats:
+// //    cos(0.0) = 1.00000e+00
+// //
+// // Historique:
+// //    cree le 01/01/2024
+
+// // Un exemple de programme Deca utilisant la classe Math
+
+
+// {
+//     int num = 437;
+//     printf("Entrez un nombre entre 0 et 1000 :");
+//     int find  = readInt();
+
+//     while (num != find) {
+//         if (num < find) {
+//             print("Trop grand");
+//         } else {
+//             print("Trop petit");
+//         }
+//         printf("Entrez un nombre entre 0 et 1000 :");
+//         find  = readInt();
+//     }
+// }

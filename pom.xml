@@ -238,7 +238,7 @@
                             <goal>exec</goal>
                         </goals>
                     </execution>
-                    <!-- <execution>
+                    <execution>
                         <id>basic-gencode</id>
                         <configuration>
                             <executable>./src/test/script/basic-gencode.sh</executable>
@@ -247,7 +247,7 @@
                         <goals>
                             <goal>exec</goal>
                         </goals>
-                    </execution> -->
+                    </execution>
                     <execution>
                         <id>basic-decac</id>
                         <configuration>

@@ -140,7 +140,7 @@ def runAllTests(execFunction):
     runTestLex(execFunction)
     runTestSynt(execFunction)
     runTestContext(execFunction)
-    # runTestGen(exec_test_gen)
+    runTestGen(exec_test_gen)
 
 def runTestsDev(execFunction):
     runTestLex(execFunction)
