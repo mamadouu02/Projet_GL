@@ -94,12 +94,6 @@ public class DeclVar extends AbstractDeclVar {
         if (initialization instanceof Initialization) {
             initialization.codeGenInit(compiler);
             compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), varName.getExpDefinition().getOperand()));
-            
-            if (compiler.getIdReg() == compiler.getCompilerOptions().getRegMax()) {
-                compiler.setIdReg(2);
-            } else {
-                compiler.setIdReg(compiler.getIdReg() + 1);
-            }
         }
     }
 }

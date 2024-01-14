@@ -34,15 +34,17 @@ public class Plus extends AbstractOpArith {
         } else {
             if (compiler.getIdReg() < compiler.getCompilerOptions().getRegMax()) {
                 this.getLeftOperand().codeGenExpr(compiler);
+                compiler.setIdReg(compiler.getIdReg()+1);
                 this.getRightOperand().codeGenExpr(compiler);
-                compiler.addInstruction(new ADD(null, null));
+                compiler.addInstruction(new ADD(Register.getR(compiler.getIdReg()), Register.getR(compiler.getIdReg()-1)));
+                compiler.setIdReg(compiler.getIdReg()-1);
             } else {
                 this.getLeftOperand().codeGenExpr(compiler);
-                compiler.addInstruction(new PUSH(null), "sauvegarde");
+                compiler.addInstruction(new PUSH(Register.getR(compiler.getIdReg())), "sauvegarde");
                 this.getRightOperand().codeGenExpr(compiler);
-                compiler.addInstruction(new LOAD(null, null));
-                compiler.addInstruction(new POP(null), "restauration");
-                compiler.addInstruction(new ADD(null, null));
+                compiler.addInstruction(new LOAD(Register.getR(compiler.getIdReg()),Register.R0));
+                compiler.addInstruction(new POP(Register.getR(compiler.getIdReg())), "restauration");
+                compiler.addInstruction(new ADD(Register.R0, Register.getR(compiler.getIdReg())));
             }
         }
     }

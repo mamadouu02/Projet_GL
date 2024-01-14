@@ -52,7 +52,7 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        this.d = 1;
+        this.d = 3;
         this.idReg = 2;
     }
 
