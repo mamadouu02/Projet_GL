@@ -40,6 +40,19 @@ def exec_test(file, test_name, expected):
         else:
             print("Expected error in file : " + file)
 
+def exec_test_decompile(file, test_name, expected):
+    compile = os.system(test_name + " " + file)
+    if(expected == "success"):
+        if(compile != 0):   
+            raise Exception("Unexpected error in file : " + file)
+        else:
+            print("Expected success in file : " + file)  
+    elif(expected == "error"):
+        if(compile == 0):
+            raise Exception("Unexpected success in file : " + file)
+        else:
+            print("Expected error in file : " + file)
+
 def exec_test_gen(file, expected):
     fichier_sortie = file[:-5] + ".res"
     resultat_compilation = subprocess.run(["decac" , file], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -134,13 +147,22 @@ def runTestGen(execFunction):
         execFunction(file, "error")
     print("\033[32m" + "########## ALL TEST GEN PASSED ##########" + "\033[0m")
     
+def runTestDecompile(execFunction):
+    print("########## TEST DECOMPILE ##########")
 
+    files = get_files()
+    for file in files["synt"]["valid"]:
+        exec_test_decompile(file, "decac -p", "success")
+    for file in files["synt"]["invalid"]:
+        exec_test_decompile(file, "decac -p", "error")
+    print("\033[32m" + "########## ALL TEST DECOMPILE PASSED ##########" + "\033[0m")
 
 def runAllTests(execFunction):
     runTestLex(execFunction)
     runTestSynt(execFunction)
     runTestContext(execFunction)
     runTestGen(exec_test_gen)
+    runTestDecompile(execFunction)
 
 def runTestsDev(execFunction):
     runTestLex(execFunction)
@@ -167,6 +189,7 @@ if __name__ == "__main__":
         print("-synt : run only synt tests")
         print("-context : run only context tests")
         print("-gen : run only gen tests")
+        print("-decompile : run only decompile tests")
         sys.exit(0)
     if(sys.argv.__contains__("-w")):
         execMode = exec_test_write_result
@@ -182,6 +205,8 @@ if __name__ == "__main__":
         runTestContext(execMode)
     elif(sys.argv.__contains__("-gen")):
         runTestGen(exec_test_gen)
+    elif(sys.argv.__contains__("-decompile")):
+        runTestDecompile(execMode)
     else:
         print("Usage : python3 tests.py [options]")
         print("Try 'python3 tests.py -h' for more information.")
