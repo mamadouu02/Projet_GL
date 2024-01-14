@@ -8,9 +8,14 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
 
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -48,6 +53,12 @@ public abstract class AbstractExpr extends AbstractInst {
         if (getType() == null) {
             throw new DecacInternalError("Expression " + decompile() + " has no Type decoration");
         }
+    }
+
+    private boolean printHex;
+
+    public void setPrintHex(boolean printHex) {
+        this.printHex = printHex;
     }
 
     /**
@@ -101,10 +112,6 @@ public abstract class AbstractExpr extends AbstractInst {
         else {
             throw new ContextualError("les deux types ne sont pas compatibles",getLocation());
         }
-
-
-
-
     }
 
 
@@ -142,7 +149,17 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        //throw new UnsupportedOperationException("not yet implemented");
+        compiler.addInstruction(new LOAD(dVal(), Register.R1), "Load in R1 to be able to display");
+        
+        if (getType().isFloat()) {
+            if (printHex) {
+                compiler.addInstruction(new WFLOATX());
+            } else {
+                compiler.addInstruction(new WFLOAT());
+            }
+        } else {
+            compiler.addInstruction(new WINT());
+        }
     }
 
     @Override
@@ -150,7 +167,13 @@ public abstract class AbstractExpr extends AbstractInst {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-    protected abstract void codeGenExpr(DecacCompiler compiler);    
+    protected void codeGenExpr(DecacCompiler compiler) {
+        compiler.addInstruction(new LOAD(dVal(), Register.getR(compiler.getIdReg())));
+    }
+
+    protected DVal dVal() {
+        return null;
+    }
 
     @Override
     protected void decompileInst(IndentPrintStream s) {
