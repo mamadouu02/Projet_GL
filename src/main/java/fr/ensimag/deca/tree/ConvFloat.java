@@ -4,6 +4,8 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.BinaryInstruction;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.FLOAT;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -35,9 +37,12 @@ public class ConvFloat extends AbstractUnaryExpr {
     }
 
     @Override
-    public BinaryInstruction mnemo(DVal op1, GPRegister op2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mnemo'");
+    protected void codeGenExpr(DecacCompiler compiler) {
+        compiler.addInstruction(mnemo(getOperand().dVal(), Register.getR(compiler.getIdReg())));
     }
 
+	@Override
+	public BinaryInstruction mnemo(DVal op1, GPRegister op2) {
+		return new FLOAT(op1, op2);
+	}
 }
