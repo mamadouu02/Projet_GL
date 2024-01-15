@@ -2,7 +2,7 @@
 //    tests de programme syntaxiquement incorrects : ineq avec << au lieu de <
 //
 // Resultats:
-//    Ligne 13: no viable alternative at input '0'
+//    Ligne 12:  missing ')' at ';'
 //    
 //
 // Historique:

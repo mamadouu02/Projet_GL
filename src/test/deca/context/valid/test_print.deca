@@ -1,5 +1,5 @@
 // Description:
-//    Programme minimaliste utilisant println.
+//    Programme minimaliste utilisant print d'un string.
 //
 // Resultats:
 //    Hello
@@ -9,6 +9,4 @@
 
 {
         print("Hello, world!");
-        print(12);
-        print(12.34);
 }

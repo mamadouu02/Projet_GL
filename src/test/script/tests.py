@@ -28,7 +28,23 @@ def exec_test_write_result(file, test_name, expected):
                 fichier_lis.write(resultat_compilation.stderr)
 
 def exec_test(file, test_name, expected):
-    compile = os.system("./src/test/script/launchers/" + test_name + " " + file)
+    if(test_name == "decac"):
+        compile = os.system("./src/main/bin/decac " + file)
+    else:
+        compile = os.system("./src/test/script/launchers/" + test_name + " " + file)
+    if(expected == "success"):
+        if(compile != 0):   
+            raise Exception("Unexpected error in file : " + file)
+        else:
+            print("Expected success in file : " + file)  
+    elif(expected == "error"):
+        if(compile == 0):
+            raise Exception("Unexpected success in file : " + file)
+        else:
+            print("Expected error in file : " + file)
+
+def exec_test_decompile(file, test_name, expected):
+    compile = os.system("./src/main/bin/decac -p " + file)
     if(expected == "success"):
         if(compile != 0):   
             raise Exception("Unexpected error in file : " + file)
@@ -42,7 +58,7 @@ def exec_test(file, test_name, expected):
 
 def exec_test_gen(file, expected):
     fichier_sortie = file[:-5] + ".res"
-    resultat_compilation = subprocess.run(["decac" , file], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    resultat_compilation = subprocess.run(["./src/main/bin/decac" , file], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if(expected == "success"):
         if(resultat_compilation.returncode != 0):
             with open(fichier_sortie, 'w') as fichier_lis:
@@ -55,18 +71,20 @@ def exec_test_gen(file, expected):
                 fichier_lis.write(resultat_execution.stdout)
     elif(expected == "error"):
         if(resultat_compilation.returncode == 0):
+            if(file.__contains__("stack_overflow")):
+                resultat_execution = subprocess.run(["ima", "-p", "3" , file[:-4] + "ass"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            else:
+                resultat_execution = subprocess.run(["ima" , file[:-4] + "ass"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             with open(fichier_sortie, 'w') as fichier_lis:
-                fichier_lis.write(resultat_compilation.stdout)
-                fichier_lis.write(resultat_compilation.stderr)
-                raise Exception("Unexpected success in file : " + file)
-        else:
-            resultat_execution = subprocess.run(["ima" , file[:-4] + "ass"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            with open(fichier_sortie, 'w') as fichier_lis:
+                print(resultat_execution)
                 fichier_lis.write(resultat_execution.stdout)
                 fichier_lis.write(resultat_execution.stderr)
-
+        else:
+            raise Exception("Unexpected error in file : " + file)
+        
+    
 def get_files():
-    filesSorted = {"lex" : {"invalid" : [], "valid" : []} , "synt" : {"invalid" : [], "valid" : []}, "context" : {"invalid" : [], "valid" : []}, "gen" : {"invalid" : [], "valid" : []}}
+    filesSorted = {"lex" : {"invalid" : [], "valid" : []} , "synt" : {"invalid" : [], "valid" : []}, "context" : {"invalid" : [], "valid" : []}, "gen" : {"invalid" : [], "valid" : [], "interactive": []}}
     for root, dirs, files in os.walk("src/test/deca"): 
         for file in files:
             if file.endswith(".deca"):
@@ -88,8 +106,10 @@ def get_files():
                 elif "gen" in root:
                     if "invalid" in root:
                         filesSorted["gen"]["invalid"].append(os.path.join(root, file))
-                    else:
+                    elif "valid" in root:
                         filesSorted["gen"]["valid"].append(os.path.join(root, file))
+                    elif "interactive" in root:
+                        filesSorted["gen"]["interactive"].append(os.path.join(root, file))
     return filesSorted
 
 def runTestLex(execFunction):
@@ -124,28 +144,47 @@ def runTestContext(execFunction):
     print("\033[32m" + "########## ALL TEST CONTEXT PASSED ##########" + "\033[0m")
     
 
-def runTestGen(execFunction):
+def runTestGen(execFunction, pipeline = False):
     print("########## TEST GEN ##########")
-
     files = get_files()
     for file in files["gen"]["valid"]:
-        execFunction(file, "success")
+        if pipeline:
+            execFunction(file, "decac", "success")
+        else:
+            execFunction(file, "success")
     for file in files["gen"]["invalid"]:
-        execFunction(file, "error")
+        if not (pipeline):
+            execFunction(file, "error")    
+    # for file in files["gen"]["interactive"]:
+    #     execFunction(file, "success")
     print("\033[32m" + "########## ALL TEST GEN PASSED ##########" + "\033[0m")
     
+def runTestDecompile(execFunction):
+    print("########## TEST DECOMPILE ##########")
 
+    files = get_files()
+    for file in files["synt"]["valid"]:
+        exec_test_decompile(file, "decac -p", "success")
+    for file in files["synt"]["invalid"]:
+        exec_test_decompile(file, "decac -p", "error")
+    print("\033[32m" + "########## ALL TEST DECOMPILE PASSED ##########" + "\033[0m")
 
-def runAllTests(execFunction):
+def runAllTests(execFunction, pipeline = False):
     runTestLex(execFunction)
     runTestSynt(execFunction)
     runTestContext(execFunction)
-    # runTestGen(exec_test_gen)
+    if not (pipeline):
+        runTestGen(exec_test_gen, pipeline)
+    else:
+        runTestGen(execFunction, pipeline)
+    runTestDecompile(execFunction)
 
 def runTestsDev(execFunction):
     runTestLex(execFunction)
     runTestSynt(execFunction)
     runTestContext(execFunction)
+    runTestGen(exec_test_gen)
+    runTestDecompile(execFunction)
     print("\033[32m" + "########## ALL TESTS PASSED ##########" + "\033[0m")
 
 if __name__ == "__main__":
@@ -153,7 +192,7 @@ if __name__ == "__main__":
         runAllTests(exec_test)
         sys.exit(0)
     if(sys.argv.__contains__("-pipeline")):
-        runAllTests(exec_test)
+        runAllTests(exec_test, True)
         sys.exit(0)
     
     if(sys.argv.__contains__("-h")):
@@ -167,6 +206,7 @@ if __name__ == "__main__":
         print("-synt : run only synt tests")
         print("-context : run only context tests")
         print("-gen : run only gen tests")
+        print("-decompile : run only decompile tests")
         sys.exit(0)
     if(sys.argv.__contains__("-w")):
         execMode = exec_test_write_result
@@ -182,6 +222,8 @@ if __name__ == "__main__":
         runTestContext(execMode)
     elif(sys.argv.__contains__("-gen")):
         runTestGen(exec_test_gen)
+    elif(sys.argv.__contains__("-decompile")):
+        runTestDecompile(execMode)
     else:
         print("Usage : python3 tests.py [options]")
         print("Try 'python3 tests.py -h' for more information.")

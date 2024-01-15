@@ -1,8 +1,8 @@
 // Description:
-//    tests de programme syntaxiquement incorrects : if sans crochet
+//    tests de programme syntaxiquement incorrects : 2 else
 //
 // Resultats:
-//    Ligne 13: missing '{' at 'println'
+//    Ligne 16 : mismatched input 'else' expecting {'instanceof', '<', '>', '=', '+', '-', '*', '/', '%', '.', ';', '==', '!=', '>=', '<=', '&&', '||'}
 //    
 //
 // Historique:

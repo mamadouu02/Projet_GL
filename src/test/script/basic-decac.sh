@@ -81,6 +81,15 @@ else
     exit 1
 fi
 
+decac_moins_r=$(decac -r 4 src/test/deca/decac/test_decacr.deca)
 
+result=$(cat src/test/deca/decac/test_decacr.ass)
 
-# TODO faire les tests pour -r et -P
+if echo "$result" | grep -q -e "POP" -e "POP"
+then
+    echo "Pas de probleme detecte avec decac -r."
+else
+    echo "ERREUR: decac -r n'a pas produit le code attendu."
+    exit 1
+fi
+

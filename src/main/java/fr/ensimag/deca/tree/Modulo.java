@@ -30,7 +30,7 @@ public class Modulo extends AbstractOpArith {
         Type leftType = getLeftOperand().verifyExpr(compiler,localEnv,currentClass);
         Type rightType = getRightOperand().verifyExpr(compiler,localEnv,currentClass);
         if( !leftType.isInt() || !rightType.isInt()){
-            throw new ContextualError("Le type des deux operandes doit etre int !", getLocation());
+            throw new ContextualError("Le type des deux operandes doit etre int pour l'operation mod ", getLocation());
         }
         setType(leftType);
         return rightType;

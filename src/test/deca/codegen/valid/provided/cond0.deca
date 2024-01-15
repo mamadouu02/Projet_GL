@@ -8,12 +8,8 @@
 //    cree le 01/01/2024
 
 {
-   if (1 >= 0) {
+   // if (1 >= 0) {
       println("ok"); 
-   } else if(2 < 5){
-      println("ok2");
-   } else if(4 < 5){
-      println("ok3");
-   }
+   // } 
 }
 

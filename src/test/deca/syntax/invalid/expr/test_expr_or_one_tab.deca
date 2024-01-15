@@ -2,7 +2,7 @@
 //    tests de programme syntaxiquement incorrects : OR logique avec un seul |
 //
 // Resultats:
-//    Ligne 13: no viable alternative at input 'a'
+//    Ligne 13: token recognition error at: '| '
 //    
 //
 // Historique:
