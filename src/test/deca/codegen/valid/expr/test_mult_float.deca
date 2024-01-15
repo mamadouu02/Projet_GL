@@ -1,9 +1,10 @@
 // Description:
-//    tests d'expressions entieres
+//    tests de multiplication et d'addition de flottants
 //
 // Resultats:
-//    1
-//    2
+//
+// Historique:
+// cree le 12/01/2024
 
 {
     float i = 1.0;

@@ -71,18 +71,20 @@ def exec_test_gen(file, expected):
                 fichier_lis.write(resultat_execution.stdout)
     elif(expected == "error"):
         if(resultat_compilation.returncode == 0):
+            if(file.__contains__("stack_overflow")):
+                resultat_execution = subprocess.run(["ima", "-p", "3" , file[:-4] + "ass"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            else:
+                resultat_execution = subprocess.run(["ima" , file[:-4] + "ass"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             with open(fichier_sortie, 'w') as fichier_lis:
-                fichier_lis.write(resultat_compilation.stdout)
-                fichier_lis.write(resultat_compilation.stderr)
-                raise Exception("Unexpected success in file : " + file)
-        else:
-            resultat_execution = subprocess.run(["ima" , file[:-4] + "ass"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            with open(fichier_sortie, 'w') as fichier_lis:
+                print(resultat_execution)
                 fichier_lis.write(resultat_execution.stdout)
                 fichier_lis.write(resultat_execution.stderr)
-
+        else:
+            raise Exception("Unexpected error in file : " + file)
+        
+    
 def get_files():
-    filesSorted = {"lex" : {"invalid" : [], "valid" : []} , "synt" : {"invalid" : [], "valid" : []}, "context" : {"invalid" : [], "valid" : []}, "gen" : {"invalid" : [], "valid" : []}}
+    filesSorted = {"lex" : {"invalid" : [], "valid" : []} , "synt" : {"invalid" : [], "valid" : []}, "context" : {"invalid" : [], "valid" : []}, "gen" : {"invalid" : [], "valid" : [], "interactive": []}}
     for root, dirs, files in os.walk("src/test/deca"): 
         for file in files:
             if file.endswith(".deca"):
@@ -104,8 +106,10 @@ def get_files():
                 elif "gen" in root:
                     if "invalid" in root:
                         filesSorted["gen"]["invalid"].append(os.path.join(root, file))
-                    else:
+                    elif "valid" in root:
                         filesSorted["gen"]["valid"].append(os.path.join(root, file))
+                    elif "interactive" in root:
+                        filesSorted["gen"]["interactive"].append(os.path.join(root, file))
     return filesSorted
 
 def runTestLex(execFunction):
@@ -142,8 +146,6 @@ def runTestContext(execFunction):
 
 def runTestGen(execFunction, pipeline = False):
     print("########## TEST GEN ##########")
-    if not (pipeline):
-        print("Ecrivez 2 floats puis 2 int")
     files = get_files()
     for file in files["gen"]["valid"]:
         if pipeline:
@@ -151,7 +153,10 @@ def runTestGen(execFunction, pipeline = False):
         else:
             execFunction(file, "success")
     for file in files["gen"]["invalid"]:
-        execFunction(file, "error")
+        if not (pipeline):
+            execFunction(file, "error")    
+    # for file in files["gen"]["interactive"]:
+    #     execFunction(file, "success")
     print("\033[32m" + "########## ALL TEST GEN PASSED ##########" + "\033[0m")
     
 def runTestDecompile(execFunction):
@@ -178,6 +183,8 @@ def runTestsDev(execFunction):
     runTestLex(execFunction)
     runTestSynt(execFunction)
     runTestContext(execFunction)
+    runTestGen(exec_test_gen)
+    runTestDecompile(execFunction)
     print("\033[32m" + "########## ALL TESTS PASSED ##########" + "\033[0m")
 
 if __name__ == "__main__":

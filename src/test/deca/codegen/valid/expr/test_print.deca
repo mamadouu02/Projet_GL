@@ -1,13 +1,16 @@
 // Description:
-//    tests de la soustraction d'entiers
+//    tests de la fonction print
 //
 // Resultats:
+//    6
 //
 // Historique:
 // cree le 12/01/2024
+
 {
     int i = 1;
     int j;
-    j = i - 1;
+    j = i * 6;
+    print(j);
 }
 
