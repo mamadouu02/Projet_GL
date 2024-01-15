@@ -1,10 +1,10 @@
 // Description:
-//    tests d'expressions entieres
+//    tests de la lecture d'entiers
 //
 // Resultats:
-//    1
-//    2
-
+//    437
+// Historique:
+//  Cree le 14/01/2024
 {
     int i = 437;
     int j = readInt();

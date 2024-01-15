@@ -1,8 +1,7 @@
 // Description:
-//    Initialization
+//    Initialisation d'une variable de type float avec convfloat de l expression a droite
 //
 // Resultats:
-//   Initialization d'une variable de type float avec convfloat de l expression a droite
 //
 // Historique:
 //    cree le 01/01/2024
