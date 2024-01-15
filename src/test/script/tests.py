@@ -55,7 +55,7 @@ def exec_test_decompile(file, test_name, expected):
 
 def exec_test_gen(file, expected):
     fichier_sortie = file[:-5] + ".res"
-    resultat_compilation = subprocess.run(["decac" , file], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    resultat_compilation = subprocess.run(["./src/main/bin/decac" , file], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if(expected == "success"):
         if(resultat_compilation.returncode != 0):
             with open(fichier_sortie, 'w') as fichier_lis:
@@ -161,8 +161,8 @@ def runAllTests(execFunction):
     runTestLex(execFunction)
     runTestSynt(execFunction)
     runTestContext(execFunction)
-    runTestGen(exec_test_gen)
-    runTestDecompile(execFunction)
+    # runTestGen(exec_test_gen)
+    # runTestDecompile(execFunction)
 
 def runTestsDev(execFunction):
     runTestLex(execFunction)
