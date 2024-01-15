@@ -1,0 +1,11 @@
+// // Description:
+// //    Utilisation simple de la classe Math
+// //
+// // Resultats:
+// //    cos(0.0) = 1.00000e+00
+// //
+// // Historique:
+// //    cree le 01/01/2024
+
+
+#include "test_find_imported.deca"

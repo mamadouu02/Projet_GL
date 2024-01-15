@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -47,10 +48,53 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        // A FAIRE: compléter ce squelette très rudimentaire de code
+        compiler.addInstruction(new TSTO(main.getNbVar()));
+
+        if (compiler.getCompilerOptions().getCheck()) {
+            compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
+        }
+
+        compiler.addInstruction(new ADDSP(main.getNbVar()));
         compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+    }
+
+    public void codeGenError(DecacCompiler compiler) {
+        if (compiler.getCompilerOptions().getCheck()) {
+            if (compiler.getError(0)) {
+                compiler.addLabel(new Label("zero_division_error"));
+                compiler.addInstruction(new WSTR("Error: Division by zero"));
+                compiler.addInstruction(new WNL());
+                compiler.addInstruction(new ERROR());
+            }
+
+            if (compiler.getError(1)) {
+                compiler.addLabel(new Label("zero_modulo_error"));
+                compiler.addInstruction(new WSTR("Error: Integer modulo by zero"));
+                compiler.addInstruction(new WNL());
+                compiler.addInstruction(new ERROR());
+            }
+
+            if (compiler.getError(2)) {
+                compiler.addLabel(new Label("overflow_error"));
+                compiler.addInstruction(new WSTR("Error: Overflow during float arithmetic operation or Float division by zero"));
+                compiler.addInstruction(new WNL());
+                compiler.addInstruction(new ERROR());
+            }
+
+            compiler.addLabel(new Label("stack_overflow_error"));
+            compiler.addInstruction(new WSTR("Error: Stack Overflow"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
+        }
+
+        if (compiler.getError(3)) {
+            compiler.addLabel(new Label("io_error"));
+            compiler.addInstruction(new WSTR("Error: Input/Output error"));
+            compiler.addInstruction(new WNL());
+            compiler.addInstruction(new ERROR());
+        }
     }
 
     @Override

@@ -4,6 +4,8 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.BinaryInstruction;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import fr.ensimag.ima.pseudocode.instructions.REM;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -28,7 +30,7 @@ public class Modulo extends AbstractOpArith {
         Type leftType = getLeftOperand().verifyExpr(compiler,localEnv,currentClass);
         Type rightType = getRightOperand().verifyExpr(compiler,localEnv,currentClass);
         if( !leftType.isInt() || !rightType.isInt()){
-            throw new ContextualError("Le type des deux operandes doit etre int !", getLocation());
+            throw new ContextualError("Le type des deux operandes doit etre int pour l'operation mod ", getLocation());
         }
         setType(leftType);
         return rightType;
@@ -44,4 +46,12 @@ public class Modulo extends AbstractOpArith {
     public BinaryInstruction mnemo(DVal op1, GPRegister op2) {
         return new REM(op1, op2);
     }
+
+	@Override
+	public void codeGenBOV(DecacCompiler compiler) {
+        if (compiler.getCompilerOptions().getCheck()) {
+            compiler.setError(1);
+		    compiler.addInstruction(new BOV(new Label("zero_modulo_error")));
+        }
+	}
 }

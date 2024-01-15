@@ -1,0 +1,12 @@
+// Description:
+//    Initialization
+//
+// Resultats:
+//   Initialization d'une variable de type float
+//
+// Historique:
+//    cree le 01/01/2024
+
+{
+   float a = 42.3 ;
+}

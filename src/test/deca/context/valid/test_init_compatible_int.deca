@@ -1,0 +1,12 @@
+// Description:
+//    Initialization
+//
+// Resultats:
+//   Initialization d'une variable de type int
+//
+// Historique:
+//    cree le 01/01/2024
+
+{
+   int x = 1 ;
+}

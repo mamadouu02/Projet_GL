@@ -1,0 +1,13 @@
+// Description:
+//    operation not reussie
+//
+// Resultats:
+//    state1 = false
+//
+// Historique:
+//    cree le 01/01/2024
+
+{
+   boolean state = true ;
+   boolean state1 = (!state);
+}

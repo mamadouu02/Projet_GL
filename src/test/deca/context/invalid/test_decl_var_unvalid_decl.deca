@@ -2,11 +2,11 @@
 //    Affectation et typage
 //
 // Resultats:
-//    Ligne 15: Affectation de types incompatibles.
+//    Ligne 11: identifiant introuvable.
 // 
 // Historique:
 //    cree le 01/01/2024
 
 {
-   int nom = 1 - True;
+   int x =  deux;
 }
