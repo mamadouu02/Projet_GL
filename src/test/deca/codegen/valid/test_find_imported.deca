@@ -1,9 +1,10 @@
 // Description:
-//    tests d'expressions entieres
+//    test de l'assignation et de l'addition d'entiers
 //
 // Resultats:
-//    1
-//    2
+//
+// Historique:
+//  Cree le 12/01/2024
 
 {
     int i = 1;

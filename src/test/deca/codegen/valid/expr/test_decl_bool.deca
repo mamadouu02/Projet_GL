@@ -1,9 +1,10 @@
 // Description:
-//    tests d'expressions entieres
+//    tests d'assignation de booleens
 //
 // Resultats:
-//    1
-//    2
+//
+// Historique:
+//  Cree le 14/01/2024
 
 {
     boolean b;

@@ -183,6 +183,8 @@ def runTestsDev(execFunction):
     runTestLex(execFunction)
     runTestSynt(execFunction)
     runTestContext(execFunction)
+    runTestGen(exec_test_gen)
+    runTestDecompile(execFunction)
     print("\033[32m" + "########## ALL TESTS PASSED ##########" + "\033[0m")
 
 if __name__ == "__main__":
