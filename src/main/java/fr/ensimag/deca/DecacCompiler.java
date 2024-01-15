@@ -40,6 +40,7 @@ import org.apache.log4j.Logger;
 public class DecacCompiler {
     private int d;
     private int idReg;
+    private boolean[] errors;
     
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
@@ -54,6 +55,10 @@ public class DecacCompiler {
         this.source = source;
         this.d = 3;
         this.idReg = 2;
+        this.errors = new boolean[4];
+        for (int i = 0; i < 4; i++) {
+            this.errors[i] = false;
+        }
     }
 
     /**
@@ -74,8 +79,16 @@ public class DecacCompiler {
         return this.idReg;
     }
 
-    public void setIdReg(int i){
+    public void setIdReg(int i) {
         this.idReg = i;
+    }
+
+    public void setError(int i) {
+        this.errors[i] = true;
+    }
+
+    public boolean getError(int i) {
+        return this.errors[i];
     }
     
     public File getSource() {
@@ -223,10 +236,10 @@ public class DecacCompiler {
             return false;
         }
 
-
         addComment("start main program");
         prog.codeGenProgram(this);
         addComment("end main program");
+        prog.codeGenError(this);
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
         

@@ -61,17 +61,21 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
 
     public abstract BinaryInstruction mnemo(DVal op1, GPRegister op2);
 
+    public abstract void codeGenBOV(DecacCompiler compiler);
+
     @Override
     protected void codeGenExpr(DecacCompiler compiler) {
         if (getRightOperand().dVal() != null) {
             this.getLeftOperand().codeGenExpr(compiler);
             compiler.addInstruction(mnemo(getRightOperand().dVal(), Register.getR(compiler.getIdReg())));
+            this.codeGenBOV(compiler);
         } else {
             if (compiler.getIdReg() < compiler.getCompilerOptions().getRegMax()) {
                 this.getLeftOperand().codeGenExpr(compiler);
                 compiler.setIdReg(compiler.getIdReg() + 1);
                 this.getRightOperand().codeGenExpr(compiler);
                 compiler.addInstruction(mnemo(Register.getR(compiler.getIdReg()), Register.getR(compiler.getIdReg() - 1)));
+                this.codeGenBOV(compiler);
                 compiler.setIdReg(compiler.getIdReg() - 1);
             } else {
                 this.getLeftOperand().codeGenExpr(compiler);
@@ -80,6 +84,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 compiler.addInstruction(new LOAD(Register.getR(compiler.getIdReg()),Register.R0));
                 compiler.addInstruction(new POP(Register.getR(compiler.getIdReg())), "restauration");
                 compiler.addInstruction(mnemo(Register.R0, Register.getR(compiler.getIdReg())));
+                this.codeGenBOV(compiler);
             }
         }
     }

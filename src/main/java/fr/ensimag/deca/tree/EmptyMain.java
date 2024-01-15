@@ -44,4 +44,9 @@ public class EmptyMain extends AbstractMain {
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do
     }
+
+    @Override
+    public int getNbVar() {
+        return 0;
+    }
 }
