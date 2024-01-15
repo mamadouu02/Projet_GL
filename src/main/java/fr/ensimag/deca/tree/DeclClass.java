@@ -5,6 +5,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+import java.util.List;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -13,6 +14,10 @@ import java.io.PrintStream;
  * @date 01/01/2024
  */
 public class DeclClass extends AbstractDeclClass {
+    AbstractIdentifier name;
+    AbstractIdentifier superClass;
+    ListDeclField fields;
+    ListDeclMethod methods;
 
     @Override
     public void decompile(IndentPrintStream s) {
@@ -29,12 +34,11 @@ public class DeclClass extends AbstractDeclClass {
             throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
     }
-    
+
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
     }
-
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
