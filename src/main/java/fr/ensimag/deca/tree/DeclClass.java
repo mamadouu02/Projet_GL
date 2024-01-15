@@ -62,6 +62,7 @@ public class DeclClass extends AbstractDeclClass {
             superClass.prettyPrint(s, prefix, false);
         }
         fields.prettyPrint(s, prefix, false);
+        methods.prettyPrint(s, prefix, true);
 
     }
 

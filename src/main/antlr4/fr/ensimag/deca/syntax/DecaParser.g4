@@ -142,7 +142,7 @@ inst returns[AbstractInst tree]:
     }
 	| RETURN expr SEMI {
         assert($expr.tree != null);
-        // TODO
+        // $tree = new Return($expr.tree);
     };
 
 if_then_else returns[IfThenElse tree]
@@ -438,7 +438,7 @@ list_classes returns[ListDeclClass tree]
 class_decl returns[AbstractDeclClass tree]:
 	CLASS name = ident superclass = class_extension OBRACE class_body CBRACE {
             assert($name.tree != null);
-            $tree = new DeclClass($name.tree, $superclass.tree, $class_body.fields, null);
+            $tree = new DeclClass($name.tree, $superclass.tree, $class_body.fields, $class_body.methods);
         };
 
 class_extension
@@ -457,6 +457,7 @@ class_body returns[ListDeclField fields, ListDeclMethod methods]
         }:
     (
 		m = decl_method {
+            $methods.add($m.tree);
         }
 		| decl_field_set[$fields]
 	)*;
@@ -498,22 +499,31 @@ decl_field[AbstractIdentifier t, Visibility v] returns[AbstractDeclField tree]
             setLocation($tree, $i.start);
         };
 
-decl_method
-	@init {
-}:
+decl_method returns[AbstractDeclMethod tree]
+	@init {}:
 	type ident OPARENT params = list_params CPARENT (
 		block {
+            assert($block.decls != null);
+            assert($block.insts != null);
+            $tree = new DeclMethod($type.tree, $ident.tree, $block.decls, $block.insts, $params.tree);
         }
 		| ASM OPARENT code = multi_line_string CPARENT SEMI {
+            assert($code.text != null);
+            // $tree = new DeclMethod($type.tree, $ident.tree, $code.text);
         }
 	) {
         };
 
-list_params: (
-		p1 = param {
+list_params returns[ListDeclParam tree]
+    @init {
+            $tree = new ListDeclParam();
+        }:
+    (p1 = param {
+            $tree.add($p1.tree);
         } (
 			COMMA p2 = param {
-        }
+                $tree.add($p2.tree);
+            }
 		)*
 	)?;
 
@@ -527,6 +537,9 @@ multi_line_string returns[String text, Location location]:
             $location = tokenLocation($s);
         };
 
-param:
-	type ident {
+param returns[AbstractDeclParam tree]:
+	type ident {  
+            assert($type.tree != null);
+            assert($ident.tree != null);
+            $tree = new DeclParam($type.tree, $ident.tree);
         };

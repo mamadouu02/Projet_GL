@@ -12,9 +12,11 @@
 class A extends Object {
    protected int x, y = 1 ;
    float z = 1.0 ;
-   // int getX() {
-   //    return x ;
-   // }
+
+   int getX(int y) {
+      int x = 1 ;
+      x = x + 1 ;
+   }
    // void setX(int x) {
    //    this.x = x ;
    // }

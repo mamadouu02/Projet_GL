@@ -10,14 +10,22 @@ import org.apache.commons.lang.Validate;
 public class DeclMethod extends AbstractDeclMethod {
     final private AbstractIdentifier type;
     final private AbstractIdentifier name;
-    // ListDeclParam params;
+    final private ListDeclParam params;
+    private ListDeclVar declVariables;
+    private ListInst insts;
 
-    public DeclMethod(AbstractIdentifier type, AbstractIdentifier name) {
+    public DeclMethod(AbstractIdentifier type, AbstractIdentifier name, ListDeclVar declVariables,
+            ListInst insts, ListDeclParam params) {
         Validate.notNull(type);
         Validate.notNull(name);
+        Validate.notNull(declVariables);
+        Validate.notNull(insts);
+        Validate.notNull(params);
         this.type = type;
         this.name = name;
-        // this.params = params;
+        this.declVariables = declVariables;
+        this.insts = insts;
+        this.params = params;
     }
 
     @Override
@@ -38,7 +46,11 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("not yet implemented");
+        type.prettyPrint(s, prefix, false);
+        name.prettyPrint(s, prefix, false);
+        params.prettyPrint(s, prefix, false);
+        declVariables.prettyPrint(s, prefix, false);
+        insts.prettyPrint(s, prefix, false);
     }
 
     @Override
