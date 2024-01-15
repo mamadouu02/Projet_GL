@@ -1,6 +1,9 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.BinaryInstruction;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -29,6 +32,12 @@ public class ConvFloat extends AbstractUnaryExpr {
     @Override
     protected String getOperatorName() {
         return "/* conv float */";
+    }
+
+    @Override
+    public BinaryInstruction mnemo(DVal op1, GPRegister op2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mnemo'");
     }
 
 }
