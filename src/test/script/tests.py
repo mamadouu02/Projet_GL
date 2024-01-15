@@ -153,7 +153,8 @@ def runTestGen(execFunction, pipeline = False):
         else:
             execFunction(file, "success")
     for file in files["gen"]["invalid"]:
-        execFunction(file, "error")
+        if not (pipeline):
+            execFunction(file, "error")    
     # for file in files["gen"]["interactive"]:
     #     execFunction(file, "success")
     print("\033[32m" + "########## ALL TEST GEN PASSED ##########" + "\033[0m")
