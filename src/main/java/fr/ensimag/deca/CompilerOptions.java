@@ -79,7 +79,6 @@ public class CompilerOptions {
                     verif = true;
                     break;
                 case "-n":
-                    // TODO: decac -n
                     check = false;
                     break;
                 case "-r":
@@ -102,9 +101,8 @@ public class CompilerOptions {
                     debug++;
                     break;
                 case "-P":
-                    // TODO: decac -P
                     parallel = true;
-                    throw new UnsupportedOperationException("not yet implemented");
+                    break;
                 default:
                     if (!arg.endsWith(".deca")) {
                         throw new CLIException("<fichier deca> doit avoir l'extension .deca");
