@@ -8,6 +8,17 @@ import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
 public class DeclMethod extends AbstractDeclMethod {
+    final private AbstractIdentifier type;
+    final private AbstractIdentifier name;
+    // ListDeclParam params;
+
+    public DeclMethod(AbstractIdentifier type, AbstractIdentifier name) {
+        Validate.notNull(type);
+        Validate.notNull(name);
+        this.type = type;
+        this.name = name;
+        // this.params = params;
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {

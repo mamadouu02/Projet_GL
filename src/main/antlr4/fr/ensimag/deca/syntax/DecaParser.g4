@@ -431,42 +431,71 @@ ident returns[AbstractIdentifier tree]:
 list_classes returns[ListDeclClass tree]
 	@init {$tree = new ListDeclClass();}: (
 		c1 = class_decl {
-            
+            $tree.add($c1.tree);
         }
 	)*;
 
-class_decl:
+class_decl returns[AbstractDeclClass tree]:
 	CLASS name = ident superclass = class_extension OBRACE class_body CBRACE {
+            assert($name.tree != null);
+            $tree = new DeclClass($name.tree, $superclass.tree, $class_body.fields, null);
         };
 
-class_extension returns[AbstractIdentifier tree]:
+class_extension
+	returns[AbstractIdentifier tree]:
 	EXTENDS ident {
+            assert($ident.tree != null);
+            $tree = $ident.tree;
         }
 	| /* epsilon */ {
         };
 
-class_body: (
+class_body returns[ListDeclField fields, ListDeclMethod methods]
+    @init {
+            $fields = new ListDeclField();
+            $methods = new ListDeclMethod();
+        }:
+    (
 		m = decl_method {
         }
-		| decl_field_set
+		| decl_field_set[$fields]
 	)*;
 
-decl_field_set: v = visibility t = type list_decl_field SEMI;
+decl_field_set[ListDeclField l]:
+    v = visibility t = type list_decl_field[$l, $type.tree, $visibility.v] SEMI;
 
-visibility:
+visibility returns[Visibility v]
+    @init {}:
 	/* epsilon */ {
+            $v = Visibility.PUBLIC;
         }
 	| PROTECTED {
+           $v = Visibility.PROTECTED;
         };
 
-list_decl_field: dv1 = decl_field (COMMA dv2 = decl_field)*;
 
-decl_field:
+
+list_decl_field[ListDeclField l, AbstractIdentifier t, Visibility v]:
+    (dv1 = decl_field[$t, $v]{
+        $l.add($dv1.tree);
+    } (COMMA dv2 = decl_field[$t, $v] {
+        $l.add($dv2.tree);
+    })*)?;
+
+decl_field[AbstractIdentifier t, Visibility v] returns[AbstractDeclField tree]
+    @init {}:
 	i = ident {
+            assert($i.tree != null);
+            AbstractInitialization init = new NoInitialization();
         } (
 		EQUALS e = expr {
+            assert($e.tree != null);
+            init = new Initialization($e.tree);
+            setLocation(init, $i.start);
         }
 	)? {
+            $tree = new DeclField($v, $t, $i.tree, init);
+            setLocation($tree, $i.start);
         };
 
 decl_method
