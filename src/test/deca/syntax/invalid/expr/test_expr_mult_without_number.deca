@@ -2,7 +2,7 @@
 //    tests de programme syntaxiquement incorrects : AND logique avec un seul &
 //
 // Resultats:
-//    Ligne 13: no viable alternative at input 'a'
+//    mismatched input ';' expecting {'false', 'new', 'null', 'readInt', 'readFloat', 'this', 'true', IDENT, '-', '(', '!', INT, FLOAT, STRING}
 //    
 //
 // Historique:

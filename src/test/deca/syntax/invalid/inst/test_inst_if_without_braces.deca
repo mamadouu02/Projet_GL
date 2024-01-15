@@ -2,7 +2,7 @@
 //    tests de programme syntaxiquement incorrects : if sans crochet
 //
 // Resultats:
-//    Ligne 13: mismatched input '{' expecting '('
+//    Ligne 13: missing '{' at 'println'
 //    
 //
 // Historique:

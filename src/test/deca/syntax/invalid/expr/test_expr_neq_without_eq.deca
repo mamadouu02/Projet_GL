@@ -2,7 +2,7 @@
 //    tests de programme syntaxiquement incorrects : eq avec un seul ! au lieu de !=
 //
 // Resultats:
-//    Ligne 13: no viable alternative at input '0'
+//    Ligne 13: no viable alternative at input '!'
 //    
 //
 // Historique:

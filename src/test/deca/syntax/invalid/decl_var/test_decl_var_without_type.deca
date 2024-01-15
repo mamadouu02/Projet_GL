@@ -1,8 +1,8 @@
 // Description:
-//    tests de programme syntaxiquement incorrects : double signe egal
+//    tests de programme syntaxiquement incorrects : pas de nom de variable
 //
 // Resultats:
-//    Ligne 13: mismatched input '==' expecting {'=', ',', ';'}
+//    mismatched input '=' expecting {'false', 'if', 'new', 'null', 'readInt', 'readFloat', 'print', 'println', 'printlnx', 'printx', 'return', 'this', 'true', 'while', IDENT, '-', '(', '}', '!', ';', INT, FLOAT, STRING}
 //    
 //
 // Historique:
