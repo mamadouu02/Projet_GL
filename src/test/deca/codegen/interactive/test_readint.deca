@@ -12,12 +12,5 @@
     println("Ecrivez un entier entre 0 et 1000 : ");
     k = readInt();
     println(i - j + k);
-    // if (i < j) {
-    //     println("Trop grand");
-    // } else {
-    //     println("Trop petit");
-    // }
-    // println("Ecrivez un entier entre 0 et 1000 : ");
-    // j = readInt();
 }
 
