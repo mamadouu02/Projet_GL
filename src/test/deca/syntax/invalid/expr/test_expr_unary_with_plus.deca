@@ -2,7 +2,7 @@
 //    tests de programme syntaxiquement incorrects : operateur unaire + incorrect
 //
 // Resultats:
-//    Ligne 13: no viable alternative at input 'a'
+//    Ligne 13: extraneous input '+' expecting {'false', 'new', 'null', 'readInt', 'readFloat', 'this', 'true', IDENT, '-', '(', '!', INT, FLOAT, STRING}
 //    
 //
 // Historique:

@@ -1,8 +1,8 @@
 // Description:
-//    tests de programme syntaxiquement incorrects : if sans crochet
+//    tests de programme syntaxiquement incorrects : signe + en trop
 //
 // Resultats:
-//    Ligne 13: missing '{' at 'println'
+//    Ligne 12: mismatched input ';' expecting {'false', 'new', 'null', 'readInt', 'readFloat', 'this', 'true', IDENT, '-', '(', '!', INT, FLOAT, STRING}
 //    
 //
 // Historique:

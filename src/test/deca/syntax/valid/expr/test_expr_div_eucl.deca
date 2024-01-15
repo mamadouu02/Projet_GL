@@ -1,8 +1,7 @@
 // Description:
-//    tests de programme syntaxiquement incorrects : AND logique avec un seul &
+//    tests de programme syntaxiquement correct
 //
 // Resultats:
-//    Ligne 13: no viable alternative at input 'a'
 //    
 //
 // Historique:

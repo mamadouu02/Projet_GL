@@ -8,5 +8,5 @@
 //  Cree le 15/01/2024
 {
     int x = -1;
-    print(x)
+    print(x);
 }

@@ -1,8 +1,7 @@
 // Description:
-//    tests de programme syntaxiquement incorrects : ineq avec << au lieu de <
+//    tests de programme syntaxiquement correct
 //
 // Resultats:
-//    Ligne 13: no viable alternative at input '0'
 //    
 //
 // Historique:
