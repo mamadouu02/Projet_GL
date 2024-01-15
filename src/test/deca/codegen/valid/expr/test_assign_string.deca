@@ -1,0 +1,12 @@
+// Description:
+//    tests de l'assignation d'une string
+//
+// Resultats:
+//
+// Historique:
+//  Cree le 14/01/2024
+
+{
+    string s;
+}
+

@@ -12,3 +12,8 @@
 *.DS_Store
 *.antlr
 *.ass
+*.res
+*.lis
+*.idea
+*.iml
+src/main/resources/log4j.properties

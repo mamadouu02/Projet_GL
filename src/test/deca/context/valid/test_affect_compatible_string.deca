@@ -1,0 +1,11 @@
+// Description:
+//    Affectation et typage
+//
+// Resultats:
+// 
+// Historique:
+//    cree le 01/01/2024
+
+{
+   string S = "Bonjour";
+}

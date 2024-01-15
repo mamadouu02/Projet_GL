@@ -14,12 +14,12 @@ import java.io.PrintStream;
 public class EmptyMain extends AbstractMain {
     @Override
     protected void verifyMain(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        // throw new UnsupportedOperationException("not yet implemented");
     }
 
     /**
@@ -43,5 +43,10 @@ public class EmptyMain extends AbstractMain {
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         // leaf node => nothing to do
+    }
+
+    @Override
+    public int getNbVar() {
+        return 0;
     }
 }

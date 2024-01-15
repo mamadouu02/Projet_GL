@@ -1,5 +1,5 @@
 // Description:
-//    Programme minimaliste utilisant println.
+//    Programme minimaliste utilisant print d'un string.
 //
 // Resultats:
 //    Hello
@@ -8,6 +8,5 @@
 //    cree le 01/01/2024
 
 {
-        int i;
-        i = 0;
+        print("Hello, world!");
 }

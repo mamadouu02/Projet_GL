@@ -20,7 +20,33 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
+        Type leftType = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type rightType = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        if (leftType.sameType(rightType)) {
+            setType(compiler.environmentType.BOOLEAN);
+            return compiler.environmentType.BOOLEAN;
+
+        } else if (leftType.isFloat() && rightType.isInt()) {
+
+            ConvFloat rightTypeconv = new ConvFloat(getRightOperand());
+            setRightOperand(rightTypeconv);
+            Type returnType = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+            setType(compiler.environmentType.BOOLEAN);
+            return compiler.environmentType.BOOLEAN;
+
+        } else if (leftType.isInt() && rightType.isFloat()) {
+            ConvFloat leftTypeConv = new ConvFloat(getLeftOperand());
+            setLeftOperand(leftTypeConv);
+            Type returnType = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+
+            setType(compiler.environmentType.BOOLEAN);
+            return compiler.environmentType.BOOLEAN;
+        }
+        else{
+            throw new ContextualError("operation de compraison impossible avec ces types", getLocation());
+        }
     }
 
 

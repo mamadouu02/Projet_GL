@@ -1,6 +1,8 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -29,7 +31,11 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
+        Type type = getLeftOperand().verifyExpr(compiler,localEnv,currentClass);
+        getRightOperand().verifyRValue(compiler,localEnv,currentClass,type);
+        setType(type);
+        return type;
     }
 
 
@@ -38,4 +44,9 @@ public class Assign extends AbstractBinaryExpr {
         return "=";
     }
 
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        getRightOperand().codeGenInst(compiler);
+        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), getLeftOperand().dVal()));
+    }
 }
