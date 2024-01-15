@@ -41,6 +41,7 @@ public class DecacCompiler {
     private int d;
     private int idReg;
     private boolean[] errors;
+    private int numLabel;
     
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
@@ -59,6 +60,7 @@ public class DecacCompiler {
         for (int i = 0; i < 4; i++) {
             this.errors[i] = false;
         }
+        this.numLabel = 0;
     }
 
     /**
@@ -91,6 +93,14 @@ public class DecacCompiler {
         return this.errors[i];
     }
     
+    public int getLabelNumber() {
+        return this.numLabel;
+    }
+
+    public void incrLabelNumber() {
+        this.numLabel += 1;
+    }
+
     public File getSource() {
         return source;
     }

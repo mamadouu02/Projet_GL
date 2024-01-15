@@ -1,0 +1,12 @@
+// Description:
+//   test Convfloat
+//
+// Resultats:
+//   2.0
+//
+// Historique:
+//  Cree le 15/01/2024
+{
+    int x = 1;
+    print( x + 1.0);
+}
