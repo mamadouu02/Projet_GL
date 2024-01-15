@@ -28,7 +28,10 @@ def exec_test_write_result(file, test_name, expected):
                 fichier_lis.write(resultat_compilation.stderr)
 
 def exec_test(file, test_name, expected):
-    compile = os.system("./src/test/script/launchers/" + test_name + " " + file)
+    if(test_name == "decac"):
+        compile = os.system("./src/main/bin/decac " + file)
+    else:
+        compile = os.system("./src/test/script/launchers/" + test_name + " " + file)
     if(expected == "success"):
         if(compile != 0):   
             raise Exception("Unexpected error in file : " + file)
@@ -41,7 +44,7 @@ def exec_test(file, test_name, expected):
             print("Expected error in file : " + file)
 
 def exec_test_decompile(file, test_name, expected):
-    compile = os.system(test_name + " " + file)
+    compile = os.system("./src/main/bin/decac -p " + file)
     if(expected == "success"):
         if(compile != 0):   
             raise Exception("Unexpected error in file : " + file)
@@ -137,12 +140,16 @@ def runTestContext(execFunction):
     print("\033[32m" + "########## ALL TEST CONTEXT PASSED ##########" + "\033[0m")
     
 
-def runTestGen(execFunction):
+def runTestGen(execFunction, pipeline = False):
     print("########## TEST GEN ##########")
-
+    if not (pipeline):
+        print("Ecrivez 2 floats puis 2 int")
     files = get_files()
     for file in files["gen"]["valid"]:
-        execFunction(file, "success")
+        if pipeline:
+            execFunction(file, "decac", "success")
+        else:
+            execFunction(file, "success")
     for file in files["gen"]["invalid"]:
         execFunction(file, "error")
     print("\033[32m" + "########## ALL TEST GEN PASSED ##########" + "\033[0m")
@@ -157,12 +164,15 @@ def runTestDecompile(execFunction):
         exec_test_decompile(file, "decac -p", "error")
     print("\033[32m" + "########## ALL TEST DECOMPILE PASSED ##########" + "\033[0m")
 
-def runAllTests(execFunction):
+def runAllTests(execFunction, pipeline = False):
     runTestLex(execFunction)
     runTestSynt(execFunction)
     runTestContext(execFunction)
-    # runTestGen(exec_test_gen)
-    # runTestDecompile(execFunction)
+    if not (pipeline):
+        runTestGen(exec_test_gen, pipeline)
+    else:
+        runTestGen(execFunction, pipeline)
+    runTestDecompile(execFunction)
 
 def runTestsDev(execFunction):
     runTestLex(execFunction)
@@ -175,7 +185,7 @@ if __name__ == "__main__":
         runAllTests(exec_test)
         sys.exit(0)
     if(sys.argv.__contains__("-pipeline")):
-        runAllTests(exec_test)
+        runAllTests(exec_test, True)
         sys.exit(0)
     
     if(sys.argv.__contains__("-h")):
