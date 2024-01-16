@@ -181,7 +181,9 @@ public abstract class AbstractExpr extends AbstractInst {
         return null;
     }
 
-    protected abstract void code(DecacCompiler compiler, boolean b, String label);
+    protected void code(DecacCompiler compiler, boolean b, Label label) {
+        // nothing
+    };
 
     @Override
     protected void decompileInst(IndentPrintStream s) {

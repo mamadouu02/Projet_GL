@@ -43,27 +43,33 @@ public class Not extends AbstractUnaryExpr {
     }
 
     @Override
-    protected void code(DecacCompiler compiler, boolean b, String label) {
+    protected void code(DecacCompiler compiler, boolean b, Label label) {
+        if (getOperand().dVal() == null) {
+            getOperand().codeGenExpr(compiler);
+        }
+
         getOperand().code(compiler, !b, label);
     }
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler) {
-        // <Code(!C, faux, false)>
-        code(compiler, false, "not_false." + compiler.getLabelNumber());
+        Label falseLabel = new Label("not_false." + compiler.getLabelNumber());
+        Label endLabel = new Label("end." + compiler.getLabelNumber());
+        compiler.incrLabelNumber();
 
-        // LOAD #0 R2
+        // <Code(!C, faux, false)>
+        code(compiler, false, falseLabel);
+
+        // LOAD #1 R2
         compiler.addInstruction(new LOAD(1, Register.getR(compiler.getIdReg())));
         // BRA end
-        compiler.addInstruction(new BRA(new Label("end." + compiler.getLabelNumber())));
+        compiler.addInstruction(new BRA(endLabel));
 
         // false:
-        compiler.addLabel(new Label("not_false." + compiler.getLabelNumber()));
-        // LOAD #1 R2
+        compiler.addLabel(falseLabel);
+        // LOAD #0 R2
         compiler.addInstruction(new LOAD(0, Register.getR(compiler.getIdReg())));
         // end:
-        compiler.addLabel(new Label("end." + compiler.getLabelNumber()));
-
-        compiler.incrLabelNumber();
+        compiler.addLabel(endLabel);
     }
 }

@@ -25,31 +25,54 @@ public class And extends AbstractOpBool {
     }
 
     @Override
-    protected void code(DecacCompiler compiler, boolean b, String label) {
+    protected void code(DecacCompiler compiler, boolean b, Label label) {
         if (b) {
-            getLeftOperand().code(compiler, false, "E_fin." + compiler.getLabelNumber());
+            Label endLabel = new Label("E_Fin." + compiler.getLabelNumber());
+            
+            if (getLeftOperand().dVal() == null) {
+                getLeftOperand().codeGenExpr(compiler);
+            }
+
+            getLeftOperand().code(compiler, false, endLabel);
+            
+            if (getRightOperand().dVal() == null) {
+                getRightOperand().codeGenExpr(compiler);
+            }
+            
             getRightOperand().code(compiler, false, label);
-            compiler.addLabel(new Label("E_Fin." + compiler.getLabelNumber()));
+            compiler.addLabel(endLabel);
         } else {
+            if (getLeftOperand().dVal() == null) {
+                getLeftOperand().codeGenExpr(compiler);
+            }
+            
             getLeftOperand().code(compiler, false, label);
+            
+            if (getRightOperand().dVal() == null) {
+                getRightOperand().codeGenExpr(compiler);
+            }
+            
             getRightOperand().code(compiler, false, label);
         }
     }
 
     protected void codeGenExpr(DecacCompiler compiler) {
+        Label falseLabel = new Label("and_false." + compiler.getLabelNumber());
+        Label endLabel = new Label("end." + compiler.getLabelNumber());
+        compiler.incrLabelNumber();
+
         // <Code(C1 && C2, faux, false)>
-        code(compiler, false, "and_false." + compiler.getLabelNumber());
+        code(compiler, false, falseLabel);
         // LOAD #1 R2
         compiler.addInstruction(new LOAD(1, Register.getR(compiler.getIdReg())));
         // BRA end
-        compiler.addInstruction(new BRA(new Label("end." + compiler.getLabelNumber())));
+        compiler.addInstruction(new BRA(endLabel));
         // false:
-        compiler.addLabel(new Label("and_false." + compiler.getLabelNumber()));
+        compiler.addLabel(falseLabel);
         // LOAD #0 R2
         compiler.addInstruction(new LOAD(0, Register.getR(compiler.getIdReg())));
         // end:
-        compiler.addLabel(new Label("end." + compiler.getLabelNumber()));
+        compiler.addLabel(endLabel);
 
-        compiler.incrLabelNumber();
     }
 }

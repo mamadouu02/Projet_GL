@@ -245,14 +245,14 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
-    protected void code(DecacCompiler compiler, boolean b, String label) {
+    protected void code(DecacCompiler compiler, boolean b, Label label) {
         compiler.addInstruction(new LOAD(dVal(), Register.getR(compiler.getIdReg())));
         compiler.addInstruction(new CMP(0, Register.getR(compiler.getIdReg())));
 
         if (b) {
-            compiler.addInstruction(new BNE(new Label(label)));
+            compiler.addInstruction(new BNE(label));
         } else {
-            compiler.addInstruction(new BEQ(new Label(label)));
+            compiler.addInstruction(new BEQ(label));
         }
     }
 }

@@ -68,14 +68,14 @@ public class BooleanLiteral extends AbstractExpr {
     }
 
     @Override
-    protected void code(DecacCompiler compiler, boolean b, String label) {
+    protected void code(DecacCompiler compiler, boolean b, Label label) {
         if (value) {
             if (b) {
-                compiler.addInstruction(new BRA(new Label(label)));
+                compiler.addInstruction(new BRA(label));
             }
         } else {
             if (!b) {
-                compiler.addInstruction(new BRA(new Label(label)));
+                compiler.addInstruction(new BRA(label));
             }
         }
     }
