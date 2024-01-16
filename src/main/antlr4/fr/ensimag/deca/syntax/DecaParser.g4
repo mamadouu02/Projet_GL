@@ -448,6 +448,7 @@ class_extension
             $tree = $ident.tree;
         }
 	| /* epsilon */ {
+        $tree = new Identifier(getDecacCompiler().createSymbol("Object"));
         };
 
 class_body returns[ListDeclField fields, ListDeclMethod methods]
@@ -477,11 +478,11 @@ visibility returns[Visibility v]
 
 
 list_decl_field[ListDeclField l, AbstractIdentifier t, Visibility v]:
-    (dv1 = decl_field[$t, $v]{
+    dv1 = decl_field[$t, $v]{
         $l.add($dv1.tree);
     } (COMMA dv2 = decl_field[$t, $v] {
         $l.add($dv2.tree);
-    })*)?;
+    })*;
 
 decl_field[AbstractIdentifier t, Visibility v] returns[AbstractDeclField tree]
     @init {}:
@@ -509,7 +510,7 @@ decl_method returns[AbstractDeclMethod tree]
         }
 		| ASM OPARENT code = multi_line_string CPARENT SEMI {
             assert($code.text != null);
-            // $tree = new DeclMethod($type.tree, $ident.tree, $code.text);
+            // $tree = new DeclMethodAsm($type.tree, $ident.tree, $code.text, $params.tree);
         }
 	) {
         };

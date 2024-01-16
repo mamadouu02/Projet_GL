@@ -41,12 +41,20 @@ public class DeclField extends AbstractDeclField {
         name.iter(f);
         init.iter(f);
     }
+    protected Visibility getVisibilty(){
+        return this.visibility;
+    }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         type.prettyPrint(s, prefix, false);
         name.prettyPrint(s, prefix, false);
         init.prettyPrint(s, prefix, false);
+    }
+
+    @Override
+    String prettyPrintNode() {
+        return "[visibilty=" + getVisibilty().toString() + "] " + super.prettyPrintNode();
     }
 
     @Override
