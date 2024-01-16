@@ -66,4 +66,21 @@ public class BooleanLiteral extends AbstractExpr {
 
         return new ImmediateInteger(0);
     }
+
+    @Override
+    protected void code(DecacCompiler compiler, boolean b) {
+        if (value) {
+            if (b) {
+                compiler.addInstruction(new BRA(new Label("E")));
+            } else {
+
+            }
+        } else {
+            if (b) {
+                
+            } else {
+                compiler.addInstruction(new BRA(new Label("E")));
+            }
+        }
+    }
 }

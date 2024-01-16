@@ -7,8 +7,11 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
@@ -238,5 +241,16 @@ public class Identifier extends AbstractIdentifier {
     @Override
     protected DVal dVal() {
         return this.getExpDefinition().getOperand();
+    }
+
+    @Override
+    protected void code(DecacCompiler compiler, boolean b) {
+        if (b) {
+
+        } else {
+            compiler.addInstruction(new LOAD(dVal(), Register.getR(compiler.getIdReg())));
+            compiler.addInstruction(new CMP(0, Register.getR(compiler.getIdReg())));
+            compiler.addInstruction(new BEQ(new Label("E")));
+        }
     }
 }
