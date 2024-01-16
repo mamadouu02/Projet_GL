@@ -49,7 +49,9 @@ public abstract class AbstractUnaryExpr extends AbstractExpr {
         operand.prettyPrint(s, prefix, true);
     }
 
-    public abstract BinaryInstruction mnemo(DVal op1, GPRegister op2);
+    public BinaryInstruction mnemo(DVal op1, GPRegister op2) {
+        return null;
+    }
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler) {

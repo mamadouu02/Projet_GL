@@ -4,6 +4,10 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.BinaryInstruction;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -39,8 +43,27 @@ public class Not extends AbstractUnaryExpr {
     }
 
     @Override
-    public BinaryInstruction mnemo(DVal op1, GPRegister op2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mnemo'");
+    protected void code(DecacCompiler compiler, boolean b, String label) {
+        getOperand().code(compiler, !b, label);
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler) {
+        // <Code(!C, faux, false)>
+        code(compiler, false, "not_false." + compiler.getLabelNumber());
+
+        // LOAD #0 R2
+        compiler.addInstruction(new LOAD(1, Register.getR(compiler.getIdReg())));
+        // BRA end
+        compiler.addInstruction(new BRA(new Label("end." + compiler.getLabelNumber())));
+
+        // false:
+        compiler.addLabel(new Label("not_false." + compiler.getLabelNumber()));
+        // LOAD #1 R2
+        compiler.addInstruction(new LOAD(0, Register.getR(compiler.getIdReg())));
+        // end:
+        compiler.addLabel(new Label("end." + compiler.getLabelNumber()));
+
+        compiler.incrLabelNumber();
     }
 }

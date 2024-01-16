@@ -11,6 +11,7 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
@@ -244,13 +245,14 @@ public class Identifier extends AbstractIdentifier {
     }
 
     @Override
-    protected void code(DecacCompiler compiler, boolean b) {
-        if (b) {
+    protected void code(DecacCompiler compiler, boolean b, String label) {
+        compiler.addInstruction(new LOAD(dVal(), Register.getR(compiler.getIdReg())));
+        compiler.addInstruction(new CMP(0, Register.getR(compiler.getIdReg())));
 
+        if (b) {
+            compiler.addInstruction(new BNE(new Label(label)));
         } else {
-            compiler.addInstruction(new LOAD(dVal(), Register.getR(compiler.getIdReg())));
-            compiler.addInstruction(new CMP(0, Register.getR(compiler.getIdReg())));
-            compiler.addInstruction(new BEQ(new Label("E")));
+            compiler.addInstruction(new BEQ(new Label(label)));
         }
     }
 }
