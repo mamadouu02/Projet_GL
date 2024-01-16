@@ -11,21 +11,17 @@ public class DeclMethod extends AbstractDeclMethod {
     final private AbstractIdentifier type;
     final private AbstractIdentifier name;
     final private ListDeclParam params;
-    private ListDeclVar declVariables;
-    private ListInst insts;
+    final private AbstractMethodBody body;
 
-    public DeclMethod(AbstractIdentifier type, AbstractIdentifier name, ListDeclVar declVariables,
-            ListInst insts, ListDeclParam params) {
+    public DeclMethod(AbstractIdentifier type, AbstractIdentifier name, ListDeclParam params,AbstractMethodBody body) {
         Validate.notNull(type);
         Validate.notNull(name);
-        Validate.notNull(declVariables);
-        Validate.notNull(insts);
         Validate.notNull(params);
+        Validate.notNull(body);
         this.type = type;
         this.name = name;
-        this.declVariables = declVariables;
-        this.insts = insts;
         this.params = params;
+        this.body = body;
     }
 
     @Override
@@ -49,8 +45,7 @@ public class DeclMethod extends AbstractDeclMethod {
         type.prettyPrint(s, prefix, false);
         name.prettyPrint(s, prefix, false);
         params.prettyPrint(s, prefix, false);
-        declVariables.prettyPrint(s, prefix, false);
-        insts.prettyPrint(s, prefix, false);
+        body.prettyPrint(s,prefix,false);
     }
 
     @Override

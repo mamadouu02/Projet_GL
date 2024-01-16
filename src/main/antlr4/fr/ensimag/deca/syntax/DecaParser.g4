@@ -142,7 +142,7 @@ inst returns[AbstractInst tree]:
     }
 	| RETURN expr SEMI {
         assert($expr.tree != null);
-        // $tree = new Return($expr.tree);
+        $tree = new Return($expr.tree);
     };
 
 if_then_else returns[IfThenElse tree]
@@ -340,16 +340,18 @@ select_expr returns[AbstractExpr tree]:
 	| e1=select_expr DOT i=ident {
         assert($e1.tree != null);
         assert($i.tree != null);
-        // TODO
+    
     }
     ( o=OPARENT args=list_expr CPARENT {
         // we matched "e1.i(args)"
         assert($args.tree != null);
-        // TODO
+        $tree = new DotMethod($e1.tree, $i.tree, $args.tree);
+        
     }
     | /* epsilon */ {
         // we matched "e.i"
         // TODO
+        $tree = new Dot($e1.tree, $i.tree);
     }
 	);
 
@@ -377,7 +379,7 @@ primary_expr returns[AbstractExpr tree]:
     }
 	| NEW ident OPARENT CPARENT {
         assert($ident.tree != null);
-        // TODO
+        $tree = new New($ident.tree);
     }
 	| cast=OPARENT type CPARENT OPARENT expr CPARENT {
         assert($type.tree != null);
@@ -414,10 +416,10 @@ literal returns[AbstractExpr tree]:
         $tree = new BooleanLiteral(false);
     }
 	| THIS {
-        // TODO
+        $tree = new This();
     }
 	| NULL {
-        // TODO
+        $tree = new Null();
     };
 
 ident returns[AbstractIdentifier tree]:
@@ -449,6 +451,7 @@ class_extension
         }
 	| /* epsilon */ {
         $tree = new Identifier(getDecacCompiler().createSymbol("Object"));
+
         };
 
 class_body returns[ListDeclField fields, ListDeclMethod methods]
@@ -485,7 +488,8 @@ list_decl_field[ListDeclField l, AbstractIdentifier t, Visibility v]:
     })*;
 
 decl_field[AbstractIdentifier t, Visibility v] returns[AbstractDeclField tree]
-    @init {}:
+    @init {
+    }:
 	i = ident {
             assert($i.tree != null);
             AbstractInitialization init = new NoInitialization();
@@ -501,16 +505,20 @@ decl_field[AbstractIdentifier t, Visibility v] returns[AbstractDeclField tree]
         };
 
 decl_method returns[AbstractDeclMethod tree]
-	@init {}:
+	@init {
+        
+    }:
 	type ident OPARENT params = list_params CPARENT (
 		block {
             assert($block.decls != null);
             assert($block.insts != null);
-            $tree = new DeclMethod($type.tree, $ident.tree, $block.decls, $block.insts, $params.tree);
+            AbstractMethodBody body = new MethodBody($block.decls, $block.insts);
+            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body );
         }
 		| ASM OPARENT code = multi_line_string CPARENT SEMI {
             assert($code.text != null);
-            // $tree = new DeclMethodAsm($type.tree, $ident.tree, $code.text, $params.tree);
+            AbstractMethodBody body = new MethodBodyAsm($code.text);
+            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, body);
         }
 	) {
         };

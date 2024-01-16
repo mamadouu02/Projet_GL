@@ -38,6 +38,11 @@ public class EnvironmentType {
         Symbol stringSymb = compiler.createSymbol("string");
         STRING = new StringType(stringSymb);
         envTypes.put(stringSymb, new TypeDefinition(STRING, Location.BUILTIN));
+
+        Symbol objectSymb = compiler.createSymbol("object");
+        OBJECT = new ClassType(stringSymb);
+        envTypes.put(objectSymb, new TypeDefinition(OBJECT, Location.BUILTIN));
+        
     }
 
     private final Map<Symbol, TypeDefinition> envTypes;
@@ -51,4 +56,5 @@ public class EnvironmentType {
     public final FloatType FLOAT;
     public final StringType STRING;
     public final BooleanType BOOLEAN;
+    public final ClassType OBJECT;
 }
