@@ -1,6 +1,12 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.BinaryInstruction;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.GPRegister;
+
+import fr.ensimag.ima.pseudocode.BinaryInstruction;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
@@ -65,5 +71,4 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         leftOperand.prettyPrint(s, prefix, false);
         rightOperand.prettyPrint(s, prefix, true);
     }
-
 }

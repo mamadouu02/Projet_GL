@@ -51,7 +51,7 @@ public class Or extends AbstractOpBool {
             }
             
             getRightOperand().code(compiler, false, label);
-            compiler.addLabel (endLabel);
+            compiler.addLabel(endLabel);
         }
     }
 
@@ -61,7 +61,7 @@ public class Or extends AbstractOpBool {
         Label endLabel = new Label("end." + compiler.getLabelNumber());
         compiler.incrLabelNumber();
 
-        // <Code(C, faux, false)>
+        // <Code(C, vrai, true)>
         code(compiler, true, trueLabel);
 
         // LOAD #0 R2

@@ -56,6 +56,7 @@ public class And extends AbstractOpBool {
         }
     }
 
+    @Override
     protected void codeGenExpr(DecacCompiler compiler) {
         Label falseLabel = new Label("and_false." + compiler.getLabelNumber());
         Label endLabel = new Label("end." + compiler.getLabelNumber());
