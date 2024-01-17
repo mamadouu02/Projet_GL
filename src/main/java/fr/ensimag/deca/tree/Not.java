@@ -1,6 +1,13 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
+import fr.ensimag.ima.pseudocode.BinaryInstruction;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
@@ -33,5 +40,36 @@ public class Not extends AbstractUnaryExpr {
     @Override
     protected String getOperatorName() {
         return "!";
+    }
+
+    @Override
+    protected void code(DecacCompiler compiler, boolean b, Label label) {
+        if (getOperand().dVal() == null) {
+            getOperand().codeGenExpr(compiler);
+        }
+
+        getOperand().code(compiler, !b, label);
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler) {
+        Label falseLabel = new Label("not_false." + compiler.getLabelNumber());
+        Label endLabel = new Label("end." + compiler.getLabelNumber());
+        compiler.incrLabelNumber();
+
+        // <Code(!C, faux, false)>
+        code(compiler, false, falseLabel);
+
+        // LOAD #1 R2
+        compiler.addInstruction(new LOAD(1, Register.getR(compiler.getIdReg())));
+        // BRA end
+        compiler.addInstruction(new BRA(endLabel));
+
+        // false:
+        compiler.addLabel(falseLabel);
+        // LOAD #0 R2
+        compiler.addInstruction(new LOAD(0, Register.getR(compiler.getIdReg())));
+        // end:
+        compiler.addLabel(endLabel);
     }
 }
