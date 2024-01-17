@@ -62,15 +62,19 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         if (getLeftOperand().dVal() != null) {
             compiler.addInstruction(new LOAD(getLeftOperand().dVal(), Register.getR(compiler.getIdReg())));
         } else {
+            int i = compiler.getIdReg();
+            compiler.setIdReg(compiler.getIdReg() + 1);
             getLeftOperand().codeGenExpr(compiler);
-            // CMP
+            compiler.addInstruction(new CMP(Register.getR(compiler.getIdReg()), Register.getR(i)));
         }
-
+        
         if (getRightOperand().dVal() != null) {
             compiler.addInstruction(new CMP(getRightOperand().dVal(), Register.getR(compiler.getIdReg())));
         } else {
+            int i = compiler.getIdReg();
+            compiler.setIdReg(compiler.getIdReg() + 1);
             getRightOperand().codeGenExpr(compiler);
-            // CMP
+            compiler.addInstruction(new CMP(Register.getR(compiler.getIdReg()), Register.getR(i)));
         }
 
         compiler.addInstruction(mnemo(b, label));

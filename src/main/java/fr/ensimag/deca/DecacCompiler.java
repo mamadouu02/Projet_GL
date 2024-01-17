@@ -54,7 +54,7 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        this.d = 3;
+        this.d = 1;
         this.idReg = 2;
         this.errors = new boolean[4];
         for (int i = 0; i < 4; i++) {
@@ -71,10 +71,10 @@ public class DecacCompiler {
     }
 
     public void incrD(){
-        this.d += 1;
+        this.d++;
     }
     public void decrD(){
-        this.d -= 1;
+        this.d--;
     }
 
     public int getIdReg(){
@@ -98,7 +98,7 @@ public class DecacCompiler {
     }
 
     public void incrLabelNumber() {
-        this.numLabel += 1;
+        this.numLabel++;
     }
 
     public File getSource() {

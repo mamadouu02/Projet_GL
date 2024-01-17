@@ -54,10 +54,6 @@ public class DeclVar extends AbstractDeclVar {
             }
 
             initialization.verifyInitialization(compiler, declVarType, localEnv, currentClass);
-
-
-
-
     }
 
     
