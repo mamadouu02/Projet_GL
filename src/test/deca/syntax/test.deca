@@ -1,17 +1,19 @@
-// Description:
-//    tests de programme syntaxiquement incorrects : double signe egal
-//
-// Resultats:
-//    Ligne 13: mismatched input '==' expecting {'=', ',', ';'}
-//    
-//
-// Historique:
-//    cree le 01/01/2024
-
-class A   {
-    int x;
-
+class A {
+   protected int x ;
+   int getX() {
+      return x ;
+   }
+   void setX(int x) {
+      this.x = x ;
+   }
+   void getX(){
+      setX();
+   }
 }
 
+{
 
+   x InstanceOf A;
 
+   
+}

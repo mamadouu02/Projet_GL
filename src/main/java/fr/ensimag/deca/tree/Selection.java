@@ -9,16 +9,14 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
-public class DotMethod extends AbstractLValue{
+public class Selection extends AbstractLValue{
 
     final private AbstractExpr expr;
     final private AbstractIdentifier ident;
-    final private ListExpr list;
 
-    public DotMethod(AbstractExpr expr,AbstractIdentifier ident, ListExpr list) {
+    public Selection(AbstractExpr expr,AbstractIdentifier ident) {
         this.expr = expr;
         this.ident = ident;
-        this.list = list;
     }
 
     @Override
@@ -43,18 +41,15 @@ public class DotMethod extends AbstractLValue{
     protected void iterChildren(TreeFunction f) {
         expr.iter(f);
         ident.iter(f);
-        list.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         expr.prettyPrint(s, prefix, false);
-        ident.prettyPrint(s, prefix, false);
-        list.prettyPrint(s, prefix, true);
+        ident.prettyPrint(s, prefix, true);
     }
 
 }
-
 
 
 

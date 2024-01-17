@@ -9,15 +9,15 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
-public class Dot extends AbstractLValue{
+public class Cast extends AbstractExpr{
+    private AbstractIdentifier ident;
+    private AbstractExpr expr;
 
-    final private AbstractExpr expr;
-    final private AbstractIdentifier ident;
-
-    public Dot(AbstractExpr expr,AbstractIdentifier ident) {
-        this.expr = expr;
+    public Cast(AbstractIdentifier ident, AbstractExpr expr) {
         this.ident = ident;
+        this.expr = expr;
     }
+
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
@@ -39,17 +39,16 @@ public class Dot extends AbstractLValue{
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        expr.iter(f);
         ident.iter(f);
+        expr.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        expr.prettyPrint(s, prefix, false);
-        ident.prettyPrint(s, prefix, true);
+        ident.prettyPrint(s, prefix, false);
+        expr.prettyPrint(s, prefix, true);
     }
 
 }
-
 
 
