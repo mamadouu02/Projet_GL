@@ -44,11 +44,11 @@ public class Not extends AbstractUnaryExpr {
 
     @Override
     protected void code(DecacCompiler compiler, boolean b, Label label) {
-        if (getOperand().dVal() == null) {
+        if (getOperand().dVal() == null && !(getOperand() instanceof AbstractOpCmp)) {
             getOperand().codeGenExpr(compiler);
+        } else {
+            getOperand().code(compiler, !b, label);
         }
-
-        getOperand().code(compiler, !b, label);
     }
 
     @Override

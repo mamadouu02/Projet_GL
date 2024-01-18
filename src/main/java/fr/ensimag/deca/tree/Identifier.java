@@ -220,6 +220,9 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     String prettyPrintNode() {
+        // if(getName().toString() == "Object"){
+        //     return "[builtin] Identifier (" + getName() + ")";
+        // }
         return "Identifier (" + getName() + ")";
     }
 

@@ -9,19 +9,19 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
-public class Return extends AbstractInst{
-    private AbstractExpr expr;
+public class New extends AbstractExpr{
+    private AbstractIdentifier ident;
 
-    public Return(AbstractExpr expr) {
-        this.expr = expr;
+    public New(AbstractIdentifier ident) {
+        this.ident = ident;
     }
 
-    public AbstractExpr getExpr() {
-        return expr;
+    public AbstractIdentifier getIdent() {
+        return ident;
     }
 
-    public void setExpr(AbstractExpr expr) {
-        this.expr = expr;
+    public void setExpr(AbstractIdentifier ident) {
+        this.ident = ident;
     }
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
@@ -29,10 +29,9 @@ public class Return extends AbstractInst{
     }
 
     @Override
-    protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
-            throws ContextualError {
-            throw new UnsupportedOperationException("not yet implemented");
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
+            ClassDefinition currentClass) throws ContextualError {
+        throw new UnsupportedOperationException("not yet implemented");
 
     }
 
@@ -44,12 +43,12 @@ public class Return extends AbstractInst{
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        expr.iter(f);
+        ident.iter(f);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        expr.prettyPrint(s, prefix, true);
+        ident.prettyPrint(s, prefix, true);
     }
 
 }

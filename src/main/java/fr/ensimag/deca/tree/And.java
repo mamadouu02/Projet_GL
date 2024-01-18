@@ -29,33 +29,36 @@ public class And extends AbstractOpBool {
         if (b) {
             Label endLabel = new Label("E_Fin." + compiler.getLabelNumber());
             
-            if (getLeftOperand().dVal() == null) {
+            if (getLeftOperand().dVal() == null && !(getLeftOperand() instanceof AbstractOpCmp)) {
                 getLeftOperand().codeGenExpr(compiler);
+            } else {
+                getLeftOperand().code(compiler, false, endLabel);
             }
 
-            getLeftOperand().code(compiler, false, endLabel);
-            
-            if (getRightOperand().dVal() == null) {
+            if (getRightOperand().dVal() == null && !(getRightOperand() instanceof AbstractOpCmp)) {
                 getRightOperand().codeGenExpr(compiler);
+            } else {
+                getRightOperand().code(compiler, false, label);
             }
             
-            getRightOperand().code(compiler, false, label);
             compiler.addLabel(endLabel);
         } else {
-            if (getLeftOperand().dVal() == null) {
+            if (getLeftOperand().dVal() == null && !(getLeftOperand() instanceof AbstractOpCmp)) {
                 getLeftOperand().codeGenExpr(compiler);
+            } else {
+                getLeftOperand().code(compiler, false, label);
             }
             
-            getLeftOperand().code(compiler, false, label);
             
-            if (getRightOperand().dVal() == null) {
+            if (getRightOperand().dVal() == null && !(getRightOperand() instanceof AbstractOpCmp)) {
                 getRightOperand().codeGenExpr(compiler);
+            } else {
+                getRightOperand().code(compiler, false, label);
             }
-            
-            getRightOperand().code(compiler, false, label);
         }
     }
 
+    @Override
     protected void codeGenExpr(DecacCompiler compiler) {
         Label falseLabel = new Label("and_false." + compiler.getLabelNumber());
         Label endLabel = new Label("end." + compiler.getLabelNumber());

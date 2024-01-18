@@ -182,7 +182,7 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     protected void code(DecacCompiler compiler, boolean b, Label label) {
-        // nothing
+        codeGenExpr(compiler);
     };
 
     @Override

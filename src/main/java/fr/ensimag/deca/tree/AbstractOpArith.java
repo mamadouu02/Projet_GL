@@ -59,9 +59,9 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         }
     }
 
-    public abstract BinaryInstruction mnemo(DVal op1, GPRegister op2);
-
     public abstract void codeGenBOV(DecacCompiler compiler);
+
+    public abstract BinaryInstruction mnemo(DVal op1, GPRegister op2);
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler) {

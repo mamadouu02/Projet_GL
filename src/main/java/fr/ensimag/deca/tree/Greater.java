@@ -1,5 +1,9 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.ima.pseudocode.BranchInstruction;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BGT;
+import fr.ensimag.ima.pseudocode.instructions.BLE;
 
 /**
  *
@@ -17,5 +21,15 @@ public class Greater extends AbstractOpIneq {
     protected String getOperatorName() {
         return ">";
     }
+
+
+    @Override
+    public BranchInstruction mnemo(boolean b, Label label) {
+        if (b) {
+            return new BGT(label);
+        }
+        
+        return new BLE(label);
+    }   
 
 }

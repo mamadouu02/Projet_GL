@@ -6,31 +6,38 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
+
 import java.io.PrintStream;
+import org.apache.commons.lang.Validate;
 
 /**
  * 
+ *
  * @author gl42
  * @date 01/01/2024
  */
-public class NoOperation extends AbstractInst {
+public class This extends AbstractExpr {
+
 
     @Override
-    protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
-            ClassDefinition currentClass, Type returnType)
-            throws ContextualError {
-        // throw new UnsupportedOperationException("not yet implemented");
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
+            ClassDefinition currentClass) throws ContextualError {
+        throw new UnsupportedOperationException("not yet implemented");
+
     }
 
-    @Override
-    protected void codeGenInst(DecacCompiler compiler) {
-        // nothing to do;
-    }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print(";");
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    String prettyPrintNode() {
+        //throw new UnsupportedOperationException("not yet implemented");
+        return "This";
     }
 
     @Override
