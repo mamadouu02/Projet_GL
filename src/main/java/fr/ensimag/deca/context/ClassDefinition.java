@@ -54,6 +54,7 @@ public class ClassDefinition extends TypeDefinition {
         return (ClassType) super.getType();
     };
 
+
     public ClassDefinition getSuperClass() {
         return superClass;
     }

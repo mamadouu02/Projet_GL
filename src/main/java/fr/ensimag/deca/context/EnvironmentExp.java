@@ -32,7 +32,7 @@ public class EnvironmentExp {
      private HashMap<Symbol, ExpDefinition> environmentDefinitions = new HashMap<Symbol, ExpDefinition>();
 
     public EnvironmentExp(EnvironmentExp parentEnvironment) {
-        // environmentDefinitions = new java.util.HashMap<Symbol, ExpDefinition>();
+        //environmentDefinitions = new java.util.HashMap<Symbol, ExpDefinition>();
         this.parentEnvironment = parentEnvironment;
     }
 

@@ -1,5 +1,6 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
@@ -19,25 +20,22 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
         }
     }
 
-    /**
-     * Pass 1 of [SyntaxeContextuelle]
-     */
-    void verifyListField(DecacCompiler compiler, ClassType currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
-    }
 
     /**
      * Pass 2 of [SyntaxeContextuelle]
      */
-    public void verifyListFieldMembers(DecacCompiler compiler, ClassType currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    public void verifyListFieldMembers(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
+        //throw new UnsupportedOperationException("not yet implemented");
+        for(AbstractDeclField declfield : this.getList()){
+            declfield.verifyDeclField(compiler, currentClass);
+        }
 
     }
 
     /**
      * Pass 3 of [SyntaxeContextuelle]
      */
-    public void verifyListFieldBody(DecacCompiler compiler, ClassType currentClass) throws ContextualError {
+    public void verifyListFieldBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
 
     }
