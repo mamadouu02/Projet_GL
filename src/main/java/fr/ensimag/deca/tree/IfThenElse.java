@@ -57,11 +57,18 @@ public class IfThenElse extends AbstractInst {
         Label labelFin = new Label("E_Fin." + compiler.getLabelNumber());
         compiler.incrLabelNumber();
 
-        condition.code(compiler, false, labelSinon);
-        thenBranch.codeGenListInst(compiler);
-        compiler.addInstruction(new BRA(labelFin));
-        compiler.addLabel(labelSinon);
-        elseBranch.codeGenListInst(compiler);
+        if (elseBranch.isEmpty()){
+            condition.code(compiler, false, labelFin);
+            thenBranch.codeGenListInst(compiler);
+            compiler.addInstruction(new BRA(labelFin));
+        } else {
+            condition.code(compiler, false, labelSinon);
+            thenBranch.codeGenListInst(compiler);
+            compiler.addInstruction(new BRA(labelFin));
+            compiler.addLabel(labelSinon);
+            elseBranch.codeGenListInst(compiler);
+        }
+        
         compiler.addLabel(labelFin);
     }
 

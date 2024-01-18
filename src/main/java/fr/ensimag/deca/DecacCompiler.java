@@ -101,6 +101,9 @@ public class DecacCompiler {
         this.numLabel++;
     }
 
+    /**
+     * Source file associated with this compiler instance.
+     */
     public File getSource() {
         return source;
     }
