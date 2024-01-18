@@ -1,0 +1,62 @@
+package fr.ensimag.deca.tree;
+
+import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.tools.IndentPrintStream;
+
+import java.io.PrintStream;
+
+import org.apache.commons.lang.Validate;
+
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+
+/**
+ * Variable declaration
+ *
+ * @author gl42
+ * @date 01/01/2024
+ */
+
+ public class MethodBody extends AbstractMethodBody{
+    final private ListDeclVar decls;
+    final private ListInst insts;
+
+    public MethodBody(ListDeclVar decls, ListInst insts) {
+
+        Validate.notNull(decls);
+        Validate.notNull(insts);
+        this.decls = decls;
+        this.insts = insts;
+
+    }
+
+    @Override
+    protected void prettyPrintChildren(PrintStream s, String prefix) {
+        decls.prettyPrint(s,prefix, false);
+        insts.prettyPrint(s,prefix, false);
+    }
+
+    @Override
+    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+            throws ContextualError {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    protected void codeGenMethodBody(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    protected void iterChildren(TreeFunction f) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public void decompile(IndentPrintStream s) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+ }

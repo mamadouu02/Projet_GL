@@ -1,5 +1,9 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.ima.pseudocode.BranchInstruction;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
 
 /**
  *
@@ -16,6 +20,15 @@ public class Equals extends AbstractOpExactCmp {
     @Override
     protected String getOperatorName() {
         return "==";
+    }
+
+    @Override
+    public BranchInstruction mnemo(boolean b, Label label) {
+        if (b) {
+            return new BEQ(label);
+        }
+        
+        return new BNE(label);
     }    
     
 }

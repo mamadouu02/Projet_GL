@@ -31,7 +31,6 @@ public class BooleanLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
         Type type = compiler.environmentType.BOOLEAN;
         setType(type);
         return type;
@@ -65,5 +64,18 @@ public class BooleanLiteral extends AbstractExpr {
         }
 
         return new ImmediateInteger(0);
+    }
+
+    @Override
+    protected void code(DecacCompiler compiler, boolean b, Label label) {
+        if (value) {
+            if (b) {
+                compiler.addInstruction(new BRA(label));
+            }
+        } else {
+            if (!b) {
+                compiler.addInstruction(new BRA(label));
+            }
+        }
     }
 }

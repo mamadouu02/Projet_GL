@@ -23,13 +23,9 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
  * @date 01/01/2024
  */
 public class EnvironmentExp {
-    // A FAIRE : implémenter la structure de donnée représentant un
-    // environnement (association nom -> définition, avec possibilité
-    // d'empilement).
+    public EnvironmentExp parentEnvironment;
 
-    EnvironmentExp parentEnvironment;
-
-     private HashMap<Symbol, ExpDefinition> environmentDefinitions = new HashMap<Symbol, ExpDefinition>();
+    private HashMap<Symbol, ExpDefinition> environmentDefinitions = new HashMap<Symbol, ExpDefinition>();
 
     public EnvironmentExp(EnvironmentExp parentEnvironment) {
         // environmentDefinitions = new java.util.HashMap<Symbol, ExpDefinition>();
@@ -45,8 +41,7 @@ public class EnvironmentExp {
      * symbol is undefined.
      */
     public ExpDefinition get(Symbol key) {
-         return environmentDefinitions.get(key);
-        //return null;
+        return environmentDefinitions.get(key);
     }
 
     /**
@@ -66,10 +61,11 @@ public class EnvironmentExp {
      *
      */
     public void declare(Symbol name, ExpDefinition def) throws DoubleDefException {
-         if (environmentDefinitions.containsKey(name)) {
-         throw new DoubleDefException();
-         }
-         environmentDefinitions.put(name, def);
+        if (environmentDefinitions.containsKey(name)) {
+            throw new DoubleDefException();
+        }
+
+        environmentDefinitions.put(name, def);
     }
 
 }
