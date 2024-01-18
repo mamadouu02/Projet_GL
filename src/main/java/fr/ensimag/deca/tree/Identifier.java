@@ -5,7 +5,6 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
-import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
@@ -14,8 +13,6 @@ import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BNE;
 import fr.ensimag.ima.pseudocode.instructions.CMP;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
-import fr.ensimag.ima.pseudocode.instructions.WINT;
 
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -170,12 +167,12 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
         ExpDefinition vardef = localEnv.get(name);
-        if(vardef == null){
-            throw new ContextualError("identifiant introuvable ", getLocation());
 
+        if (vardef == null) {
+            throw new ContextualError("identifiant introuvable ", getLocation());
         }
+
         setDefinition(vardef);
         Type returntype = vardef.getType();
         setType(returntype);
@@ -188,11 +185,12 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
         TypeDefinition t = compiler.environmentType.defOfType(name);
-        if (t == null){
+
+        if (t == null) {
             throw new ContextualError("type invalide", getLocation());
         }
+
         setDefinition(t);
         setType(t.getType());
         return t.getType();

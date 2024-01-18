@@ -1,6 +1,4 @@
-package maths;
-
-import maths.MathsDeca;
+package fr.ensimag.deca.maths;
 
 public class TestMaths {
     public static void main(String[] args) {

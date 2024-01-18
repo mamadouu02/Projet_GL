@@ -36,10 +36,10 @@ public class Main {
 
         LOG.trace("name = " + name);
 
-        // A FAIRE : cette méthode vérifie comme précondition que "name"
-        // A FAIRE : n'est pas null. Dans la version anglaise, la précondition
-        // A FAIRE : est vérifiée, mais pas dans la version française. Vérifiez
-        // A FAIRE : que l'exception est bien levée dans ce cas :
+        // cette méthode vérifie comme précondition que "name"
+        // n'est pas null. Dans la version anglaise, la précondition
+        // est vérifiée, mais pas dans la version française. Vérifiez
+        // que l'exception est bien levée dans ce cas :
         sayHello.sayItTo(name);
 
         computeAnswer();

@@ -1,4 +1,4 @@
-package maths;
+package fr.ensimag.deca.maths;
 
 public class _Maths {
     public static float _add(float a, float b) {

@@ -1,4 +1,4 @@
-package maths;
+package fr.ensimag.deca.maths;
 
 public class MathsDeca extends _Maths {
     public static float pi = 3.14159265359f;

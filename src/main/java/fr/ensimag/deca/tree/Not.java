@@ -1,9 +1,6 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.ima.pseudocode.BinaryInstruction;
-import fr.ensimag.ima.pseudocode.DVal;
-import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.BRA;
@@ -27,11 +24,12 @@ public class Not extends AbstractUnaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
-        Type type = getOperand().verifyExpr(compiler,localEnv,currentClass);
-        if( !type.isBoolean()){
+        Type type = getOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        if (!type.isBoolean()) {
             throw new ContextualError("Le type attendu après not est boolean!", getLocation());
         }
+
         setType(type);
         return type;
     }
