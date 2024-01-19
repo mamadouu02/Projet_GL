@@ -51,10 +51,10 @@ public class Program extends AbstractProgram {
     public void codeGenProgram(DecacCompiler compiler) {
         classes.codeGenListMethodTable(compiler);
         main.codeGenMain(compiler);
+        compiler.addInstruction(new HALT());
         ObjectClass objectClass = new ObjectClass(compiler);
         objectClass.codeGenClass(compiler);
 
-        compiler.addInstruction(new HALT());
 
         // TODO: Prendre en compte la table des méthodes
         compiler.addFirst(new ADDSP(compiler.getADDSP()));

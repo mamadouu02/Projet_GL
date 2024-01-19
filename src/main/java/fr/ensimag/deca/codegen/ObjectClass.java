@@ -20,7 +20,7 @@ public class ObjectClass {
     private Symbol name;
 
     public ObjectClass(DecacCompiler compiler) {
-        this.name = compiler.createSymbol("object");
+        this.name = compiler.createSymbol("Object");
     }
 
     public void codeGenClass(DecacCompiler compiler){
