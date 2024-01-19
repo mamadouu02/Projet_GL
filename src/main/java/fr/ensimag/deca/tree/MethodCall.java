@@ -9,13 +9,13 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
-public class MethodCall extends AbstractExpr{
+public class MethodCall extends AbstractExpr {
 
     final private AbstractExpr expr;
     final private AbstractIdentifier ident;
     final private ListExpr list;
 
-    public MethodCall(AbstractExpr expr,AbstractIdentifier ident, ListExpr list) {
+    public MethodCall(AbstractExpr expr, AbstractIdentifier ident, ListExpr list) {
         this.expr = expr;
         this.ident = ident;
         this.list = list;
@@ -35,7 +35,12 @@ public class MethodCall extends AbstractExpr{
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        expr.decompile(s);
+        s.print(".");
+        ident.decompile(s);
+        s.print("(");
+        list.decompile(s);
+        s.print(")");
 
     }
 
@@ -54,7 +59,3 @@ public class MethodCall extends AbstractExpr{
     }
 
 }
-
-
-
-
