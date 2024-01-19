@@ -48,10 +48,5 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
         for (AbstractDeclVar i : getList()) {
             i.codeGenDeclVar(compiler);
         }
-
-        compiler.setTstoCurr(getList().size());
-        if (compiler.getTstoCurr() > compiler.getTSTOMax()) {
-            compiler.setTstoMax(compiler.getTstoCurr());
-        }
     }
 }

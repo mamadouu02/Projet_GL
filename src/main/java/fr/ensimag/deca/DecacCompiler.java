@@ -42,8 +42,9 @@ public class DecacCompiler {
     private int idReg;
     private boolean[] errors;
     private int numLabel;
-    private int TstoCurr;
-    private int TstoMax;
+    private int tstoCurr;
+    private int tstoMax;
+    private int addSP;
     
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
@@ -63,8 +64,9 @@ public class DecacCompiler {
             this.errors[i] = false;
         }
         this.numLabel = 0;
-        this.TstoCurr = 0;
-        this.TstoMax = 0;
+        this.tstoCurr = 0;
+        this.tstoMax = 0;
+        this.addSP = 0;
     }
 
     /**
@@ -105,20 +107,28 @@ public class DecacCompiler {
         this.numLabel++;
     }
 
-    public int getTstoCurr() {
-        return this.TstoCurr;
+    public int getTSTOCurr() {
+        return this.tstoCurr;
     }
 
-    public void setTstoCurr(int i) {
-        this.TstoCurr = i;
+    public void setTSTOCurr(int i) {
+        this.tstoCurr = i;
     }
 
     public int getTSTOMax() {
-        return this.TstoMax;
+        return this.tstoMax;
     }
 
-    public void setTstoMax(int i) {
-        this.TstoMax = i;
+    public void setTSTOMax(int i) {
+        this.tstoMax = i;
+    }
+
+    public int getADDSP() {
+        return this.addSP;
+    }
+
+    public void setADDSP(int i) {
+        this.addSP = i;
     }
 
     /**
@@ -278,9 +288,7 @@ public class DecacCompiler {
             return false;
         }
 
-        addComment("start main program");
         prog.codeGenProgram(this);
-        addComment("end main program");
         prog.codeGenError(this);
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);

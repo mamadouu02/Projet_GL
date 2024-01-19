@@ -76,16 +76,17 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 this.getLeftOperand().codeGenExpr(compiler);
                 compiler.addInstruction(new PUSH(Register.getR(compiler.getIdReg())), "sauvegarde");
                 
-                compiler.setTstoCurr(compiler.getTstoCurr() + 1);
-                if (compiler.getTstoCurr() > compiler.getTSTOMax()) {
-                    compiler.setTstoMax(compiler.getTstoCurr());
+                compiler.setTSTOCurr(compiler.getTSTOCurr() + 1);
+                
+                if (compiler.getTSTOCurr() > compiler.getTSTOMax()) {
+                    compiler.setTSTOMax(compiler.getTSTOCurr());
                 }
 
                 this.getRightOperand().codeGenExpr(compiler);
                 compiler.addInstruction(new LOAD(Register.getR(compiler.getIdReg()), Register.R0));
                 compiler.addInstruction(new POP(Register.getR(compiler.getIdReg())), "restauration");
 
-                compiler.setTstoCurr(compiler.getTstoCurr() - 1);
+                compiler.setTSTOCurr(compiler.getTSTOCurr() - 1);
 
                 compiler.addInstruction(mnemo(Register.R0, Register.getR(compiler.getIdReg())));
                 this.codeGenBOV(compiler);

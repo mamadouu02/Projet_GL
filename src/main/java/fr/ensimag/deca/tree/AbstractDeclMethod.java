@@ -11,6 +11,6 @@ public abstract class AbstractDeclMethod extends Tree {
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError;
 
-    protected abstract void codeGenDeclMethod(DecacCompiler compiler);
+    public abstract void codeGenMethodTable(DecacCompiler compiler, String className);
 
 }

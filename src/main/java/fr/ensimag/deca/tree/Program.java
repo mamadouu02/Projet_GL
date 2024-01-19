@@ -8,6 +8,7 @@ import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
+import fr.ensimag.deca.codegen.ObjectClass;
 
 /**
  * Deca complete program (class definition plus main block)
@@ -48,11 +49,15 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        compiler.addComment("Main program");
+        classes.codeGenListMethodTable(compiler);
         main.codeGenMain(compiler);
+        ObjectClass objectClass = new ObjectClass();
+        objectClass.codeGenClass(compiler);
+
         compiler.addInstruction(new HALT());
 
-        compiler.addFirst(new ADDSP(compiler.getTSTOMax()));
+        // TODO: Prendre en compte la table des méthodes
+        compiler.addFirst(new ADDSP(compiler.getADDSP()));
 
         if (compiler.getCompilerOptions().getCheck()) {
             compiler.addFirst(new BOV(new Label("stack_overflow_error")));
@@ -62,6 +67,9 @@ public class Program extends AbstractProgram {
     }
 
     public void codeGenError(DecacCompiler compiler) {
+        compiler.addComment("--------------------------------------------------");
+        compiler.addComment("                 Messages d'erreur");
+        compiler.addComment("--------------------------------------------------");
         if (compiler.getCompilerOptions().getCheck()) {
             if (compiler.getError(0)) {
                 compiler.addLabel(new Label("zero_division_error"));

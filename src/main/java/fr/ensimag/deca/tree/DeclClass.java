@@ -4,6 +4,14 @@ import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+
 import java.io.PrintStream;
 
 /**
@@ -80,6 +88,27 @@ public class DeclClass extends AbstractDeclClass {
     protected void iterChildren(TreeFunction f) {
         fields.iter(f);
         methods.iter(f);
+    }
+
+    @Override
+    protected void codeGenMethodTable(DecacCompiler compiler) {
+        // TODO codeGenMethodTable for DeclClass
+        compiler.addComment("Construction de la table des methodes de " + this.name.getName());
+        
+        this.name.codeGenInst(compiler);
+        compiler.incrD();
+
+        compiler.addInstruction(new LEA(this.superClass.getExpDefinition().getOperand(), Register.getR(0)));
+        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()),this.name.getExpDefinition().getOperand()));
+        
+        compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(0)));
+        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), new RegisterOffset(compiler.getD(), Register.GB)));
+        compiler.incrD();
+
+        for (AbstractDeclMethod i : this.methods.getList()) {
+            i.codeGenMethodTable(compiler, this.name.getName().getName());
+        }
+
     }
 
 }
