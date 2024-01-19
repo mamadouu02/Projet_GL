@@ -42,6 +42,8 @@ public class DecacCompiler {
     private int idReg;
     private boolean[] errors;
     private int numLabel;
+    private int TstoCurr;
+    private int TstoMax;
     
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
@@ -61,6 +63,8 @@ public class DecacCompiler {
             this.errors[i] = false;
         }
         this.numLabel = 0;
+        this.TstoCurr = 0;
+        this.TstoMax = 0;
     }
 
     /**
@@ -99,6 +103,22 @@ public class DecacCompiler {
 
     public void incrLabelNumber() {
         this.numLabel++;
+    }
+
+    public int getTstoCurr() {
+        return this.TstoCurr;
+    }
+
+    public void setTstoCurr(int i) {
+        this.TstoCurr = i;
+    }
+
+    public int getTSTOMax() {
+        return this.TstoMax;
+    }
+
+    public void setTstoMax(int i) {
+        this.TstoMax = i;
     }
 
     /**
@@ -158,6 +178,14 @@ public class DecacCompiler {
 
     /**
      * @see
+     *      fr.ensimag.ima.pseudocode.IMAProgram#addFirst(fr.ensimag.ima.pseudocode.Instruction)
+     */
+    public void addFirst(Instruction instruction) {
+        program.addFirst(instruction);
+    }
+
+    /**
+     * @see
      *      fr.ensimag.ima.pseudocode.IMAProgram#display()
      */
     public String displayIMAProgram() {
@@ -176,6 +204,7 @@ public class DecacCompiler {
     public final EnvironmentType environmentType = new EnvironmentType(this);
 
     public final EnvironmentExp environmentExp = new EnvironmentExp(null);
+
     public Symbol createSymbol(String name) {
         return symbolTable.create(name);
     }

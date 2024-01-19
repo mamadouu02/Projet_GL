@@ -48,16 +48,17 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        compiler.addInstruction(new TSTO(main.getNbVar()));
-
-        if (compiler.getCompilerOptions().getCheck()) {
-            compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
-        }
-
-        compiler.addInstruction(new ADDSP(main.getNbVar()));
         compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+
+        compiler.addFirst(new ADDSP(compiler.getTSTOMax()));
+
+        if (compiler.getCompilerOptions().getCheck()) {
+            compiler.addFirst(new BOV(new Label("stack_overflow_error")));
+        }
+
+        compiler.addFirst(new TSTO(compiler.getTSTOMax()));
     }
 
     public void codeGenError(DecacCompiler compiler) {
