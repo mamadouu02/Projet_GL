@@ -39,9 +39,7 @@ public class DeclVar extends AbstractDeclVar {
             if(declVarType.isVoid()){
                 throw new ContextualError("Vous ne pouvez pas declarer une variable de type Void!",getLocation());
             }
-            else if(declVarType.isString()){
-                throw new ContextualError("Vous ne pouvez pas declarer une variable de type String!",getLocation());
-            }
+
             try {
                 VariableDefinition VarDefinition = new VariableDefinition(declVarType, getLocation());
                 varName.setDefinition(VarDefinition);

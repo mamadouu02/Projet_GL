@@ -37,18 +37,42 @@ public class EnvironmentType {
 
         Symbol stringSymb = compiler.createSymbol("string");
         STRING = new StringType(stringSymb);
-        envTypes.put(stringSymb, new TypeDefinition(STRING, Location.BUILTIN));
+        //envTypes.put(stringSymb, new TypeDefinition(STRING, Location.BUILTIN));
 
-        Symbol objectSymb = compiler.createSymbol("object");
-        OBJECT = new ClassType(stringSymb);
-        envTypes.put(objectSymb, new TypeDefinition(OBJECT, Location.BUILTIN));
+        Symbol objectSymb = compiler.createSymbol("Object");
+        OBJECT = new ClassType(objectSymb, Location.BUILTIN, null);
+        Signature signature = new Signature();
+        signature.add(OBJECT);
+        MethodDefinition method = new MethodDefinition(BOOLEAN, Location.BUILTIN, signature, 0);
+        Symbol equalsSymb = compiler.createSymbol("equals");
+        try {
+            OBJECT.getDefinition().getMembers().declare(equalsSymb,(ExpDefinition) method);
+            OBJECT.getDefinition().incNumberOfMethods();
+        }
+        catch (EnvironmentExp.DoubleDefException e ){
+            //rien a verifier;
+        }
+        envTypes.put(objectSymb, OBJECT.getDefinition());
         
     }
-
+    public static class DoubleDefException extends Exception {
+        private static final long serialVersionUID = -2733379901827316441L;
+    }
     private final Map<Symbol, TypeDefinition> envTypes;
 
     public TypeDefinition defOfType(Symbol s) {
         return envTypes.get(s);
+    }
+
+    public Map<Symbol, TypeDefinition> getEnvTypes() {
+        return envTypes;
+    }
+
+    public void declare_type(Symbol name, ClassDefinition def) throws EnvironmentType.DoubleDefException {
+        if (envTypes.containsKey(name)) {
+            throw new EnvironmentType.DoubleDefException();
+        }
+        envTypes.put(name, def);
     }
 
     public final VoidType VOID;

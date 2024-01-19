@@ -9,8 +9,15 @@
 
 {
     boolean b = true;
+    boolean c = false;
     b = !b;
     if (b) {
+        print(6);
+    } else {
+        print(7);
+    }
+
+    if(!(b && c)) {
         print(6);
     } else {
         print(7);
