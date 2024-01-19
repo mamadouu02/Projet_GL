@@ -28,7 +28,6 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
                            ClassDefinition currentClass) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
         Type leftType = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type rightType = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
 
@@ -39,22 +38,18 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
             setType(leftType);
             return leftType;
         } else if (leftType.isFloat() && rightType.isInt()) {
-
             ConvFloat rightTypeconv = new ConvFloat(getRightOperand());
             setRightOperand(rightTypeconv);
             Type returnType = getRightOperand().verifyExpr(compiler, localEnv, currentClass);
             setType(returnType);
             return returnType;
-
         } else if (leftType.isInt() && rightType.isFloat()) {
             ConvFloat leftTypeConv = new ConvFloat(getLeftOperand());
             setLeftOperand(leftTypeConv);
             Type returnType = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
-
             setType(returnType);
             return returnType;
-        }
-        else{
+        } else {
             throw new ContextualError("operation arithmetique impossible avec ces deux types", getLocation());
         }
     }
@@ -87,7 +82,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 }
 
                 this.getRightOperand().codeGenExpr(compiler);
-                compiler.addInstruction(new LOAD(Register.getR(compiler.getIdReg()),Register.R0));
+                compiler.addInstruction(new LOAD(Register.getR(compiler.getIdReg()), Register.R0));
                 compiler.addInstruction(new POP(Register.getR(compiler.getIdReg())), "restauration");
 
                 compiler.setTstoCurr(compiler.getTstoCurr() - 1);

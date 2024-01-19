@@ -3,11 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 
 import java.io.PrintStream;
@@ -43,7 +39,9 @@ public class DeclVar extends AbstractDeclVar {
             if(declVarType.isVoid()){
                 throw new ContextualError("Vous ne pouvez pas declarer une variable de type Void!",getLocation());
             }
-
+            else if(declVarType.isString()){
+                throw new ContextualError("Vous ne pouvez pas declarer une variable de type String!",getLocation());
+            }
             try {
                 VariableDefinition VarDefinition = new VariableDefinition(declVarType, getLocation());
                 varName.setDefinition(VarDefinition);
