@@ -58,17 +58,10 @@ public class DeclClass extends AbstractDeclClass {
             name.setDefinition(ct.getDefinition());
             superClass.setDefinition(def);
             name.setType(ct);
-
         }
         catch(EnvironmentType.DoubleDefException e){
             throw new ContextualError("Classe déjà définie", getLocation());
-
         }
-
-
-
-
-
     }
 
     @Override
@@ -76,8 +69,20 @@ public class DeclClass extends AbstractDeclClass {
             throws ContextualError {
         //throw new UnsupportedOperationException("not yet implemented");
         ClassDefinition def = (ClassDefinition) compiler.environmentType.defOfType(name.getName());
+
+        //def.setNumberOfFields(def.getSuperClass().getNumberOfFields());
+        // def.setNumberOfMethods(def.getSuperClass().getNumberOfMethods());
+
         fields.verifyListFieldMembers(compiler,def);
         methods.verifyListMethodMembers(compiler,def );
+
+        EnvironmentExp env_exp_super = def.getSuperClass().getMembers();
+
+        if(env_exp_super == null){
+            throw new ContextualError("Env_exp_object non défini", getLocation());
+        }
+
+
     }
 
     @Override

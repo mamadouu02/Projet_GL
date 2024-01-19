@@ -32,7 +32,20 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void verifyDeclMethod(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
+        Type type_return = type.verifyType(compiler);
+        Signature sig = params.verifyListDeclParam(compiler);
+        EnvironmentExp env_exp_super = currentClass.getMembers();
+        ExpDefinition def = env_exp_super.get(name.getName());
+        if(def != null){
+
+
+            if (def.isMethod()){
+
+            }
+            MethodDefinition def_methode = def.asMethodDefinition("ce n'est pas une définition de méthode", getLocation());
+            Signature sig2 = def_methode.getSignature();
+        }
     }
 
     @Override

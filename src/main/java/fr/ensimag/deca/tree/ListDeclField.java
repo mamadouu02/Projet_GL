@@ -4,6 +4,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -26,9 +27,14 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
      */
     public void verifyListFieldMembers(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         //throw new UnsupportedOperationException("not yet implemented");
+        //EnvironmentExp env_exp_r = new EnvironmentExp(null);
         for(AbstractDeclField declfield : this.getList()){
             declfield.verifyDeclField(compiler, currentClass);
+            //env_exp_r.declare();
+
         }
+        //env_exp_r.
+
 
     }
 

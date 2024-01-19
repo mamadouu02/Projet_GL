@@ -41,6 +41,17 @@ public class EnvironmentType {
 
         Symbol objectSymb = compiler.createSymbol("Object");
         OBJECT = new ClassType(objectSymb, Location.BUILTIN, null);
+        Signature signature = new Signature();
+        signature.add(OBJECT);
+        MethodDefinition method = new MethodDefinition(BOOLEAN, Location.BUILTIN, signature, 0);
+        Symbol equalsSymb = compiler.createSymbol("equals");
+        try {
+            OBJECT.getDefinition().getMembers().declare(equalsSymb,(ExpDefinition) method);
+            OBJECT.getDefinition().incNumberOfMethods();
+        }
+        catch (EnvironmentExp.DoubleDefException e ){
+            //rien a verifier;
+        }
         envTypes.put(objectSymb, OBJECT.getDefinition());
         
     }
