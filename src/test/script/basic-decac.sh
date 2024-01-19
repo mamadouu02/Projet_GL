@@ -5,6 +5,23 @@
 
 PATH=./src/main/bin:"$PATH"
 
+
+if decac 2>&1 |
+    grep -q -e 'OPTIONS' -e 'SYNTAXE'; then    
+    echo "Pas de probleme detecte avec decac."
+else
+    echo "ERREUR: decac a termine avec un status different de 1."
+    exit 1
+fi
+
+if decac -n 2>&1 |
+    grep -q -e 'Error during option parsing:'; then    
+    echo "Pas de probleme detecte avec decac."
+else
+    echo "ERREUR: decac a termine avec un status different de 1."
+    exit 1
+fi
+
 decac_moins_b=$(decac -b)
 
 if [ "$?" -ne 0 ]; then
@@ -85,4 +102,24 @@ if echo "$result" | grep -q -e "POP" -e "POP"; then
 else
     echo "ERREUR: decac -r n'a pas produit le code attendu."
     exit 1
+fi
+
+
+decac_moins_P=$(decac -P src/test/deca/codegen/valid/expr/test_and.deca src/test/deca/codegen/valid/expr/test_or.deca)
+
+if [ "$?" -ne 0 ]; then
+    echo "ERREUR: decac -P a termine avec un status different de 0."
+    exit 1
+else
+    echo "Pas de probleme detecte avec decac -P."
+fi
+
+
+decac_moins_P=$(decac -P src/test/deca/codegen/valid/expr/test_and.deca src/test/deca/codegen/valid/expr/test_r.deca)
+
+if [ "$?" -ne 1 ]; then
+    echo "ERREUR: decac -P a termine avec un status different de 1."
+    exit 1
+else
+    echo "Pas de probleme detecte avec decac -P."
 fi
