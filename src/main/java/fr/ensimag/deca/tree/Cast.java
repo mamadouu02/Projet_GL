@@ -9,7 +9,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
-public class Cast extends AbstractExpr{
+public class Cast extends AbstractExpr {
     private AbstractIdentifier ident;
     private AbstractExpr expr;
 
@@ -17,7 +17,6 @@ public class Cast extends AbstractExpr{
         this.ident = ident;
         this.expr = expr;
     }
-
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
@@ -33,7 +32,12 @@ public class Cast extends AbstractExpr{
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print("(");
+        ident.decompile(s);
+        s.print(")");
+        s.print("(");
+        expr.decompile(s);
+        s.print(")");
 
     }
 
@@ -50,5 +54,3 @@ public class Cast extends AbstractExpr{
     }
 
 }
-
-

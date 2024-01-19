@@ -9,12 +9,12 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
-public class Selection extends AbstractLValue{
+public class Selection extends AbstractLValue {
 
     final private AbstractExpr expr;
     final private AbstractIdentifier ident;
 
-    public Selection(AbstractExpr expr,AbstractIdentifier ident) {
+    public Selection(AbstractExpr expr, AbstractIdentifier ident) {
         this.expr = expr;
         this.ident = ident;
     }
@@ -33,7 +33,9 @@ public class Selection extends AbstractLValue{
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        expr.decompile(s);
+        s.print(".");
+        ident.decompile(s);
 
     }
 
@@ -50,6 +52,3 @@ public class Selection extends AbstractLValue{
     }
 
 }
-
-
-

@@ -26,7 +26,6 @@ class B extends A {
     B b;
     a = new A();
     a.printA(1);
-    printA(1);
 
     b = (B) (a);
 

@@ -2,14 +2,10 @@
 //    Programme minimaliste creant une classe
 //
 // Resultats:
-// no viable alternative at input 'publicvoidsetA'
+//   no viable alternative at input 'voidprint'
 // Historique:
 //    cree le 01/01/2024
 
 class A {   
-    int a;
-
-    int getA() {
-        return null;
-    }
+    void print(int a) asm(aze);
 }
