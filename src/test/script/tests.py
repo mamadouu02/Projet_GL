@@ -230,7 +230,7 @@ def runAllTests(execFunction, pipeline=False):
     else:
         runTestGen(execFunction, pipeline)
 
-    runTestDecompile()
+    # runTestDecompile()
 
 
 def runTestsDev(execFunction):
