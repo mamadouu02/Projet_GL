@@ -18,7 +18,6 @@ import org.apache.commons.lang.Validate;
  */
 public class This extends AbstractExpr {
 
-
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
@@ -26,15 +25,14 @@ public class This extends AbstractExpr {
 
     }
 
-
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print("this");
     }
 
     @Override
     String prettyPrintNode() {
-        //throw new UnsupportedOperationException("not yet implemented");
+        // throw new UnsupportedOperationException("not yet implemented");
         return "This";
     }
 

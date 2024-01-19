@@ -1,0 +1,19 @@
+// Description:
+//    tests de l'instrcution not
+//
+// Resultats:
+//    6
+//
+// Historique:
+// cree le 12/01/2024
+
+{
+    boolean b = true;
+    b = !b;
+    if (b) {
+        print(6);
+    } else {
+        print(7);
+    }
+}
+
