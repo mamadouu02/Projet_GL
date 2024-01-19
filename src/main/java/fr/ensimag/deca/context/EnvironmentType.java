@@ -37,23 +37,23 @@ public class EnvironmentType {
 
         Symbol stringSymb = compiler.createSymbol("string");
         STRING = new StringType(stringSymb);
-        //envTypes.put(stringSymb, new TypeDefinition(STRING, Location.BUILTIN));
 
         Symbol objectSymb = compiler.createSymbol("Object");
         OBJECT = new ClassType(objectSymb, Location.BUILTIN, null);
+
         Signature signature = new Signature();
         signature.add(OBJECT);
         MethodDefinition method = new MethodDefinition(BOOLEAN, Location.BUILTIN, signature, 0);
         Symbol equalsSymb = compiler.createSymbol("equals");
+
         try {
-            OBJECT.getDefinition().getMembers().declare(equalsSymb,(ExpDefinition) method);
+            OBJECT.getDefinition().getMembers().declare(equalsSymb, (ExpDefinition) method);
             OBJECT.getDefinition().incNumberOfMethods();
+        } catch (EnvironmentExp.DoubleDefException e) {
+            // rien a verifier;
         }
-        catch (EnvironmentExp.DoubleDefException e ){
-            //rien a verifier;
-        }
+
         envTypes.put(objectSymb, OBJECT.getDefinition());
-        
     }
     public static class DoubleDefException extends Exception {
         private static final long serialVersionUID = -2733379901827316441L;

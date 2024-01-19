@@ -1,8 +1,10 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.*;
+import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
@@ -58,55 +60,18 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
-
-        EnvironmentType env_types = compiler.environmentType;
-        TypeDefinition def = env_types.defOfType(superClass.getName());
-        if(def == null){
-            throw new ContextualError("La classe mère n'existe pas", getLocation());
-        }
-        if(!def.isClass()){
-            throw new ContextualError("Vous ne pouvez pas hériter de ce que vous avez écrit", getLocation());
-        }
-
-        try {
-            ClassDefinition cdef  = (ClassDefinition) def;
-            ClassType ct = new ClassType(name.getName(), getLocation(),cdef);
-            env_types.declare_type(name.getName(), ct.getDefinition());
-            name.setDefinition(ct.getDefinition());
-            superClass.setDefinition(def);
-            name.setType(ct);
-        }
-        catch(EnvironmentType.DoubleDefException e){
-            throw new ContextualError("Classe déjà définie", getLocation());
-        }
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
-        ClassDefinition def = (ClassDefinition) compiler.environmentType.defOfType(name.getName());
-
-        //def.setNumberOfFields(def.getSuperClass().getNumberOfFields());
-        // def.setNumberOfMethods(def.getSuperClass().getNumberOfMethods());
-
-        fields.verifyListFieldMembers(compiler,def);
-        methods.verifyListMethodMembers(compiler,def );
-
-        EnvironmentExp env_exp_super = def.getSuperClass().getMembers();
-
-        if(env_exp_super == null){
-            throw new ContextualError("Env_exp_object non défini", getLocation());
-        }
-
-
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
-
     }
 
     @Override
@@ -128,21 +93,21 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void codeGenMethodTable(DecacCompiler compiler) {
-        // TODO codeGenMethodTable for DeclClass
-        compiler.addComment("Construction de la table des methodes de " + this.name.getName());
+        compiler.addComment("Construction de la table des methodes de " + name.getName());
         
-        this.name.codeGenInst(compiler);
-        compiler.incrD();
+        compiler.getClassAdresses().put(name.getName(), new RegisterOffset(compiler.getD(), Register.GB));
 
-        compiler.addInstruction(new LEA(this.superClass.getExpDefinition().getOperand(), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()),this.name.getExpDefinition().getOperand()));
+        DAddr classAddr = compiler.getClassAdresses().get(name.getName());
+        DAddr superclassAddr = compiler.getClassAdresses().get(superClass.getName());
+        compiler.addInstruction(new LEA(superclassAddr, Register.getR(0)));
+        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), classAddr));
         
         compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(0)));
         compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), new RegisterOffset(compiler.getD(), Register.GB)));
         compiler.incrD();
 
-        for (AbstractDeclMethod i : this.methods.getList()) {
-            i.codeGenMethodTable(compiler, this.name.getName().getName());
+        for (AbstractDeclMethod i : methods.getList()) {
+            i.codeGenMethodTable(compiler, name.getName().getName());
         }
 
     }
