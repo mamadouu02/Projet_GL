@@ -1,8 +1,12 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.EnvironmentType;
+import fr.ensimag.deca.context.TypeDefinition;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Label;
@@ -60,13 +64,45 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        EnvironmentType env_types = compiler.environmentType;
+        TypeDefinition def = env_types.defOfType(superClass.getName());
+
+        if (def == null) {
+            throw new ContextualError("La classe mère n'existe pas", getLocation());
+        }
+
+        if (!def.isClass()) {
+            throw new ContextualError("Vous ne pouvez pas hériter de ce que vous avez écrit", getLocation());
+        }
+
+        try {
+            ClassDefinition cdef = (ClassDefinition) def;
+            ClassType ct = new ClassType(name.getName(), getLocation(), cdef);
+            env_types.declare_type(name.getName(), ct.getDefinition());
+            name.setDefinition(ct.getDefinition());
+            superClass.setDefinition(def);
+            name.setType(ct);
+        } catch (EnvironmentType.DoubleDefException e) {
+            throw new ContextualError("Classe déjà définie", getLocation());
+        }
     }
 
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        ClassDefinition def = (ClassDefinition) compiler.environmentType.defOfType(name.getName());
+
+        // def.setNumberOfFields(def.getSuperClass().getNumberOfFields());
+        // def.setNumberOfMethods(def.getSuperClass().getNumberOfMethods());
+
+        fields.verifyListFieldMembers(compiler, def);
+        methods.verifyListMethodMembers(compiler, def);
+
+        EnvironmentExp env_exp_super = def.getSuperClass().getMembers();
+
+        if (env_exp_super == null) {
+            throw new ContextualError("Env_exp_object non défini", getLocation());
+        }
     }
 
     @Override
