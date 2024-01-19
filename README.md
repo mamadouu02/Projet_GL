@@ -1,29 +1,29 @@
 # Projet Génie Logiciel, Ensimag.
-gl42, 01/01/2024.
+gl42, 01/01/2024
 
- ahjaous, bouihih, guessouo, senameg, thiongam
+ahjaous, bouihih, guessouo, senameg, thiongam
 
-## Exécutions des tests
+## Exécution des tests
 
-Les fichiers deca tests sont dans le dossier ```src/test/deca```.
+Les fichiers de tests Deca sont dans le répertoire `src/test/deca`.
 
-Les scripts de tests sont dans le dossier ```src/test/script```. Le fichier ```tests.py``` dans ce dossier permet de lancer nos tests sur les fichiers deca.
-Il s'exécute avec la commande ```python3 tests.py [options]```.
-Les options sont les suivantes :
+Les scripts de tests sont dans le répertoire `src/test/script`.
+
+Le fichier `src/test/script/tests.py` permet de lancer nos tests sur les fichiers Deca. Il s'exécute avec la commande `python3 tests.py [options]`. Les options sont les suivantes :
 - sans option : exécute tous les tests.
-- ```-h``` : affiche l'aide.
-- ```-w``` : écrit les résultats dans les fichiers ```.lis``` et ```.res``` au lieu de les afficher dans le terminal.
-- ```-dev``` : exécute les tests en mode développement.
-- ```-lex``` : exécute les tests de lex.
-- ```-synt``` : exécute les tests de synt.
-- ```-context``` : exécute les tests de context.
-- ```-gen``` : exécute les tests de gen.
-- ```-decompile``` : exécute les tests de decompile.
+- `-h` : affiche l'aide.
+- `-w` : redirige les résultats dans des fichiers `.lis` et `.res` au lieu de les afficher dans la sortie standard.
+- `-dev` : exécute les tests en mode développement.
+- `-lex` : exécute les tests pour l'analyse lexicographique.
+- `-synt` : exécute les tests pour l'analyse syntaxique.
+- `-context` : exécute les tests pour les vérifications contextuelles.
+- `-gen` : exécute les tests pour la génération de code.
+- `-decompile` : exécute les tests pour la décompilation.
 
-La commande maven ```mvn test``` permet de lancer les tests shell et les tests python sans options.
+La commande `mvn test` permet de lancer les scripts Shell et le script Python sans option.
 
-La commande ```make verify``` permet de recompiler le projet et de lancer les tests shell et les tests python sans options.
+La commande `make verify` permet de recompiler le projet et de lancer les scripts Shell et le script Python sans option.
 
-## Explication de la mise en forme du projet
+## Structure du projet
 
 Le projet a la structure suivante :

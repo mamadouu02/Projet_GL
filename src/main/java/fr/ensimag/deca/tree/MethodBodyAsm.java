@@ -19,23 +19,23 @@ import fr.ensimag.deca.context.EnvironmentExp;
  * @date 01/01/2024
  */
 
- public class MethodBodyAsm extends AbstractMethodBody{
+public class MethodBodyAsm extends AbstractMethodBody {
     final private String code;
-    
 
     public MethodBodyAsm(String code) {
 
         Validate.notNull(code);
         this.code = code;
-        
+
     }
 
-
-        @Override
+    @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        //throw new UnsupportedOperationException("not yet implemented");
-        
+        s.print(prefix);
+        s.println(code);
+
     }
+
     @Override
     String prettyPrintNode() {
         return "asm (" + code + ")";
@@ -54,12 +54,12 @@ import fr.ensimag.deca.context.EnvironmentExp;
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("not yet implemented");
+
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print(code);
     }
 
- }
+}

@@ -41,6 +41,7 @@ public class DecacCompiler {
     private int d;
     private int idReg;
     private boolean[] errors;
+    private int numLabel;
     
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
@@ -53,12 +54,13 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        this.d = 3;
+        this.d = 1;
         this.idReg = 2;
         this.errors = new boolean[4];
         for (int i = 0; i < 4; i++) {
             this.errors[i] = false;
         }
+        this.numLabel = 0;
     }
 
     /**
@@ -69,10 +71,10 @@ public class DecacCompiler {
     }
 
     public void incrD(){
-        this.d += 1;
+        this.d++;
     }
     public void decrD(){
-        this.d -= 1;
+        this.d--;
     }
 
     public int getIdReg(){
@@ -91,6 +93,17 @@ public class DecacCompiler {
         return this.errors[i];
     }
     
+    public int getLabelNumber() {
+        return this.numLabel;
+    }
+
+    public void incrLabelNumber() {
+        this.numLabel++;
+    }
+
+    /**
+     * Source file associated with this compiler instance.
+     */
     public File getSource() {
         return source;
     }

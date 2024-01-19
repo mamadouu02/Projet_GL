@@ -7,13 +7,10 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.DVal;
-import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
 import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
@@ -98,20 +95,16 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass, 
             Type expectedType)
             throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
         Type type2 = verifyExpr(compiler,localEnv,currentClass);
-        if(expectedType.isFloat() && type2.isInt()) {
 
+        if(expectedType.isFloat() && type2.isInt()) {
             AbstractExpr floattype = new ConvFloat(this) ;
             floattype.setType(compiler.environmentType.FLOAT);
             return floattype;
-
-        }
-        else if (expectedType.sameType(type2)){
+        } else if (expectedType.sameType(type2)) {
             return this;
-        }
-        else {
-            throw new ContextualError("les deux types ne sont pas compatibles",getLocation());
+        } else {
+            throw new ContextualError("les deux types ne sont pas compatibles", getLocation());
         }
     }
 
@@ -120,8 +113,6 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
                               ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-
-        //throw new UnsupportedOperationException("not yet implemented");
         this.verifyExpr(compiler,localEnv,currentClass);
     }
 
@@ -137,9 +128,9 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
         Type expected = this.verifyExpr(compiler,localEnv,currentClass);
-        if(!expected.isBoolean()){
+
+        if(!expected.isBoolean()) {
             throw new ContextualError("Votre condition doit être de type Boolean", getLocation());
         }
     }
@@ -180,6 +171,10 @@ public abstract class AbstractExpr extends AbstractInst {
     protected DVal dVal() {
         return null;
     }
+
+    protected void code(DecacCompiler compiler, boolean b, Label label) {
+        codeGenExpr(compiler);
+    };
 
     @Override
     protected void decompileInst(IndentPrintStream s) {

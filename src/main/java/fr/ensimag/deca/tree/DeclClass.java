@@ -4,7 +4,6 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
-import java.util.List;
 
 /**
  * Declaration of a class (<code>class name extends superClass {members}<code>).
@@ -35,7 +34,18 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("class { ... A FAIRE ... }");
+        s.print("class ");
+        name.decompile(s);
+        if (superClass != null) {
+            s.print(" extends ");
+            superClass.decompile(s);
+        }
+        s.println(" {");
+        s.indent();
+        fields.decompile(s);
+        methods.decompile(s);
+        s.unindent();
+        s.println("}");
     }
 
     @Override

@@ -61,16 +61,16 @@ public class TestPlusWithoutMock {
         }
     }
 
-    // @Test
-    // public void testType() throws ContextualError {
-    // DecacCompiler compiler = new DecacCompiler(null, null);
-    // DummyIntExpression left = new DummyIntExpression();
-    // DummyIntExpression right = new DummyIntExpression();
-    // Plus t = new Plus(left, right);
-    // // check the result
-    // assertTrue(t.verifyExpr(compiler, null, null).isInt());
-    // // check that the dummy expression have been called properly.
-    // left.checkProperUse();
-    // right.checkProperUse();
-    // }
+    @Test
+    public void testType() throws ContextualError {
+    DecacCompiler compiler = new DecacCompiler(null, null);
+    DummyIntExpression left = new DummyIntExpression();
+    DummyIntExpression right = new DummyIntExpression();
+    Plus t = new Plus(left, right);
+    // check the result
+    assertTrue(t.verifyExpr(compiler, null, null).isInt());
+    // check that the dummy expression have been called properly.
+    left.checkProperUse();
+    right.checkProperUse();
+    }
 }

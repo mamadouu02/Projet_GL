@@ -19,7 +19,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
  * @date 01/01/2024
  */
 
- public class MethodBody extends AbstractMethodBody{
+public class MethodBody extends AbstractMethodBody {
     final private ListDeclVar decls;
     final private ListInst insts;
 
@@ -34,8 +34,8 @@ import fr.ensimag.deca.context.EnvironmentExp;
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        decls.prettyPrint(s,prefix, false);
-        insts.prettyPrint(s,prefix, false);
+        decls.prettyPrint(s, prefix, false);
+        insts.prettyPrint(s, prefix, false);
     }
 
     @Override
@@ -51,12 +51,14 @@ import fr.ensimag.deca.context.EnvironmentExp;
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("not yet implemented");
+        decls.iter(f);
+        insts.iter(f);
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        decls.decompile(s);
+        insts.decompile(s);
     }
 
- }
+}
