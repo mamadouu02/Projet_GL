@@ -1,0 +1,18 @@
+// Description:
+//    test de l'assignation et de l'addition d'entiers
+//
+// Resultats:
+//
+// Historique:
+//  Cree le 12/01/2024
+
+class B
+{
+    protected int a;
+    int b;
+}
+
+class A extends B
+{
+    int c;
+}

@@ -51,12 +51,16 @@ public class DeclMethod extends AbstractDeclMethod {
         // System.out.println(def + "\n\n\n");
 
         if (def != null && !def.isMethod()) {
-            throw new ContextualError("methode déjà définie dans la classe mère autant que field", getLocation());
+            throw new ContextualError("methode déjà définie dans la classe mère en tant que field", getLocation());
         } else if (def != null && def.isMethod()) {
-            MethodDefinition defMethode = def.asMethodDefinition("ce n'est pas une définition de méthode", getLocation());
+            MethodDefinition defMethode = def.asMethodDefinition("ce n'est pas une définition de méthode",
+                    getLocation());
             Signature sig2 = defMethode.getSignature();
             Type type2 = defMethode.getType();
-            if(sig.isSameSignature(sig2) && (type2.sameType(typeReturn) || typeReturn.asClassType("Override impossible, verifiez  le type que renvoie votre fonction", getLocation()).isSubClassOf(type2.asClassType("Override impossible, verifiez  type que renvoie votre fonction", getLocation())))) {
+            if (sig.isSameSignature(sig2) && (type2.sameType(typeReturn) || typeReturn
+                    .asClassType("Override impossible, verifiez  le type que renvoie votre fonction", getLocation())
+                    .isSubClassOf(type2.asClassType("Override impossible, verifiez  type que renvoie votre fonction",
+                            getLocation())))) {
                 try {
                     currentClass.getMembers().declare(name.getName(), defMethode);
                     name.setDefinition(defMethode);
@@ -64,10 +68,12 @@ public class DeclMethod extends AbstractDeclMethod {
                 } catch (EnvironmentExp.DoubleDefException e) {
                     throw new ContextualError("methode déjà definie", getLocation());
                 }
-            } else if(!sig.isSameSignature(sig2)) {
-                throw new ContextualError("Override impossible, verifiez la signature de votre fonction", getLocation());
-            } else{
-                throw new ContextualError("Override impossible, verifiez le type que renvoie votre fonction", getLocation());
+            } else if (!sig.isSameSignature(sig2)) {
+                throw new ContextualError("Override impossible, verifiez la signature de votre fonction",
+                        getLocation());
+            } else {
+                throw new ContextualError("Override impossible, verifiez le type que renvoie votre fonction",
+                        getLocation());
 
             }
         } else if (def == null) {
@@ -77,8 +83,7 @@ public class DeclMethod extends AbstractDeclMethod {
                 currentClass.incNumberOfFields();
                 currentClass.getMembers().declare(name.getName(), mDef);
                 // name.setDefinition(mDef);
-            }
-            catch (EnvironmentExp.DoubleDefException e) {
+            } catch (EnvironmentExp.DoubleDefException e) {
                 throw new ContextualError("methode deja définie", getLocation());
             }
         }
@@ -102,7 +107,8 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     public void codeGenMethodTable(DecacCompiler compiler, String className) {
-        compiler.addInstruction(new LOAD(new LabelOperand(new Label("code." + className + "." + name.getName().getName())), Register.getR(0)));
+        compiler.addInstruction(new LOAD(
+                new LabelOperand(new Label("code." + className + "." + name.getName().getName())), Register.getR(0)));
         compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(compiler.getD(), Register.GB)));
         compiler.incrD();
     }
