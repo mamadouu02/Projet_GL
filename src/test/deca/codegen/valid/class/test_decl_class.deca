@@ -16,3 +16,7 @@ class A extends B
 {
     int c;
 }
+
+{
+    A a;
+}
