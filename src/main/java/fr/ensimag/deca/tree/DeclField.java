@@ -38,33 +38,35 @@ public class DeclField extends AbstractDeclField {
     @Override
     protected void verifyDeclField(DecacCompiler compiler, ClassDefinition currentClass)
             throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
-        Type type_verified = this.type.verifyType(compiler);
-        if(type_verified.isVoid()){
+        Type typeVerified = this.type.verifyType(compiler);
+
+        if (typeVerified.isVoid()) {
             throw new ContextualError("Vous ne pouvez pas déclarer un field de type void ", getLocation());
         }
-        ClassDefinition super_def = currentClass.getSuperClass();
-        EnvironmentExp env_exp_super = super_def.getMembers();
-        ExpDefinition def = env_exp_super.get(name.getName());
-        //System.out.println(def + "\n\n\n\n\n");
-        if(def != null &&  !def.isField()){
-            throw new ContextualError("attribut déjà définie dans la classe mère autant que methode", getLocation());
-        }
-        else {
-            int index_previous = currentClass.getNumberOfFields();
-            FieldDefinition field_def = new FieldDefinition(type_verified, getLocation(), visibility, currentClass, index_previous+1);
-            try {
-                currentClass.getMembers().declare(name.getName(), field_def);
-                name.setDefinition(field_def);
-                currentClass.incNumberOfFields();
 
+        ClassDefinition superDef = currentClass.getSuperClass();
+        EnvironmentExp envExpSuper = superDef.getMembers();
+        ExpDefinition def = envExpSuper.get(name.getName());
+
+        // System.out.println(def + "\n\n\n\n\n");
+
+        if (def != null && !def.isField()) {
+            throw new ContextualError("attribut déjà définie dans la classe mère en tant que methode", getLocation());
+        } else {
+            int indexPrevious = currentClass.getNumberOfFields();
+            FieldDefinition fieldDef = new FieldDefinition(typeVerified, getLocation(), visibility, currentClass,
+                    indexPrevious + 1);
+            try {
+                currentClass.getMembers().declare(name.getName(), fieldDef);
+                name.setDefinition(fieldDef);
+                currentClass.incNumberOfFields();
             } catch (EnvironmentExp.DoubleDefException e) {
-                throw new ContextualError("field déjà définie", getLocation());
+                throw new ContextualError("field déjà défini", getLocation());
             }
         }
-        //init.verifyInitialization(compiler, type_verified, currentClass.getMembers(), currentClass);
 
-
+        // init.verifyInitialization(compiler, typeVerified, currentClass.getMembers(),
+        // currentClass);
     }
 
     @Override

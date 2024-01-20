@@ -9,6 +9,5 @@
 #include "test_affect_simple_float.deca"
 
 {
-        String s = "Hello World
-        Ccoucou";
+        int a;
 }

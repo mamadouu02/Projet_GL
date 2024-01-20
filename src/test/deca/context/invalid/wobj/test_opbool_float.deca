@@ -2,14 +2,14 @@
 //    Declaration
 //
 // Resultats:
-//    Ligne 11: un ou deux des operandes n'est pas de type boolean
+//    Ligne 11: operation de compraison impossible avec ces types
 //
 // Historique:
 //    cree le 01/01/2024
 
 {
    boolean state1 = true ;
-   string state2 = "false";
+   int state2 = 12;
 
    boolean state = (state1 == state2);
 

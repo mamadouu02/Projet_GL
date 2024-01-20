@@ -26,16 +26,14 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
      * Pass 2 of [SyntaxeContextuelle]
      */
     public void verifyListFieldMembers(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
-        //EnvironmentExp env_exp_r = new EnvironmentExp(null);
-        for(AbstractDeclField declfield : this.getList()){
+        // EnvironmentExp envExpR = new EnvironmentExp(null);
+
+        for (AbstractDeclField declfield : this.getList()) {
             declfield.verifyDeclField(compiler, currentClass);
-            //env_exp_r.declare();
-
+            // envExpR.declare();
         }
-        //env_exp_r.
-
-
+        
+        // envExpR.
     }
 
     /**

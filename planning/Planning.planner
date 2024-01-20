@@ -23,15 +23,15 @@
   </calendars>
   <tasks>
     <task id="1" name="Initialisation du projet" note="" work="172800" start="20231218T000000Z" end="20231219T170000Z" work-start="20231218T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
-      <task id="2" name="Voir les vid&#xE9;os" note="" work="57600" start="20231218T000000Z" end="20231219T170000Z" work-start="20231218T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="3" name="Comprendre le sujet et le cahier des charges" note="" work="57600" start="20231218T000000Z" end="20231219T170000Z" work-start="20231218T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="4" name="Mettre en place l'environnement de d&#xE9;veloppement" note="" work="57600" start="20231218T000000Z" end="20231219T170000Z" work-start="20231218T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="2" name="Visionnage des vid&#xE9;os" note="" work="57600" start="20231218T000000Z" end="20231219T170000Z" work-start="20231218T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="3" name="Compr&#xE9;hension du sujet et du cahier des charges" note="" work="57600" start="20231218T000000Z" end="20231219T170000Z" work-start="20231218T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="4" name="Mise en place l'environnement de d&#xE9;veloppement" note="" work="57600" start="20231218T000000Z" end="20231219T170000Z" work-start="20231218T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
     </task>
     <task id="5" name="Analyse lexicosyntaxique" note="" work="223200" start="20231219T000000Z" end="20231220T104000Z" work-start="20231219T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <task id="6" name="Lexeur" note="" work="115200" start="20231219T000000Z" end="20231220T104000Z" work-start="20231219T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+      <task id="6" name="Lexer" note="" work="115200" start="20231219T000000Z" end="20231220T104000Z" work-start="20231219T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="must-start-on" time="20231219T000000Z"/>
       </task>
-      <task id="7" name="Parseur" note="" work="108000" start="20231219T000000Z" end="20231220T100000Z" work-start="20231219T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+      <task id="7" name="Parser" note="" work="108000" start="20231219T000000Z" end="20231220T100000Z" work-start="20231219T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="must-start-on" time="20231219T000000Z"/>
       </task>
     </task>
@@ -50,37 +50,37 @@
       <constraint type="must-start-on" time="20240109T000000Z"/>
     </task>
     <task id="14" name="Compilateur sans objet" note="" work="503100" start="20231220T000000Z" end="20240112T170000Z" work-start="20231220T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <task id="15" name=" Lexeur SO" note="" work="86400" start="20231220T000000Z" end="20231221T120000Z" work-start="20231220T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+      <task id="15" name="Lexer" note="" work="86400" start="20231220T000000Z" end="20231221T120000Z" work-start="20231220T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="must-start-on" time="20231220T000000Z"/>
       </task>
-      <task id="16" name="Parseur SO" note="" work="144000" start="20240108T000000Z" end="20240110T120000Z" work-start="20240108T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+      <task id="16" name="Parser" note="" work="144000" start="20240108T000000Z" end="20240110T120000Z" work-start="20240108T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="start-no-earlier-than" time="20240108T000000Z"/>
         <predecessors>
           <predecessor id="1" predecessor-id="15" type="FS"/>
         </predecessors>
       </task>
-      <task id="17" name="Analyse contextuelle SO" note="" work="128700" start="20240110T120000Z" end="20240112T145140Z" work-start="20240110T120000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+      <task id="17" name="Analyse contextuelle" note="" work="128700" start="20240110T120000Z" end="20240112T145140Z" work-start="20240110T120000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="16" type="FS"/>
         </predecessors>
       </task>
-      <task id="18" name="G&#xE9;n&#xE9;ration de code SO" note="" work="144000" start="20240110T120000Z" end="20240112T170000Z" work-start="20240110T120000Z" percent-complete="90" priority="0" type="normal" scheduling="fixed-work">
+      <task id="18" name="G&#xE9;n&#xE9;ration de code" note="" work="144000" start="20240110T120000Z" end="20240112T170000Z" work-start="20240110T120000Z" percent-complete="90" priority="0" type="normal" scheduling="fixed-work">
         <predecessors>
           <predecessor id="1" predecessor-id="16" type="FS"/>
         </predecessors>
       </task>
     </task>
-    <task id="19" name="Rendu version interm&#xE9;diaire" note="" work="0" start="20240115T000000Z" end="20240115T000000Z" work-start="20240115T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
+    <task id="19" name="Rendu interm&#xE9;diaire" note="" work="0" start="20240115T000000Z" end="20240115T000000Z" work-start="20240115T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
       <constraint type="must-start-on" time="20240115T000000Z"/>
     </task>
     <task id="20" name="Suivi 3" note="" work="0" start="20240117T000000Z" end="20240117T000000Z" work-start="20240117T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
       <constraint type="must-start-on" time="20240117T000000Z"/>
     </task>
     <task id="21" name="Extension" note="" work="172800" start="20240108T000000Z" end="20240119T170000Z" work-start="20240108T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
-      <task id="22" name="Recherche algos" note="" work="28800" start="20240108T000000Z" end="20240108T170000Z" work-start="20240108T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
+      <task id="22" name="Recherche des algorithmes" note="" work="28800" start="20240108T000000Z" end="20240108T170000Z" work-start="20240108T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="start-no-earlier-than" time="20240108T000000Z"/>
       </task>
-      <task id="23" name="Ecriture librarie" note="" work="86400" start="20240115T000000Z" end="20240117T170000Z" work-start="20240115T080000Z" percent-complete="30" priority="0" type="normal" scheduling="fixed-work">
+      <task id="23" name="Impl&#xE9;mentation de la librairie" note="" work="86400" start="20240115T000000Z" end="20240117T170000Z" work-start="20240115T080000Z" percent-complete="30" priority="0" type="normal" scheduling="fixed-work">
         <constraint type="start-no-earlier-than" time="20240115T000000Z"/>
       </task>
       <task id="24" name="Tests" note="" work="57600" start="20240117T170000Z" end="20240119T170000Z" work-start="20240118T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work">
@@ -95,18 +95,18 @@
       <predecessors>
         <predecessor id="1" predecessor-id="19" type="FS"/>
       </predecessors>
-      <task id="26" name="Lexeur Ob" note="" work="57600" start="20240115T000000Z" end="20240116T170000Z" work-start="20240115T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="27" name="Parseur Ob" note="" work="115200" start="20240115T000000Z" end="20240118T170000Z" work-start="20240115T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="28" name="Analyse contextuelle Ob" note="" work="115200" start="20240115T000000Z" end="20240118T170000Z" work-start="20240115T080000Z" percent-complete="20" priority="0" type="normal" scheduling="fixed-work"/>
-      <task id="29" name="G&#xE9;n&#xE9;ration de code Ob" note="" work="144000" start="20240115T000000Z" end="20240119T170000Z" work-start="20240115T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="26" name="Lexer" note="" work="57600" start="20240115T000000Z" end="20240116T170000Z" work-start="20240115T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="27" name="Parser" note="" work="115200" start="20240115T000000Z" end="20240118T170000Z" work-start="20240115T080000Z" percent-complete="100" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="28" name="Analyse contextuelle" note="" work="115200" start="20240115T000000Z" end="20240118T170000Z" work-start="20240115T080000Z" percent-complete="20" priority="0" type="normal" scheduling="fixed-work"/>
+      <task id="29" name="G&#xE9;n&#xE9;ration de code" note="" work="144000" start="20240115T000000Z" end="20240119T170000Z" work-start="20240115T080000Z" percent-complete="0" priority="0" type="normal" scheduling="fixed-work"/>
     </task>
-    <task id="30" name="Rendu Final" note="" work="0" start="20240122T000000Z" end="20240122T000000Z" work-start="20240122T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
+    <task id="30" name="Rendu final" note="" work="0" start="20240122T000000Z" end="20240122T000000Z" work-start="20240122T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
       <constraint type="must-start-on" time="20240122T000000Z"/>
     </task>
     <task id="31" name="Rendu documentation" note="" work="0" start="20240122T000000Z" end="20240122T000000Z" work-start="20240122T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
       <constraint type="must-start-on" time="20240122T000000Z"/>
     </task>
-    <task id="32" name="Rendu Bilan" note="" work="0" start="20240123T000000Z" end="20240123T000000Z" work-start="20240123T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
+    <task id="32" name="Rendu bilan" note="" work="0" start="20240123T000000Z" end="20240123T000000Z" work-start="20240123T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
       <constraint type="must-start-on" time="20240123T000000Z"/>
     </task>
     <task id="33" name="Soutenance" note="" work="0" start="20240125T000000Z" end="20240125T000000Z" work-start="20240125T080000Z" percent-complete="0" priority="0" type="milestone" scheduling="fixed-work">
@@ -115,11 +115,11 @@
   </tasks>
   <resource-groups/>
   <resources>
-    <resource id="1" name="Gr&#xE9;goire Sename" short-name="GS" type="1" units="0" email="" note="" std-rate="0"/>
-    <resource id="2" name="Omar Guessous" short-name="OG" type="1" units="0" email="" note="" std-rate="0"/>
-    <resource id="3" name="Samy Ahjaou" short-name="SA" type="1" units="0" email="" note="" std-rate="0"/>
-    <resource id="4" name="Mamadou Thiongane" short-name="MT" type="1" units="0" email="" note="" std-rate="0"/>
-    <resource id="5" name="Hamza Bouihi" short-name="HB" type="1" units="0" email="" note="" std-rate="0"/>
+    <resource id="1" name="Gr&#xE9;goire Sename" short-name="G" type="1" units="0" email="" note="" std-rate="0"/>
+    <resource id="2" name="Omar Guessous" short-name="O" type="1" units="0" email="" note="" std-rate="0"/>
+    <resource id="3" name="Samy Ahjaou" short-name="S" type="1" units="0" email="" note="" std-rate="0"/>
+    <resource id="4" name="Mamadou Thiongane" short-name="M" type="1" units="0" email="" note="" std-rate="0"/>
+    <resource id="5" name="Hamza Bouihi" short-name="H" type="1" units="0" email="" note="" std-rate="0"/>
   </resources>
   <allocations>
     <allocation task-id="16" resource-id="1" units="100"/>

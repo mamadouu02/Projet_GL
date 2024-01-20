@@ -24,6 +24,21 @@ La commande `mvn test` permet de lancer les scripts Shell et le script Python sa
 
 La commande `make verify` permet de recompiler le projet et de lancer les scripts Shell et le script Python sans option.
 
-## Structure du projet
+## Exécution du compilateur
 
-Le projet a la structure suivante :
+Le compilateur Deca se lance avec la commande `deca [options] file.deca`. Les options sont les suivantes :
+
+- `-b (banner)` : affiche une bannière indiquant le nom de l'équipe
+
+- `-p (parse)` : arrête decac après l'étape de construction de l'arbre, et affiche la décompilation de ce dernier (i.e. s'il n'y a qu'un fichier source à compiler, la sortie doit être un programme deca syntaxiquement correct)
+
+- `-v (verification)` : arrête decac après l'étape de vérifications (ne produit aucune sortie en l'absence d'erreur)
+
+- `-n (no check)` : supprime les tests à l'exécution spécifiés dans les points 11.1 et 11.3 de la sémantique de Deca.
+
+- `-r X (registers)` : limite les registres banalisés disponibles à R0 ... R{X-1}, avec 4 <= X <= 16
+
+- `-d (debug)` : active les traces de debug. Répéter l'option plusieurs fois pour avoir plus de traces.
+
+- `-P (parallel)` : s'il y a plusieurs fichiers sources, lance la compilation des fichiers en parallèle (pour accélérer la compilation) ; ne pas utiliser avec l'option -v
+
