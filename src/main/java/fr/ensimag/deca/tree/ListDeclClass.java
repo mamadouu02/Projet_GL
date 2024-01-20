@@ -57,11 +57,16 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
         compiler.addComment("       Construction des tables des methodes");
         compiler.addComment("--------------------------------------------------");
 
-        ObjectClass object = new ObjectClass(compiler);
-        object.codeGenMethodTable(compiler);
+        ObjectClass.codeGenMethodTable(compiler);
 
         for (AbstractDeclClass i : getList()) {
             i.codeGenMethodTable(compiler);
+        }
+    }
+
+    public void codeGenListClass(DecacCompiler compiler) {
+        for (AbstractDeclClass i : getList()) {
+            i.codeGenClass(compiler);
         }
     }
 

@@ -1,13 +1,11 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import java.io.PrintStream;
-import java.util.List;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;
+
 import org.apache.log4j.Logger;
 
 public class ListDeclField extends TreeList<AbstractDeclField> {
@@ -42,5 +40,13 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     public void verifyListFieldBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
 
+    }
+
+
+    public void codeGenListField(DecacCompiler compiler, Symbol className) {
+        compiler.addComment("---------- Initialisation des champs de la classe " + className + " ----------");
+        for (AbstractDeclField f : getList()) {
+            f.codeGenDeclField(compiler);
+        }
     }
 }

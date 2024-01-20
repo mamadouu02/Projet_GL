@@ -45,10 +45,10 @@ public class Main extends AbstractMain {
         compiler.addComment("--------------------------------------------------");
         compiler.addComment("            Code du programme principal");
         compiler.addComment("--------------------------------------------------");
-        compiler.setTSTOCurr(declVariables.size());
+        compiler.setTSTOCurr(declVariables.size() + compiler.getTSTOCurr());
         compiler.setTSTOMax(compiler.getTSTOCurr());
 
-        compiler.setADDSP(declVariables.size());
+        compiler.setADDSP(declVariables.size() + compiler.getADDSP());
         declVariables.codeGenListDeclVar(compiler);
         insts.codeGenListInst(compiler);
     }
