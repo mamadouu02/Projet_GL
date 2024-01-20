@@ -35,22 +35,26 @@ public class DeclField extends AbstractDeclField {
         //throw new UnsupportedOperationException("not yet implemented");
         Type type_verified = this.type.verifyType(compiler);
         if(type_verified.isVoid()){
-            throw new ContextualError("Vous ne pouvez pas déclarer una field de type void ", getLocation());
+            throw new ContextualError("Vous ne pouvez pas déclarer un field de type void ", getLocation());
         }
         ClassDefinition super_def = currentClass.getSuperClass();
         EnvironmentExp env_exp_super = super_def.getMembers();
         ExpDefinition def = env_exp_super.get(name.getName());
-        if(def != null && (!def.isField())){
-            throw new ContextualError("attribut déjà définie dans la classe mère en une autre nature", getLocation());
+        //System.out.println(def + "\n\n\n\n\n");
+        if(def != null &&  !def.isField()){
+            throw new ContextualError("attribut déjà définie dans la classe mère autant que methode", getLocation());
         }
-        int index_previous = currentClass.getNumberOfFields();
-        FieldDefinition field_def = new FieldDefinition(type_verified, getLocation(), visibility,currentClass, index_previous);
-        try {
-            currentClass.getMembers().declare(name.getName(), field_def);
-            currentClass.incNumberOfFields();
-        }
-        catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("field déjà définie", getLocation());
+        else {
+            int index_previous = currentClass.getNumberOfFields();
+            FieldDefinition field_def = new FieldDefinition(type_verified, getLocation(), visibility, currentClass, index_previous+1);
+            try {
+                currentClass.getMembers().declare(name.getName(), field_def);
+                name.setDefinition(field_def);
+                currentClass.incNumberOfFields();
+
+            } catch (EnvironmentExp.DoubleDefException e) {
+                throw new ContextualError("field déjà définie", getLocation());
+            }
         }
         //init.verifyInitialization(compiler, type_verified, currentClass.getMembers(), currentClass);
 

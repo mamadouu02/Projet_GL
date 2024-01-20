@@ -54,6 +54,10 @@ public class DeclClass extends AbstractDeclClass {
         try {
             ClassDefinition cdef  = (ClassDefinition) def;
             ClassType ct = new ClassType(name.getName(), getLocation(),cdef);
+
+            ct.getDefinition().setNumberOfMethods(cdef.getNumberOfMethods());
+            ct.getDefinition().setNumberOfFields(cdef.getNumberOfFields());
+
             env_types.declare_type(name.getName(), ct.getDefinition());
             name.setDefinition(ct.getDefinition());
             superClass.setDefinition(def);
