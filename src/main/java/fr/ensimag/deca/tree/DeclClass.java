@@ -102,9 +102,9 @@ public class DeclClass extends AbstractDeclClass {
         fields.verifyListFieldMembers(compiler, def);
         methods.verifyListMethodMembers(compiler, def);
 
-        EnvironmentExp env_exp_super = def.getSuperClass().getMembers();
+        EnvironmentExp envExpSuper = def.getSuperClass().getMembers();
 
-        if (env_exp_super == null) {
+        if (envExpSuper == null) {
             throw new ContextualError("Env_exp_object non défini", getLocation());
         }
     }
