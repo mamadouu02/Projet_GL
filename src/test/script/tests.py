@@ -241,6 +241,9 @@ def runTestsDev(execFunction):
     runTestDecompile()
     print("\033[32m" + "########## ALL TESTS PASSED ##########" + "\033[0m")
 
+def countAllTest():
+    files = get_files()
+    return len(files["lex"]["valid"]) + len(files["lex"]["invalid"]) + len(files["synt"]["valid"]) + len(files["synt"]["invalid"]) + len(files["context"]["valid"]) + len(files["context"]["invalid"]) + len(files["gen"]["valid"]) + len(files["gen"]["invalid"]) + len(files["gen"]["interactive"])
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
@@ -249,6 +252,10 @@ if __name__ == "__main__":
 
     if sys.argv.__contains__("-pipeline"):
         runAllTests(exec_test, True)
+        sys.exit(0)
+    
+    if sys.argv.__contains__("-count"):
+        print(countAllTest())
         sys.exit(0)
 
     if sys.argv.__contains__("-h"):

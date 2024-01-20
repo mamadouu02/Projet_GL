@@ -1,9 +1,9 @@
 // Description:
-//    Test de dépassement de pile, à lancer avec la commande ima -p 3 stack_overflo.deca
+//    Test de dépassement de pile, à lancer avec la commande ima -p 3 stack_overflow.deca
 //
 // Resultats:
+//  Error: Stack Overflow
 //    
-//
 // Historique:
 //    cree le 15/01/2024
 {

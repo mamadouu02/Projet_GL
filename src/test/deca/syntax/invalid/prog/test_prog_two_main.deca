@@ -2,15 +2,15 @@
 //    tests de programme avec des erreurs synthaxiques : () au lieu de {}
 //
 // Resultats:
-//    Ligne 11: no viable alternative at input '('
+//    Ligne 11: mismatched input '{' expecting {'instanceof', '<', '>', '=', '+', '-', '*', '/', '%', '.', ',', ')', '==', '!=', '>=', '<=', '&&', '||'}
 //    
 //
 // Historique:
 //    cree le 01/01/2024
 
 {
-    println("Hello world !")
+    println("Hello world !");
 }
 {
-    println("Hello world !")
+    println("Hello world !");
 }
