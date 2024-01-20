@@ -251,6 +251,7 @@ public class DecacCompiler {
     }
 
     public void endBlock() {
+        program.append(getCurrentProgram());
         setCurrentProgram(program);
     }
 

@@ -64,8 +64,8 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        EnvironmentType env_types = compiler.environmentType;
-        TypeDefinition def = env_types.defOfType(superClass.getName());
+        EnvironmentType envTypes = compiler.environmentType;
+        TypeDefinition def = envTypes.defOfType(superClass.getName());
 
         if (def == null) {
             throw new ContextualError("La classe mère n'existe pas", getLocation());
@@ -77,12 +77,12 @@ public class DeclClass extends AbstractDeclClass {
 
         try {
             ClassDefinition cdef  = (ClassDefinition) def;
-            ClassType ct = new ClassType(name.getName(), getLocation(),cdef);
+            ClassType ct = new ClassType(name.getName(), getLocation(), cdef);
 
             ct.getDefinition().setNumberOfMethods(cdef.getNumberOfMethods());
             ct.getDefinition().setNumberOfFields(cdef.getNumberOfFields());
 
-            env_types.declare_type(name.getName(), ct.getDefinition());
+            envTypes.declare_type(name.getName(), ct.getDefinition());
             name.setDefinition(ct.getDefinition());
             superClass.setDefinition(def);
             name.setType(ct);
@@ -139,10 +139,11 @@ public class DeclClass extends AbstractDeclClass {
         DAddr classAddr = compiler.getClassAdresses().get(name.getName());
         DAddr superclassAddr = compiler.getClassAdresses().get(superClass.getName());
         compiler.addInstruction(new LEA(superclassAddr, Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), classAddr));
+        compiler.addInstruction(new STORE(Register.R0, classAddr));
+        compiler.incrD();
         
         compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), new RegisterOffset(compiler.getD(), Register.GB)));
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(compiler.getD(), Register.GB)));
         compiler.incrD();
 
         compiler.setADDSP(compiler.getADDSP() + 2);
