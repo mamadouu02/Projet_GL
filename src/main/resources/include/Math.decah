@@ -5,7 +5,7 @@
 class Math {
     float pi =3.1415927410125732421875;
 
-        // return the ulp of f
+    // return the ulp of f
     float ulp(float f) {
         if (f == 0.0f) {
             return this._pow(2, -149);
@@ -179,6 +179,12 @@ class Math {
     int _floor(float a) {
         int res = (int) (a);
         return res;
+    }
+
+    float recenter(float x) {
+        float y = x / (2 * this.pi);
+        y = (y - this._floor(y + 0.5)) * 2 * this.pi;
+        return y;
     }
 }
 
