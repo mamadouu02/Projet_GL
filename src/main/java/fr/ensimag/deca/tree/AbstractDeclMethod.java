@@ -7,10 +7,10 @@ import fr.ensimag.deca.context.EnvironmentExp;
 
 public abstract class AbstractDeclMethod extends Tree {
 
-    protected abstract void verifyDeclMethod(DecacCompiler compiler,
-            EnvironmentExp localEnv, ClassDefinition currentClass)
+    protected abstract void verifyDeclMethod(DecacCompiler compiler
+            , ClassDefinition currentClass)
             throws ContextualError;
 
-    protected abstract void codeGenDeclMethod(DecacCompiler compiler);
+    public abstract void codeGenMethodTable(DecacCompiler compiler, String className);
 
 }

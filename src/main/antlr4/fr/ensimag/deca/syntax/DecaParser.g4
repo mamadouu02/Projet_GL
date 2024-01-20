@@ -461,6 +461,7 @@ class_extension
         }
 	| /* epsilon */ {
         $tree = new Identifier(getDecacCompiler().createSymbol("Object"));
+        $tree.setLocation(Location.BUILTIN);
 
         };
 

@@ -8,6 +8,7 @@ import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
+import fr.ensimag.deca.codegen.ObjectClass;
 
 /**
  * Deca complete program (class definition plus main block)
@@ -39,8 +40,8 @@ public class Program extends AbstractProgram {
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify program: start");
-        // classes.verifyListClass(compiler);
-        // classes.verifyListClassMembers(compiler);
+        classes.verifyListClass(compiler);
+        classes.verifyListClassMembers(compiler);
         // classes.verifyListClassBody(compiler);
         main.verifyMain(compiler);
         LOG.debug("verify program: end");
@@ -48,19 +49,27 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        compiler.addInstruction(new TSTO(main.getNbVar()));
-
-        if (compiler.getCompilerOptions().getCheck()) {
-            compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
-        }
-
-        compiler.addInstruction(new ADDSP(main.getNbVar()));
-        compiler.addComment("Main program");
+        classes.codeGenListMethodTable(compiler);
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+        ObjectClass objectClass = new ObjectClass(compiler);
+        objectClass.codeGenClass(compiler);
+
+
+        // TODO: Prendre en compte la table des méthodes
+        compiler.addFirst(new ADDSP(compiler.getADDSP()));
+
+        if (compiler.getCompilerOptions().getCheck()) {
+            compiler.addFirst(new BOV(new Label("stack_overflow_error")));
+        }
+
+        compiler.addFirst(new TSTO(compiler.getTSTOMax()));
     }
 
     public void codeGenError(DecacCompiler compiler) {
+        compiler.addComment("--------------------------------------------------");
+        compiler.addComment("                 Messages d'erreur");
+        compiler.addComment("--------------------------------------------------");
         if (compiler.getCompilerOptions().getCheck()) {
             if (compiler.getError(0)) {
                 compiler.addLabel(new Label("zero_division_error"));

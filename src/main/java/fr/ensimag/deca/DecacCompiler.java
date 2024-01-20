@@ -10,6 +10,7 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.LocationException;
 import fr.ensimag.ima.pseudocode.AbstractLine;
+import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.IMAProgram;
 import fr.ensimag.ima.pseudocode.Instruction;
 import fr.ensimag.ima.pseudocode.Label;
@@ -18,6 +19,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -42,8 +46,12 @@ public class DecacCompiler {
     private int idReg;
     private boolean[] errors;
     private int numLabel;
-    
-    private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
+    private int tstoCurr;
+    private int tstoMax;
+    private int addSP;
+    private Map<Symbol,DAddr> classAdresses;
+
+	private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
     /**
      * Portable newline character.
@@ -57,10 +65,16 @@ public class DecacCompiler {
         this.d = 1;
         this.idReg = 2;
         this.errors = new boolean[4];
+
         for (int i = 0; i < 4; i++) {
             this.errors[i] = false;
         }
+        
         this.numLabel = 0;
+        this.tstoCurr = 0;
+        this.tstoMax = 0;
+        this.addSP = 0;
+        this.classAdresses = new HashMap<>();
     }
 
     /**
@@ -100,6 +114,34 @@ public class DecacCompiler {
     public void incrLabelNumber() {
         this.numLabel++;
     }
+
+    public int getTSTOCurr() {
+        return this.tstoCurr;
+    }
+
+    public void setTSTOCurr(int i) {
+        this.tstoCurr = i;
+    }
+
+    public int getTSTOMax() {
+        return this.tstoMax;
+    }
+
+    public void setTSTOMax(int i) {
+        this.tstoMax = i;
+    }
+
+    public int getADDSP() {
+        return this.addSP;
+    }
+
+    public void setADDSP(int i) {
+        this.addSP = i;
+    }
+
+    public Map<Symbol, DAddr> getClassAdresses() {
+		return classAdresses;
+	}
 
     /**
      * Source file associated with this compiler instance.
@@ -158,6 +200,14 @@ public class DecacCompiler {
 
     /**
      * @see
+     *      fr.ensimag.ima.pseudocode.IMAProgram#addFirst(fr.ensimag.ima.pseudocode.Instruction)
+     */
+    public void addFirst(Instruction instruction) {
+        program.addFirst(instruction);
+    }
+
+    /**
+     * @see
      *      fr.ensimag.ima.pseudocode.IMAProgram#display()
      */
     public String displayIMAProgram() {
@@ -176,6 +226,7 @@ public class DecacCompiler {
     public final EnvironmentType environmentType = new EnvironmentType(this);
 
     public final EnvironmentExp environmentExp = new EnvironmentExp(null);
+
     public Symbol createSymbol(String name) {
         return symbolTable.create(name);
     }
@@ -249,9 +300,7 @@ public class DecacCompiler {
             return false;
         }
 
-        addComment("start main program");
         prog.codeGenProgram(this);
-        addComment("end main program");
         prog.codeGenError(this);
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
