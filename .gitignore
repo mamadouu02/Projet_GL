@@ -16,4 +16,5 @@
 *.lis
 *.idea
 *.iml
+*.exec
 src/main/resources/log4j.properties

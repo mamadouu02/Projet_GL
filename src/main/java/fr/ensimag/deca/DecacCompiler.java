@@ -41,6 +41,10 @@ public class DecacCompiler {
     private int d;
     private int idReg;
     private boolean[] errors;
+    private int numLabel;
+    private int tstoCurr;
+    private int tstoMax;
+    private int addSP;
     
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
@@ -53,12 +57,16 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
-        this.d = 3;
+        this.d = 1;
         this.idReg = 2;
         this.errors = new boolean[4];
         for (int i = 0; i < 4; i++) {
             this.errors[i] = false;
         }
+        this.numLabel = 0;
+        this.tstoCurr = 0;
+        this.tstoMax = 0;
+        this.addSP = 0;
     }
 
     /**
@@ -69,10 +77,10 @@ public class DecacCompiler {
     }
 
     public void incrD(){
-        this.d += 1;
+        this.d++;
     }
     public void decrD(){
-        this.d -= 1;
+        this.d--;
     }
 
     public int getIdReg(){
@@ -91,6 +99,41 @@ public class DecacCompiler {
         return this.errors[i];
     }
     
+    public int getLabelNumber() {
+        return this.numLabel;
+    }
+
+    public void incrLabelNumber() {
+        this.numLabel++;
+    }
+
+    public int getTSTOCurr() {
+        return this.tstoCurr;
+    }
+
+    public void setTSTOCurr(int i) {
+        this.tstoCurr = i;
+    }
+
+    public int getTSTOMax() {
+        return this.tstoMax;
+    }
+
+    public void setTSTOMax(int i) {
+        this.tstoMax = i;
+    }
+
+    public int getADDSP() {
+        return this.addSP;
+    }
+
+    public void setADDSP(int i) {
+        this.addSP = i;
+    }
+
+    /**
+     * Source file associated with this compiler instance.
+     */
     public File getSource() {
         return source;
     }
@@ -145,6 +188,14 @@ public class DecacCompiler {
 
     /**
      * @see
+     *      fr.ensimag.ima.pseudocode.IMAProgram#addFirst(fr.ensimag.ima.pseudocode.Instruction)
+     */
+    public void addFirst(Instruction instruction) {
+        program.addFirst(instruction);
+    }
+
+    /**
+     * @see
      *      fr.ensimag.ima.pseudocode.IMAProgram#display()
      */
     public String displayIMAProgram() {
@@ -163,6 +214,7 @@ public class DecacCompiler {
     public final EnvironmentType environmentType = new EnvironmentType(this);
 
     public final EnvironmentExp environmentExp = new EnvironmentExp(null);
+
     public Symbol createSymbol(String name) {
         return symbolTable.create(name);
     }
@@ -236,9 +288,7 @@ public class DecacCompiler {
             return false;
         }
 
-        addComment("start main program");
         prog.codeGenProgram(this);
-        addComment("end main program");
         prog.codeGenError(this);
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);

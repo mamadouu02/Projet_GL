@@ -6,8 +6,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -20,23 +18,20 @@ import org.apache.commons.lang.Validate;
  */
 public class Null extends AbstractExpr {
 
-
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
-
     }
-
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print("null");
     }
 
     @Override
     String prettyPrintNode() {
-        throw new UnsupportedOperationException("not yet implemented");
+        return "null";
     }
 
     @Override
