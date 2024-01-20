@@ -134,7 +134,6 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void codeGenMethodTable(DecacCompiler compiler) {
         compiler.addComment("Construction de la table des methodes de " + name.getName());
-        
         compiler.getClassAdresses().put(name.getName(), new RegisterOffset(compiler.getD(), Register.GB));
 
         DAddr classAddr = compiler.getClassAdresses().get(name.getName());
