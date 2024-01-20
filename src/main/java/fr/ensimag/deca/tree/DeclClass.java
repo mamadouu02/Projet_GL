@@ -145,10 +145,26 @@ public class DeclClass extends AbstractDeclClass {
         compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), new RegisterOffset(compiler.getD(), Register.GB)));
         compiler.incrD();
 
+        compiler.setADDSP(compiler.getADDSP() + 2);
+        compiler.setTSTOCurr(compiler.getTSTOCurr() + 2);
+        
+        if (compiler.getTSTOCurr() > compiler.getTSTOMax()) {
+            compiler.setTSTOMax(compiler.getTSTOCurr());
+        }
+
         for (AbstractDeclMethod i : methods.getList()) {
             i.codeGenMethodTable(compiler, name.getName().getName());
         }
 
+    }
+
+    @Override
+    protected void codeGenClass(DecacCompiler compiler) {
+        compiler.addComment("--------------------------------------------------");
+        compiler.addComment("                   Classe "+ name.getName());
+        compiler.addComment("--------------------------------------------------");
+        fields.codeGenListField(compiler, name.getName());
+        methods.codeGenListMethod(compiler, name.getName());
     }
 
 }

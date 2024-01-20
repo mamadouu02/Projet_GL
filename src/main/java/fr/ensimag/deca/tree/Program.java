@@ -52,11 +52,9 @@ public class Program extends AbstractProgram {
         classes.codeGenListMethodTable(compiler);
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
-        ObjectClass objectClass = new ObjectClass(compiler);
-        objectClass.codeGenClass(compiler);
+        ObjectClass.codeGenClass(compiler);
+        classes.codeGenListClass(compiler);
 
-
-        // TODO: Prendre en compte la table des méthodes
         compiler.addFirst(new ADDSP(compiler.getADDSP()));
 
         if (compiler.getCompilerOptions().getCheck()) {
@@ -104,6 +102,11 @@ public class Program extends AbstractProgram {
             compiler.addInstruction(new WNL());
             compiler.addInstruction(new ERROR());
         }
+
+        compiler.addLabel(new Label("null_dereferencing_error"));
+        compiler.addInstruction(new WSTR("Error: dereferencing a null pointer"));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
     }
 
     @Override

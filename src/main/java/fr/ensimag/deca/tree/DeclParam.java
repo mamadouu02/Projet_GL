@@ -32,7 +32,7 @@ public class DeclParam extends AbstractDeclParam {
         if(t_ver.isVoid()){
             throw new ContextualError("le paramètre ne peut pas être de type Void", getLocation());
         }
-
+        
         return t_ver;
     }
 

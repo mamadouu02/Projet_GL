@@ -44,6 +44,7 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
             Type t_sig = param.verifyDeclParam(compiler);
             sig.add(t_sig);
         }
+        
         return sig;
     }
 
