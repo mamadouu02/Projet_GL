@@ -32,6 +32,8 @@ public class DeclParam extends AbstractDeclParam {
             throw new ContextualError("le paramètre ne peut pas être de type Void", getLocation());
         }
 
+        ParamDefinition pDef = new ParamDefinition(tVer, getLocation());
+        name.setDefinition(pDef);
         return tVer;
     }
 
