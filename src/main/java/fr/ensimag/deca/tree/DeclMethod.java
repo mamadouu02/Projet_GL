@@ -82,7 +82,9 @@ public class DeclMethod extends AbstractDeclMethod {
                 MethodDefinition m_def = new MethodDefinition(type_return, getLocation(), sig, index_previous + 1);
                 currentClass.incNumberOfFields();
                 currentClass.getMembers().declare(name.getName(), m_def);
-                //name.setDefinition(m_def);
+                //name.setDefinition(def_methode);
+
+                name.setDefinition(m_def);
             }
             catch (EnvironmentExp.DoubleDefException e) {
                 throw new ContextualError("methode deja définie", getLocation());
