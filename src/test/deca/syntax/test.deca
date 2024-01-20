@@ -1,0 +1,22 @@
+class A {
+
+}
+
+class B {
+
+}
+
+class C {
+
+A x(){
+
+}
+}
+
+class D extends C{
+B x(){
+
+}
+}
+
+

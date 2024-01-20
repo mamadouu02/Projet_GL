@@ -68,6 +68,7 @@ public abstract class Type {
         return false;
     }
 
+
     /**
      * Returns the same object, as type ClassType, if possible. Throws
      * ContextualError(errorMessage, l) otherwise.
