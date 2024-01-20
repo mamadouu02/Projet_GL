@@ -23,7 +23,3 @@ Le fichier `src/test/script/tests.py` permet de lancer nos tests sur les fichier
 La commande `mvn test` permet de lancer les scripts Shell et le script Python sans option.
 
 La commande `make verify` permet de recompiler le projet et de lancer les scripts Shell et le script Python sans option.
-
-## Structure du projet
-
-Le projet a la structure suivante :

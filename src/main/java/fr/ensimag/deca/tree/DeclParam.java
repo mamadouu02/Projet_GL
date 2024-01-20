@@ -26,14 +26,13 @@ public class DeclParam extends AbstractDeclParam {
     @Override
     protected Type verifyDeclParam(DecacCompiler compiler)
             throws ContextualError {
+        Type tVer = type.verifyType(compiler);
 
-        //throw new UnsupportedOperationException("not yet implemented");
-        Type t_ver = type.verifyType(compiler);
-        if(t_ver.isVoid()){
+        if (tVer.isVoid()) {
             throw new ContextualError("le paramètre ne peut pas être de type Void", getLocation());
         }
 
-        return t_ver;
+        return tVer;
     }
 
     @Override

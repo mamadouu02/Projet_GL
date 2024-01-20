@@ -489,8 +489,6 @@ visibility returns[Visibility v]
            $v = Visibility.PROTECTED;
         };
 
-
-
 list_decl_field[ListDeclField l, AbstractIdentifier t, Visibility v]:
     dv1 = decl_field[$t, $v]{
         $l.add($dv1.tree);

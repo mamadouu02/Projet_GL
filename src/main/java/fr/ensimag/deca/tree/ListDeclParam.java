@@ -38,12 +38,13 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
      *                     corresponds to "class" attribute (null in the main bloc).
      */
     Signature verifyListDeclParam(DecacCompiler compiler) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
         Signature sig = new Signature();
-        for(AbstractDeclParam param : this.getList()){
-            Type t_sig = param.verifyDeclParam(compiler);
-            sig.add(t_sig);
+
+        for (AbstractDeclParam param : this.getList()) {
+            Type tSig = param.verifyDeclParam(compiler);
+            sig.add(tSig);
         }
+        
         return sig;
     }
 
