@@ -20,16 +20,14 @@ import fr.ensimag.deca.context.EnvironmentExp;
  */
 
 public class MethodBody extends AbstractMethodBody {
-    final private ListDeclVar decls;
-    final private ListInst insts;
+    private ListDeclVar decls;
+    private ListInst insts;
 
     public MethodBody(ListDeclVar decls, ListInst insts) {
-
         Validate.notNull(decls);
         Validate.notNull(insts);
         this.decls = decls;
         this.insts = insts;
-
     }
 
     @Override
@@ -57,8 +55,12 @@ public class MethodBody extends AbstractMethodBody {
 
     @Override
     public void decompile(IndentPrintStream s) {
+        s.println(" {");
+        s.indent();
         decls.decompile(s);
         insts.decompile(s);
+        s.unindent();
+        s.println("}");
     }
 
 }

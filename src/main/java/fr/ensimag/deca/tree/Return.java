@@ -34,7 +34,6 @@ public class Return extends AbstractInst {
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
-
     }
 
     @Override
@@ -42,7 +41,6 @@ public class Return extends AbstractInst {
         s.print("return ");
         expr.decompile(s);
         s.print(";");
-
     }
 
     @Override

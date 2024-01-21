@@ -28,7 +28,6 @@ public class Selection extends AbstractLValue {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
-
     }
 
     @Override
@@ -36,7 +35,6 @@ public class Selection extends AbstractLValue {
         expr.decompile(s);
         s.print(".");
         ident.decompile(s);
-
     }
 
     @Override

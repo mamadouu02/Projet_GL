@@ -41,7 +41,6 @@ public class New extends AbstractExpr {
         s.print("new ");
         ident.decompile(s);
         s.print("()");
-
     }
 
     @Override
