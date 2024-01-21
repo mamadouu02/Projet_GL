@@ -76,10 +76,6 @@ public class DeclClass extends AbstractDeclClass {
         try {
             ClassDefinition cdef  = (ClassDefinition) def;
             ClassType ct = new ClassType(name.getName(), getLocation(), cdef);
-
-            ct.getDefinition().setNumberOfMethods(cdef.getNumberOfMethods());
-            ct.getDefinition().setNumberOfFields(cdef.getNumberOfFields());
-
             envTypes.declare_type(name.getName(), ct.getDefinition());
             name.setDefinition(ct.getDefinition());
             superClass.setDefinition(def);
@@ -94,8 +90,8 @@ public class DeclClass extends AbstractDeclClass {
             throws ContextualError {
         ClassDefinition def = (ClassDefinition) compiler.environmentType.defOfType(name.getName());
 
-        // def.setNumberOfFields(def.getSuperClass().getNumberOfFields());
-        // def.setNumberOfMethods(def.getSuperClass().getNumberOfMethods());
+        def.setNumberOfFields(def.getSuperClass().getNumberOfFields());
+        def.setNumberOfMethods(def.getSuperClass().getNumberOfMethods());
 
         fields.verifyListFieldMembers(compiler, def);
         methods.verifyListMethodMembers(compiler, def);

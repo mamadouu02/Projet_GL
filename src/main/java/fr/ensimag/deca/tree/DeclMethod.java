@@ -63,9 +63,13 @@ public class DeclMethod extends AbstractDeclMethod {
                     .isSubClassOf(type2.asClassType("Override impossible, verifiez  type que renvoie votre fonction",
                             getLocation())))) {
                 try {
-                    currentClass.getMembers().declare(name.getName(), defMethode);
+                    //currentClass.setNumberOfMethods(currentClass.getNumberOfMethods()+2);
+                    MethodDefinition m_def = new MethodDefinition(typeReturn, getLocation(), sig, defMethode.getIndex());
+                    currentClass.getMembers().declare(name.getName(), m_def);
+                    
+                    
                     name.setDefinition(defMethode);
-                    currentClass.incNumberOfMethods();
+                    
                 } catch (EnvironmentExp.DoubleDefException e) {
                     throw new ContextualError("methode déjà definie", getLocation());
                 }
@@ -76,8 +80,9 @@ public class DeclMethod extends AbstractDeclMethod {
             }
         } else if (def == null) {
             try {
-                int indexPrevious = currentClass.getNumberOfMethods();
-                MethodDefinition mDef = new MethodDefinition(typeReturn, getLocation(), sig, indexPrevious + 1);
+                //System.out.println(name.getName()+" "+ (currentClass.getNumberOfMethods() + 1));
+                int indexPrevious = currentClass.getNumberOfMethods() + 1;
+                MethodDefinition mDef = new MethodDefinition(typeReturn, getLocation(), sig, indexPrevious );
                 currentClass.incNumberOfMethods();
                 currentClass.getMembers().declare(name.getName(), mDef);
                 name.setDefinition(mDef);
@@ -108,7 +113,8 @@ public class DeclMethod extends AbstractDeclMethod {
         compiler.addInstruction(new LOAD(new LabelOperand(new Label("code." + className + "." + name.getName().getName())), Register.getR(0)));
         compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(compiler.getD(), Register.GB)));
         compiler.incrD();
-
+        MethodDefinition mdef = name.getMethodDefinition();
+        System.out.println("Index de la methode "+ name.getName() + " de la classe "+ className + "  : "+ mdef.getIndex());
         compiler.setADDSP(compiler.getADDSP() + 1);
         compiler.setTSTOCurr(compiler.getTSTOCurr() + 1);
         
