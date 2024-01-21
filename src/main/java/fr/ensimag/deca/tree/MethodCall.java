@@ -2,7 +2,6 @@ package fr.ensimag.deca.tree;
 
 import java.io.PrintStream;
 
-import com.sun.org.apache.xml.internal.security.algorithms.SignatureAlgorithm;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -48,6 +47,7 @@ public class MethodCall extends AbstractExpr {
                     list.getList().get(i).verifyRValue(compiler, localEnv, currentClass, expectedType);
 
                 }
+                setType(mDefVrai.getType());
                 ident.setType(mDefVrai.getType());
                 ident.setDefinition(mDefVrai);
                 ident.setType(mDefVrai.getType());
