@@ -2,110 +2,112 @@
 
 #include "Math.decah"
 
-class ColorList{
-    int item1;
-    int item2;
-    int item3;
-    int item4;
+class CheckList{
+    protected boolean item1;
+    protected boolean item2;
+    protected boolean item3;
+    protected boolean item4;
 
-    int setItem(int item, int index)
-    {
-        if(item < 1 || item > 4)
-        {
+    void setItem(boolean item, int index) {
+        if (index < 1 || index > 4) {
+            println("Erreur : index invalide");
+        }
+        if (index == 1) {
+            item1 = item;
+        } else if (index == 2) {
+            item2 = item;
+        } else if (index == 3) {
+            item3 = item;
+        } else if (index == 4) {
+            item4 = item;
+        }
+    }
+
+    boolean getItem(int index) {
+        if (index == 1) {
+            return item1;
+        } else if (index == 2) {
+            return item2;
+        } else if (index == 3) {
+            return item3;
+        } else if (index == 4) {
+            return item4;
+        } else {
+            println("Erreur : index invalide");
+            return false;
+        }
+    }
+}
+
+class ColorList{
+    protected int item1;
+    protected int item2;
+    protected int item3;
+    protected int item4;
+
+    int setItem(int item, int index) {
+        if (item < 1 || item > 4) {
             println("Erreur : couleur invalide");
             return 1;
         }
-        if(index < 1 || index > 4)
-        {
+        if (index < 1 || index > 4) {
             println("Erreur : index invalide");
             return 1;
         }
-        if(index == 1)
-        {
+        if (index == 1) {
             item1 = item;
-        }
-        else if(index == 2)
-        {
+        } else if (index == 2) {
             item2 = item;
-        }
-        else if(index == 3)
-        {
+        } else if (index == 3) {
             item3 = item;
-        }
-        else if(index == 4)
-        {
+        } else if (index == 4) {
             item4 = item;
         }
         return 0;
     }
 
-    int getItem(int index)
-    {
-        if(index == 1)
-        {
+    int getItem(int index) {
+        if (index == 1) {
             return item1;
-        }
-        else if(index == 2)
-        {
+        } else if (index == 2) {
             return item2;
-        }
-        else if(index == 3)
-        {
+        } else if (index == 3) {
             return item3;
-        }
-        else if(index == 4)
-        {
+        } else if (index == 4) {
             return item4;
-        }
-        else
-        {
+        } else {
             println("Erreur : index invalide");
             return -1;
         }
     }
-    void printColor(int color)
-    {
-        if(color == 0)
-        {
-            print("R");
-        }
-        else if(color == 1)
-        {
-            print("B");
-        }
-        else if(color == 2)
-        {
-            print("J");
-        }
-        else if(color == 3)
-        {
-            print("V");
-        }
-        else if(color == 4)
-        {
-            print("N");
-        }
-        else if(color == 5)
-        {
-            print("M");
+
+    void printColor(int color) {
+        if (color == 0) {
+            println("R");
+        } else if (color == 1) {
+            println("B");
+        } else if (color == 2) {
+            println("J");
+        } else if (color == 3) {
+            println("V");
+        } else if (color == 4) {
+            println("N");
+        } else if (color == 5) {
+            println("M");
         }
     }
 
-    void printList()
-    {
+    void printList() {
         printColor(item1);
         printColor(item2);
         printColor(item3);
         printColor(item4);
     }
 
-    boolean equalsList(ColorList list)
-    {
+    boolean equalsList(ColorList list) {
         int i = 1;
-        while(i <= 4)
-        {
-            if(list.getItem(i) != getItem(i))
-            {
+        while (i <= 4) {
+            if (list.getItem(i) != this.getItem(i)) {
                 return false;
             }
             i = i + 1;
@@ -113,39 +115,35 @@ class ColorList{
         return true;
     }
 
-    boolean contains(int item)
-    {
-        if(item1 == item || item2 == item || item3 == item || item4 == item)
-        {
-            return true;
+    int contains(int item) {
+        int i = 1;
+        while (i <= 4) {
+            if (this.getItem(i) == item) {
+                return i + 1;
+            }
+            i = i + 1;
         }
-        else
-        {
-            return false;
-        }
+        return -1;
     }
 
 }
 
 class Mastermind
 {
-    ColorList proposition;
-    ColorList solution;
+    ColorList proposition = new ColorList();
+    ColorList solution = new ColorList();
     int nbEssais = 0;
 
     void initSolution()
     {
         int color; 
         int i = 1;
-
         while(i <= 4)
         {
             color = Math.getRandomNumber();
             solution.setItem(color, i);
             i = i + 1;
-
         }
-        
     }
 
     void initProposition()
@@ -171,49 +169,59 @@ class Mastermind
         proposition.printList();
     }
 
-    void printResult()
-    {
+    void printResult() {
         int i = 1;
         int j = 1;
         int nbBienPlace = 0;
         int nbMalPlace = 0;
-        while(i <= 4)
-        {
-            if(proposition.getItem(i) == solution.getItem(i))
-            {
+        int colorProposition;
+        int colorSolution;
+        CheckList correctPosition = new CheckList();
+        CheckList correctDigit = new CheckList();
+
+        // Check for correct position and digit
+        while (i <= 4) {
+            if (proposition.getItem(i) == solution.getItem(i)) {
                 nbBienPlace = nbBienPlace + 1;
-            }
-            else if(solution.contains(proposition.getItem(i)))
-            {
-                nbMalPlace = nbMalPlace + 1;
+                correctPosition.setItem(true, i);
+                correctDigit.setItem(true, i);
             }
             i = i + 1;
         }
+        i = 1;
+        while (i <= 4) {
+            if (!correctPosition.getItem(i)) {
+                j = 1;
+                while (j <= 4) {
+                    if (!correctDigit.getItem(j) && proposition.getItem(i) == solution.getItem(j)) {
+                        nbMalPlace = nbMalPlace + 1;
+                        correctDigit.setItem(true, j);
+                        j = 5;
+                    }
+                    j = j + 1;
+                }
+            }
+            i = i + 1;
+        }
+
         println("Nombre de couleurs bien placees : " + nbBienPlace);
         println("Nombre de couleurs mal placees : " + nbMalPlace);
     }
 
-    boolean isWin()
-    {
-        if(proposition.equalsList(solution))
-        {
+    boolean isWin() {
+        if (proposition.equalsList(solution)) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
-    int play()
-    {
+    int play() {
         initSolution();
-        while(nbEssais < 10)
-        {
+        while (nbEssais < 10) {
             initProposition();
             printResult();
-            if(isWin())
-            {
+            if (isWin()) {
                 println("Vous avez gagne !");
                 return 1;
             }
