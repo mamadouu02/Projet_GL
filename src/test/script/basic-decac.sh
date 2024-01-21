@@ -48,14 +48,14 @@ if [ "$?" -ne 1 ]; then
     exit 1
 fi
 
-decac_moins_p=$(decac -p src/test/deca/context/valid/hello-world.deca)
+decac_moins_p=$(decac -p src/test/deca/context/valid/provided/hello-world.deca)
 
 if [ "$?" -ne 0 ]; then
     echo "ERREUR: decac -p a termine avec un status different de 0."
     exit 1
 fi
 
-if decac -p src/test/deca/context/valid/hello-world.deca 2>&1 |
+if decac -p src/test/deca/context/valid/provided/hello-world.deca 2>&1 |
     grep -q -e 'println("Hello, world!");'; then
     echo "Pas de probleme detecte avec decac -p."
 else
@@ -70,7 +70,7 @@ if [ "$?" -ne 1 ]; then
     exit 1
 fi
 
-decac_moins_v=$(decac -v src/test/deca/context/valid/hello-world.deca)
+decac_moins_v=$(decac -v src/test/deca/context/valid/provided/hello-world.deca)
 
 if [ "$?" -ne 0 ]; then
     echo "ERREUR: decac -v a termine avec un status different de 0."
