@@ -1,8 +1,13 @@
 // Description:
-//    test de l'inclusion de la classe Math
+//    test de la creation et de l'utilisation de classes avec heritage
 //
 // Resultats:
-//
+//6
+//6
+//3
+//10
+//24
+//4
 // Historique:
 //  Cree le 12/01/2024
 
