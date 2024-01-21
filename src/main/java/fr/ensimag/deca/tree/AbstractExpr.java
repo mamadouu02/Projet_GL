@@ -91,19 +91,17 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param expectedType corresponds to the "type1" attribute            
      * @return this with an additional ConvFloat if needed...
      */
-    public AbstractExpr  verifyRValue(DecacCompiler compiler,
-            EnvironmentExp localEnv, ClassDefinition currentClass, 
+    public AbstractExpr verifyRValue(DecacCompiler compiler,
+            EnvironmentExp localEnv, ClassDefinition currentClass,
             Type expectedType)
             throws ContextualError {
-        Type type2 = verifyExpr(compiler,localEnv,currentClass);
-        if(type2.isClass() && expectedType.isClass() && type2.asClassType("", getLocation()).isSubClassOf(expectedType.asClassType("", getLocation()))){
-
-            setType(expectedType.asClassType("",getLocation()));
-            return this ;
-
-        }
-        else if(expectedType.isFloat() && type2.isInt()) {
-            AbstractExpr floattype = new ConvFloat(this) ;
+        Type type2 = verifyExpr(compiler, localEnv, currentClass);
+        if (type2.isClass() && expectedType.isClass()
+                && type2.asClassType("", getLocation()).isSubClassOf(expectedType.asClassType("", getLocation()))) {
+            setType(expectedType.asClassType("", getLocation()));
+            return this;
+        } else if (expectedType.isFloat() && type2.isInt()) {
+            AbstractExpr floattype = new ConvFloat(this);
             floattype.setType(compiler.environmentType.FLOAT);
             return floattype;
         } else if (expectedType.sameType(type2)) {

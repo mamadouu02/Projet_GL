@@ -24,7 +24,6 @@ public class Selection extends AbstractLValue {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
         Type type2 = expr.verifyExpr(compiler, localEnv, currentClass);
         //if(currentClass == null)
         ClassType c_type2 = type2.asClassType("ce n'est pas une classe", getLocation());
@@ -50,7 +49,6 @@ public class Selection extends AbstractLValue {
         expr.decompile(s);
         s.print(".");
         ident.decompile(s);
-
     }
 
     @Override

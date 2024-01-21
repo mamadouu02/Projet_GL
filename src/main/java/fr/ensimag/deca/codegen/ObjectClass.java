@@ -31,7 +31,11 @@ public class ObjectClass {
         compiler.addComment("Code de la méthode equals dans la classe Object");
         compiler.addLabel(new Label("code.Object.equals"));
         compiler.addInstruction(new TSTO(2));
-        compiler.addInstruction(new BOV(new Label("null_dereferencing_error")));
+
+        if (compiler.getCompilerOptions().getCheck()) {
+            compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
+        }
+        
         compiler.addComment("Sauvegarde des registres");
         compiler.addInstruction(new PUSH(Register.getR(2)));
         compiler.addInstruction(new PUSH(Register.getR(3)));
@@ -59,11 +63,11 @@ public class ObjectClass {
         compiler.getClassAdresses().put(name, new RegisterOffset(compiler.getD(), Register.GB));
 
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), new RegisterOffset(compiler.getD(), Register.GB)));
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(compiler.getD(), Register.GB)));
         compiler.incrD();
 
         compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), new RegisterOffset(compiler.getD(), Register.GB)));
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(compiler.getD(), Register.GB)));
         compiler.incrD();
     }
 }

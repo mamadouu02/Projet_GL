@@ -15,7 +15,6 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     public void decompile(IndentPrintStream s) {
         for (AbstractDeclField f : getList()) {
             f.decompile(s);
-            s.println();
         }
     }
 
@@ -38,7 +37,6 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
      * Pass 3 of [SyntaxeContextuelle]
      */
     public void verifyListFieldBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
         for (AbstractDeclField declfield : this.getList()) {
             declfield.verifyDeclFieldBody(compiler, currentClass);
             // envExpR.declare();

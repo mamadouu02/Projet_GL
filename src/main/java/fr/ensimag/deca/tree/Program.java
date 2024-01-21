@@ -68,6 +68,7 @@ public class Program extends AbstractProgram {
         compiler.addComment("--------------------------------------------------");
         compiler.addComment("                 Messages d'erreur");
         compiler.addComment("--------------------------------------------------");
+
         if (compiler.getCompilerOptions().getCheck()) {
             if (compiler.getError(0)) {
                 compiler.addLabel(new Label("zero_division_error"));
@@ -85,11 +86,18 @@ public class Program extends AbstractProgram {
 
             if (compiler.getError(2)) {
                 compiler.addLabel(new Label("overflow_error"));
-                compiler.addInstruction(new WSTR("Error: Overflow during float arithmetic operation or Float division by zero"));
+                compiler.addInstruction(new WSTR("Error: Overflow during float arithmetic operation or float division by zero"));
                 compiler.addInstruction(new WNL());
                 compiler.addInstruction(new ERROR());
             }
 
+            if (compiler.getError(4)) {
+                compiler.addLabel(new Label("null_dereferencing_error"));
+                compiler.addInstruction(new WSTR("Error: dereferencing a null pointer"));
+                compiler.addInstruction(new WNL());
+                compiler.addInstruction(new ERROR());
+            }
+            
             compiler.addLabel(new Label("stack_overflow_error"));
             compiler.addInstruction(new WSTR("Error: Stack Overflow"));
             compiler.addInstruction(new WNL());
@@ -103,10 +111,6 @@ public class Program extends AbstractProgram {
             compiler.addInstruction(new ERROR());
         }
 
-        compiler.addLabel(new Label("null_dereferencing_error"));
-        compiler.addInstruction(new WSTR("Error: dereferencing a null pointer"));
-        compiler.addInstruction(new WNL());
-        compiler.addInstruction(new ERROR());
     }
 
     @Override

@@ -20,16 +20,14 @@ import fr.ensimag.deca.context.EnvironmentExp;
  */
 
 public class MethodBody extends AbstractMethodBody {
-    final private ListDeclVar decls;
-    final private ListInst insts;
+    private ListDeclVar decls;
+    private ListInst insts;
 
     public MethodBody(ListDeclVar decls, ListInst insts) {
-
         Validate.notNull(decls);
         Validate.notNull(insts);
         this.decls = decls;
         this.insts = insts;
-
     }
 
     @Override
@@ -39,11 +37,10 @@ public class MethodBody extends AbstractMethodBody {
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type type_return)
+    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type typeReturn)
             throws ContextualError {
-        //throw new UnsupportedOperationException("not yet implemented");
         decls.verifyListDeclVariable(compiler, compiler.environmentExp, currentClass);
-        insts.verifyListInst(compiler, compiler.environmentExp, currentClass,type_return);
+        insts.verifyListInst(compiler, compiler.environmentExp, currentClass,typeReturn);
     }
 
     @Override
@@ -59,8 +56,12 @@ public class MethodBody extends AbstractMethodBody {
 
     @Override
     public void decompile(IndentPrintStream s) {
+        s.println(" {");
+        s.indent();
         decls.decompile(s);
         insts.decompile(s);
+        s.unindent();
+        s.println("}");
     }
 
 }

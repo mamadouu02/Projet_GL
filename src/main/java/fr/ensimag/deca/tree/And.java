@@ -24,7 +24,7 @@ public class And extends AbstractOpBool {
     @Override
     protected void code(DecacCompiler compiler, boolean b, Label label) {
         if (b) {
-            Label endLabel = new Label("E_Fin." + compiler.getLabelNumber());
+            Label endLabel = new Label("E_Fin_And." + compiler.getLabelNumber());
             
             if (getLeftOperand().dVal() == null && !(getLeftOperand() instanceof AbstractOpCmp)) {
                 getLeftOperand().codeGenExpr(compiler);
