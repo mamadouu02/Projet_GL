@@ -39,7 +39,7 @@ public class Or extends AbstractOpBool {
                 getRightOperand().code(compiler, true, label);
             }
         } else {
-            Label endLabel = new Label("E_Fin." + compiler.getLabelNumber());
+            Label endLabel = new Label("E_Fin_Or." + compiler.getLabelNumber());
 
             if (getLeftOperand().dVal() == null && !(getLeftOperand() instanceof AbstractOpCmp)) {
                 getLeftOperand().codeGenExpr(compiler);
