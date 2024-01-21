@@ -33,7 +33,13 @@ public class Return extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
+        if(returnType.isVoid()){
+            throw new ContextualError("Votre fonction ne renvoie rien", getLocation());
+        }
+        else {
+            expr.verifyRValue(compiler, currentClass.getMembers(), currentClass, returnType);
+        }
 
     }
 

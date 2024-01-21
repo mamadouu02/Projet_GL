@@ -11,6 +11,10 @@ public abstract class AbstractDeclField extends Tree {
             , ClassDefinition currentClass)
             throws ContextualError;
 
+    protected abstract void verifyDeclFieldBody(DecacCompiler compiler
+            , ClassDefinition currentClass)
+            throws ContextualError;
+
     protected abstract void codeGenDeclField(DecacCompiler compiler);
 
 }

@@ -48,6 +48,14 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
         return sig;
     }
 
+    void verifyListDeclParamBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)throws ContextualError{
+        for (AbstractDeclParam param : this.getList()) {
+            param.verifyDeclParamBody(compiler, localEnv, currentClass);
+
+        }
+
+    }
+
     public void codeGenListDeclParam(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");
     }

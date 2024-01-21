@@ -68,6 +68,18 @@ public class DeclField extends AbstractDeclField {
         // init.verifyInitialization(compiler, typeVerified, currentClass.getMembers(),
         // currentClass);
     }
+    protected void verifyDeclFieldBody(DecacCompiler compiler, ClassDefinition currentClass)
+            throws ContextualError {
+
+        Type typeVerified = this.type.verifyType(compiler);
+        init.verifyInitialization(compiler, typeVerified, currentClass.getMembers(), currentClass);
+
+        //name.setDefinition();
+
+
+
+    }
+
 
     @Override
     protected void iterChildren(TreeFunction f) {

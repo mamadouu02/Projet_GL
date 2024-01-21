@@ -36,7 +36,10 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
      * Pass 3 of [SyntaxeContextuelle]
      */
     public void verifyListMethodBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
+        for (AbstractDeclMethod method : this.getList()) {
+            method.verifyDeclMethodBody(compiler, currentClass);
+        }
 
     }
 

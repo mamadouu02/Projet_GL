@@ -63,9 +63,11 @@ public class DeclMethod extends AbstractDeclMethod {
                     .isSubClassOf(type2.asClassType("Override impossible, verifiez  type que renvoie votre fonction",
                             getLocation())))) {
                 try {
-                    currentClass.getMembers().declare(name.getName(), defMethode);
+                    MethodDefinition m_def = new MethodDefinition(type2, getLocation(), sig, defMethode.getIndex());
+                    currentClass.getMembers().declare(name.getName(), m_def);
                     name.setDefinition(defMethode);
-                    // currentClass.incNumberOfFields();
+                    //currentClass.incNumberOfMethods();
+
                 } catch (EnvironmentExp.DoubleDefException e) {
                     throw new ContextualError("methode déjà definie", getLocation());
                 }
@@ -79,9 +81,9 @@ public class DeclMethod extends AbstractDeclMethod {
             }
         } else if (def == null) {
             try {
-                int indexPrevious = currentClass.getNumberOfFields();
+                int indexPrevious = currentClass.getNumberOfMethods();
                 MethodDefinition mDef = new MethodDefinition(typeReturn, getLocation(), sig, indexPrevious + 1);
-                currentClass.incNumberOfFields();
+                currentClass.incNumberOfMethods();
                 currentClass.getMembers().declare(name.getName(), mDef);
                 name.setDefinition(mDef);
             } catch (EnvironmentExp.DoubleDefException e) {
@@ -90,6 +92,16 @@ public class DeclMethod extends AbstractDeclMethod {
         }
     }
 
+
+    protected void verifyDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass)
+            throws ContextualError {
+        Type typeVer = type.verifyType(compiler);
+        EnvironmentExp env_exp_param = new EnvironmentExp(currentClass.getMembers());
+        params.verifyListDeclParamBody(compiler, env_exp_param ,currentClass);
+        body.verifyMethodBody(compiler,env_exp_param,currentClass, typeVer);
+
+
+    }
     @Override
     protected void iterChildren(TreeFunction f) {
         type.iter(f);

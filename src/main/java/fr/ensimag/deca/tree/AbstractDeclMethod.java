@@ -12,6 +12,11 @@ public abstract class AbstractDeclMethod extends Tree {
             , ClassDefinition currentClass)
             throws ContextualError;
 
+    protected abstract void verifyDeclMethodBody(DecacCompiler compiler
+            , ClassDefinition currentClass)
+            throws ContextualError;
+
+
     public abstract void codeGenMethodTable(DecacCompiler compiler, String className);
 
     public abstract void codeGenMethod(DecacCompiler compiler, Symbol className);

@@ -79,8 +79,8 @@ public class DeclClass extends AbstractDeclClass {
             ClassDefinition cdef  = (ClassDefinition) def;
             ClassType ct = new ClassType(name.getName(), getLocation(),cdef);
 
-            ct.getDefinition().setNumberOfMethods(cdef.getNumberOfMethods());
-            ct.getDefinition().setNumberOfFields(cdef.getNumberOfFields());
+            //ct.getDefinition().setNumberOfMethods(cdef.getNumberOfMethods());
+            //ct.getDefinition().setNumberOfFields(cdef.getNumberOfFields());
 
             env_types.declare_type(name.getName(), ct.getDefinition());
             name.setDefinition(ct.getDefinition());
@@ -96,8 +96,8 @@ public class DeclClass extends AbstractDeclClass {
             throws ContextualError {
         ClassDefinition def = (ClassDefinition) compiler.environmentType.defOfType(name.getName());
 
-        // def.setNumberOfFields(def.getSuperClass().getNumberOfFields());
-        // def.setNumberOfMethods(def.getSuperClass().getNumberOfMethods());
+         def.setNumberOfFields(def.getSuperClass().getNumberOfFields());
+         def.setNumberOfMethods(def.getSuperClass().getNumberOfMethods());
 
         fields.verifyListFieldMembers(compiler, def);
         methods.verifyListMethodMembers(compiler, def);
@@ -111,7 +111,17 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
+
+        ClassDefinition current_def = (ClassDefinition) compiler.environmentType.defOfType(name.getName());
+
+        //EnvironmentExp env_exp = current_def.getMembers();
+
+        fields.verifyListFieldBody(compiler, current_def);
+        methods.verifyListMethodBody(compiler, current_def);
+
+
+
     }
 
     @Override
