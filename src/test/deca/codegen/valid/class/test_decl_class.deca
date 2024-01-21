@@ -10,6 +10,9 @@ class B
 {
     protected int a;
     int b;
+    void f()
+    {
+    }
 }
 
 class A extends B
