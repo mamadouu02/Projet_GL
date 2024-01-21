@@ -50,10 +50,8 @@ public class DeclClass extends AbstractDeclClass {
     public void decompile(IndentPrintStream s) {
         s.print("class ");
         name.decompile(s);
-        if (superClass != null) {
-            s.print(" extends ");
-            superClass.decompile(s);
-        }
+        s.print(" extends ");
+        superClass.decompile(s);
         s.println(" {");
         s.indent();
         fields.decompile(s);

@@ -15,10 +15,8 @@ public class InstanceOf extends AbstractExpr {
     private AbstractIdentifier ident;
 
     public InstanceOf(AbstractExpr expr, AbstractIdentifier ident) {
-
         this.expr = expr;
         this.ident = ident;
-
     }
 
     @Override
@@ -30,7 +28,6 @@ public class InstanceOf extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
-
     }
 
     @Override
@@ -40,20 +37,16 @@ public class InstanceOf extends AbstractExpr {
         s.print(" instanceof ");
         ident.decompile(s);
         s.print(")");
-
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-
         expr.iter(f);
         ident.iter(f);
-
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-
         expr.prettyPrint(s, prefix, false);
         ident.prettyPrint(s, prefix, true);
     }

@@ -42,7 +42,6 @@ public class DeclParam extends AbstractDeclParam {
         type.decompile(s);
         s.print(" ");
         name.decompile(s);
-        s.println(";");
     }
 
     @Override

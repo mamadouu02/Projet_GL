@@ -20,25 +20,16 @@ import fr.ensimag.deca.context.EnvironmentExp;
  */
 
 public class MethodBodyAsm extends AbstractMethodBody {
-    final private String code;
+    private AbstractStringLiteral code;
 
-    public MethodBodyAsm(String code) {
-
+    public MethodBodyAsm(StringLiteral code) {
         Validate.notNull(code);
         this.code = code;
-
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        s.print(prefix);
-        s.println(code);
-
-    }
-
-    @Override
-    String prettyPrintNode() {
-        return "asm (" + code + ")";
+        code.prettyPrint(s, prefix, true);
     }
 
     @Override
@@ -54,12 +45,14 @@ public class MethodBodyAsm extends AbstractMethodBody {
 
     @Override
     protected void iterChildren(TreeFunction f) {
-
+        code.iter(f);
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print(code);
+        s.print(" asm(");
+        code.decompile(s);
+        s.println("};");
     }
 
 }
