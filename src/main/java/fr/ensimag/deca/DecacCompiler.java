@@ -1,5 +1,6 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.VTable;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
@@ -50,6 +51,7 @@ public class DecacCompiler {
     private int tstoMax;
     private int addSP;
     private Map<Symbol,DAddr> classAdresses;
+    private VTable vTable;
 
 	private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
@@ -76,6 +78,7 @@ public class DecacCompiler {
         this.tstoMax = 2;
         this.addSP = 2;
         this.classAdresses = new HashMap<>();
+        this.vTable= new VTable(this);
     }
 
     /**
@@ -143,6 +146,10 @@ public class DecacCompiler {
     public Map<Symbol, DAddr> getClassAdresses() {
 		return classAdresses;
 	}
+
+    public VTable getVTable() {
+        return vTable;
+    }
 
     /**
      * Source file associated with this compiler instance.

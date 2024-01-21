@@ -12,7 +12,7 @@ public abstract class AbstractDeclMethod extends Tree {
             , ClassDefinition currentClass)
             throws ContextualError;
 
-    public abstract void codeGenMethodTable(DecacCompiler compiler, String className);
+    public abstract void codeGenMethodTable(DecacCompiler compiler, Symbol className);
 
     public abstract void codeGenMethod(DecacCompiler compiler, Symbol className);
 }

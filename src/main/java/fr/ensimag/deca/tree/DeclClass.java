@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.VTable;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentType;
@@ -136,21 +137,39 @@ public class DeclClass extends AbstractDeclClass {
         compiler.addInstruction(new STORE(Register.R0, classAddr));
         compiler.incrD();
         
-        compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(compiler.getD(), Register.GB)));
-        compiler.incrD();
-
-        compiler.setADDSP(compiler.getADDSP() + 2);
-        compiler.setTSTOCurr(compiler.getTSTOCurr() + 2);
+        compiler.setADDSP(compiler.getADDSP() + 1);
+        compiler.setTSTOCurr(compiler.getTSTOCurr() + 1);
         
         if (compiler.getTSTOCurr() > compiler.getTSTOMax()) {
             compiler.setTSTOMax(compiler.getTSTOCurr());
         }
+        
+        int n = name.getClassDefinition().getNumberOfMethods();
+        VTable vTable = compiler.getVTable();
+        vTable.put(name.getName(), new Label[n]);
+        Label list[] = vTable.get(superClass.getName());
 
-        for (AbstractDeclMethod i : methods.getList()) {
-            i.codeGenMethodTable(compiler, name.getName().getName());
+        for (int i = 0; i < list.length; i++) {
+            vTable.get(name.getName())[i] = list[i];
         }
 
+        for (AbstractDeclMethod i : methods.getList()) {
+            i.codeGenMethodTable(compiler, name.getName());
+        }
+
+        list = vTable.get(name.getName());
+
+        for (Label l : list) {
+            compiler.addInstruction(new LOAD(new LabelOperand(l), Register.R0));
+            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(compiler.getD(), Register.GB)));
+            compiler.incrD();
+            compiler.setADDSP(compiler.getADDSP() + 1);
+            compiler.setTSTOCurr(compiler.getTSTOCurr() + 1);
+            
+            if (compiler.getTSTOCurr() > compiler.getTSTOMax()) {
+                compiler.setTSTOMax(compiler.getTSTOCurr());
+            }
+        }
     }
 
     @Override

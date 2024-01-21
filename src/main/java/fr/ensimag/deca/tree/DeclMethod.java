@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.VTable;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.Label;
@@ -109,19 +110,12 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    public void codeGenMethodTable(DecacCompiler compiler, String className) {
-        compiler.addInstruction(new LOAD(new LabelOperand(new Label("code." + className + "." + name.getName().getName())), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(compiler.getD(), Register.GB)));
-        compiler.incrD();
-        MethodDefinition mdef = name.getMethodDefinition();
-        System.out.println("Index de la methode "+ name.getName() + " de la classe "+ className + "  : "+ mdef.getIndex());
-        compiler.setADDSP(compiler.getADDSP() + 1);
-        compiler.setTSTOCurr(compiler.getTSTOCurr() + 1);
-        
-        if (compiler.getTSTOCurr() > compiler.getTSTOMax()) {
-            compiler.setTSTOMax(compiler.getTSTOCurr());
-        }
-
+    public void codeGenMethodTable(DecacCompiler compiler, Symbol className) {
+        MethodDefinition def = name.getMethodDefinition();
+        def.setLabel(new Label("code." + className + "." + name.getName()));
+        int i = def.getIndex();
+        VTable vTable = compiler.getVTable();
+        vTable.get(className)[i - 1] = def.getLabel();
     }
 
     @Override
@@ -131,7 +125,6 @@ public class DeclMethod extends AbstractDeclMethod {
         // body.codeGenMethodBody(compiler);
         // Restauration des registres
         // Sauvegarde des registres (addFirst)
-        compiler.addFirst("stack_overflow_error");
         // TSTO #d (addFirst)
         compiler.addFirst(new Label("code." + className + "." + name.getName()));
         compiler.addFirst("---------- Code de la methode " + name.getName() + " dans la classe " + className.getName() + " ----------");
