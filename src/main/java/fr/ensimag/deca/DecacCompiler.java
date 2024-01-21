@@ -65,9 +65,9 @@ public class DecacCompiler {
         setCurrentProgram(program);
         this.d = 1;
         this.idReg = 2;
-        this.errors = new boolean[4];
+        this.errors = new boolean[5];
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < errors.length; i++) {
             this.errors[i] = false;
         }
         

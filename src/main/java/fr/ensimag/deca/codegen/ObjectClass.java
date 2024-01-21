@@ -31,7 +31,11 @@ public class ObjectClass {
         compiler.addComment("Code de la méthode equals dans la classe Object");
         compiler.addLabel(new Label("code.Object.equals"));
         compiler.addInstruction(new TSTO(2));
-        compiler.addInstruction(new BOV(new Label("null_dereferencing_error")));
+
+        if (compiler.getCompilerOptions().getCheck()) {
+            compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
+        }
+        
         compiler.addComment("Sauvegarde des registres");
         compiler.addInstruction(new PUSH(Register.getR(2)));
         compiler.addInstruction(new PUSH(Register.getR(3)));

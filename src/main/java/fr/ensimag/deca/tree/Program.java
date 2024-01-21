@@ -91,10 +91,12 @@ public class Program extends AbstractProgram {
                 compiler.addInstruction(new ERROR());
             }
 
-            compiler.addLabel(new Label("null_dereferencing_error"));
-            compiler.addInstruction(new WSTR("Error: dereferencing a null pointer"));
-            compiler.addInstruction(new WNL());
-            compiler.addInstruction(new ERROR());
+            if (compiler.getError(4)) {
+                compiler.addLabel(new Label("null_dereferencing_error"));
+                compiler.addInstruction(new WSTR("Error: dereferencing a null pointer"));
+                compiler.addInstruction(new WNL());
+                compiler.addInstruction(new ERROR());
+            }
             
             compiler.addLabel(new Label("stack_overflow_error"));
             compiler.addInstruction(new WSTR("Error: Stack Overflow"));
