@@ -16,7 +16,7 @@ PASSED="[${GREEN}PASSED${NC}]"
 FAILED="[${RED}FAILED${NC}]"
 
 for f in $(find $DIR/valid -type f -name "*.deca"); do
-    if $LAUNCHER "$f" 2>&1 | grep -q -e ':[0-9][0-9]*:'; then
+    if $LAUNCHER "$f" 2>&1 | grep -q -e ":[0-9][0-9]*:"; then
         echo "$FAILED Echec inattendu: $LAUNCHER $f"
         exit 1
     else
