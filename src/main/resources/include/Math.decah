@@ -127,7 +127,7 @@ class Math {
         while (n < 100) {
             u1 = (u0 + f/u0)/2.0f;
             u0 = u1;
-            n++;
+            n = n + 1;
         }
     }
 
@@ -181,6 +181,15 @@ class Math {
         int res = (int) (a);
         return res;
     }
+
+    int getRandomNumber()
+        asm("
+            CLK
+            INT R1, R1
+            REM #4, R1
+            ADD #1, R1
+            LOAD R1, R0    
+        ");
 }
 
 
