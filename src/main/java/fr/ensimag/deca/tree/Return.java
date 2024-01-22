@@ -37,7 +37,7 @@ public class Return extends AbstractInst {
             throw new ContextualError("Votre fonction ne renvoie rien", getLocation());
         }
         else {
-            expr.verifyRValue(compiler, currentClass.getMembers(), currentClass, returnType);
+            expr.verifyRValue(compiler, localEnv, currentClass, returnType);
         }
 
     }

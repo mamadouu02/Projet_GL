@@ -42,7 +42,7 @@
 //             return x;
 //         }
 //         else{
-//             return null;
+//             return 0;
 //         }
 //     }
 // }
@@ -76,7 +76,7 @@
 //             return x;
 //         }
 //         else{
-//             return null;
+//             return 0;
 //         }
 //     }
 // }
