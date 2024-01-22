@@ -9,13 +9,10 @@
 
 // Un exemple de programme Deca
 
-class A extends Object {
-   protected int x, y = 1 ;
-   float z = 1.0 ;
-
-   int getX(int y) {
-      int x = 1 ;
-      x = x + 1 ;
+class A {
+   protected int x ;
+   int getX() {
+      return x ;
    }
    void setX(int x) {
       this.x = x ;

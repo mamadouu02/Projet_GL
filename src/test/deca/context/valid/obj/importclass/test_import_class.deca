@@ -1,101 +1,101 @@
-// // Description:
-// //    test de l'heritage et de l'utilisation d'une classe
-// //
-// // Resultats:
-// //
-// // Historique:
-// //  Cree le 12/01/2024
+// Description:
+//    test de l'heritage et de l'utilisation d'une classe
+//
+// Resultats:
+//
+// Historique:
+//  Cree le 12/01/2024
 
 
-// class Test{
-//     int a;
-//     int b;
-//     int c;
+class Test{
+    int a;
+    int b;
+    int c;
 
-//     void Test(int a, int b, int c){
-//         this.a = a;
-//         this.b = b;
-//         this.c = c;
-//     }
+    void Test(int a, int b, int c){
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
 
-//     int sum(){
-//         return a + b + c;
-//     }
+    int sum(){
+        return a + b + c;
+    }
 
-//     int product(){
-//         return a * b * c;
-//     }
+    int product(){
+        return a * b * c;
+    }
 
-//     int max(){
-//         int max = a;
-//         if(b > max){
-//             max = b;
-//         }
-//         if(c > max){
-//             max = c;
-//         }
-//         return max;
-//     }
+    int max(){
+        int max = a;
+        if(b > max){
+            max = b;
+        }
+        if(c > max){
+            max = c;
+        }
+        return max;
+    }
 
-//     int isGreaterThan(int x){
-//         if(x > this.c){
-//             return x;
-//         }
-//         else{
-//             return 0;
-//         }
-//     }
-// }
+    int isGreaterThan(int x){
+        if(x > this.c){
+            return x;
+        }
+        else{
+            return 0;
+        }
+    }
+}
 
-// class TestSon extends Test{
-//     int d;
+class TestSon extends Test{
+    int d;
 
-//     void TestSon(int a, int b, int c, int d){
-//         this.Test(a, b, c);
-//         this.d = d;
-//     }
+    void TestSon(int a, int b, int c, int d){
+        this.Test(a, b, c);
+        this.d = d;
+    }
 
-//     int sum(){
-//         return this.sum() + d;
-//     }
+    int sum(){
+        return this.sum() + d;
+    }
 
-//     int product(){
-//         return this.product() * d;
-//     }
+    int product(){
+        return this.product() * d;
+    }
 
-//     int max(){
-//         int max = this.max();
-//         if(d > max){
-//             max = d;
-//         }
-//         return max;
-//     }
+    int max(){
+        int max = this.max();
+        if(d > max){
+            max = d;
+        }
+        return max;
+    }
 
-//     int isGreaterThan(int x){
-//         if(x > this.d){
-//             return x;
-//         }
-//         else{
-//             return 0;
-//         }
-//     }
-// }
+    int isGreaterThan(int x){
+        if(x > this.d){
+            return x;
+        }
+        else{
+            return 0;
+        }
+    }
+}
     
-// {
-//     // Test t = new Test();
-//     // TestSon ts = new TestSon();
+{
+    // Test t = new Test();
+    // TestSon ts = new TestSon();
 
-//     // int x;
-//     // t.Test(1, 2, 3);
-//     // println("sum = " + t.sum());
-//     // println("product = " + t.product());
-//     // println("max = " + t.max());
-//     // x = t.isGreaterThan(1);
+    // int x;
+    // t.Test(1, 2, 3);
+    // println("sum = " + t.sum());
+    // println("product = " + t.product());
+    // println("max = " + t.max());
+    // x = t.isGreaterThan(1);
 
 
-//     // ts.TestSon(1, 2, 3, 4);
-//     // println("sum = " + ts.sum());
-//     // println("product = " + ts.product());
-//     // println("max = " + ts.max());
-//     // x = ts.isGreaterThan(1);
-// }
+    // ts.TestSon(1, 2, 3, 4);
+    // println("sum = " + ts.sum());
+    // println("product = " + ts.product());
+    // println("max = " + ts.max());
+    // x = ts.isGreaterThan(1);
+}
