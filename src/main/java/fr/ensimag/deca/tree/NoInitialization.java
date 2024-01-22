@@ -22,6 +22,7 @@ public class NoInitialization extends AbstractInitialization {
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         // nothing
+
     }
 
 

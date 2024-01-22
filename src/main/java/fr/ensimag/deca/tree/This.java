@@ -31,8 +31,12 @@ public class This extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
-
+        if (currentClass == null) {
+            throw new ContextualError("Vous ne pouvez pas utilisez This dans le Main", getLocation());
+        }
+        Type returnType = currentClass.getType().asClassType("", getLocation());
+        setType(returnType);
+        return returnType;
     }
 
     @Override

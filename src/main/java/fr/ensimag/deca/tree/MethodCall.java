@@ -3,10 +3,7 @@ package fr.ensimag.deca.tree;
 import java.io.PrintStream;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 public class MethodCall extends AbstractExpr {
@@ -29,7 +26,40 @@ public class MethodCall extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Type type2 = expr.verifyExpr(compiler, localEnv, currentClass);
+        ClassType cType2 = type2.asClassType("Vous ne pouvez pas appelez la méthode sur ce type", getLocation());
+
+        // je sais si j en ai vraiment besoin , je sais pas si ca me renvoie cce que je
+        // pense vrmnt
+        ExpDefinition def = cType2.getDefinition().getMembers().get(ident.getName());
+        if (def != null) {
+            MethodDefinition mDefVrai = def.asMethodDefinition("Ce n'est pas une méthode ", getLocation());
+            Signature sigVrai = mDefVrai.getSignature();
+            int len = sigVrai.size();
+            if (list.getList().size() != len) {
+                throw new ContextualError("Verifiez le nombre de parametre de la fonctions " + ident.getName(),
+                        getLocation());
+            } else {
+                for (int i = 0; i < len; i++) {
+                    // Type typeParam = list.getList().get(i).verifyExpr(compiler, localEnv,
+                    // currentClass);
+                    Type expectedType = sigVrai.paramNumber(i);
+                    list.getList().get(i).verifyRValue(compiler, localEnv, currentClass, expectedType);
+
+                }
+                setType(mDefVrai.getType());
+                ident.setType(mDefVrai.getType());
+                ident.setDefinition(mDefVrai);
+                ident.setType(mDefVrai.getType());
+
+                return mDefVrai.getType();
+
+            }
+        } else {
+            throw new ContextualError("Methode " + ident.getName() + " non définie dans la classe "
+                    + cType2.getDefinition().getType().getName().toString(), getLocation());
+        }
+        // System.out.println(mDef.getSignature().isSameSignature(mDefVrai.getSignature()));
     }
 
     @Override

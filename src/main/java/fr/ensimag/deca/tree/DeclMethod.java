@@ -64,13 +64,11 @@ public class DeclMethod extends AbstractDeclMethod {
                     .isSubClassOf(type2.asClassType("Override impossible, verifiez  type que renvoie votre fonction",
                             getLocation())))) {
                 try {
-                    //currentClass.setNumberOfMethods(currentClass.getNumberOfMethods()+2);
-                    MethodDefinition m_def = new MethodDefinition(typeReturn, getLocation(), sig, defMethode.getIndex());
-                    currentClass.getMembers().declare(name.getName(), m_def);
-                    
-                    
+                    MethodDefinition mDef = new MethodDefinition(type2, getLocation(), sig, defMethode.getIndex());
+                    currentClass.getMembers().declare(name.getName(), mDef);
                     name.setDefinition(defMethode);
-                    
+                    // currentClass.incNumberOfMethods();
+
                 } catch (EnvironmentExp.DoubleDefException e) {
                     throw new ContextualError("methode déjà definie", getLocation());
                 }
@@ -81,9 +79,8 @@ public class DeclMethod extends AbstractDeclMethod {
             }
         } else if (def == null) {
             try {
-                //System.out.println(name.getName()+" "+ (currentClass.getNumberOfMethods() + 1));
-                int indexPrevious = currentClass.getNumberOfMethods() + 1;
-                MethodDefinition mDef = new MethodDefinition(typeReturn, getLocation(), sig, indexPrevious );
+                int indexPrevious = currentClass.getNumberOfMethods();
+                MethodDefinition mDef = new MethodDefinition(typeReturn, getLocation(), sig, indexPrevious + 1);
                 currentClass.incNumberOfMethods();
                 currentClass.getMembers().declare(name.getName(), mDef);
                 name.setDefinition(mDef);
@@ -93,6 +90,15 @@ public class DeclMethod extends AbstractDeclMethod {
         }
     }
 
+
+    protected void verifyDeclMethodBody(DecacCompiler compiler, ClassDefinition currentClass)
+            throws ContextualError {
+        Type typeVer = type.verifyType(compiler);
+        EnvironmentExp envExpParam = new EnvironmentExp(currentClass.getMembers());
+        params.verifyListDeclParamBody(compiler, envExpParam, currentClass);
+        body.verifyMethodBody(compiler, envExpParam, currentClass, typeVer);
+    }
+    
     @Override
     protected void iterChildren(TreeFunction f) {
         type.iter(f);

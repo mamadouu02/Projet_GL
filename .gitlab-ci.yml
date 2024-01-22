@@ -19,5 +19,8 @@ deploy-prod:
     - PATH=/home/gl/Projet_GL/src/main/bin:"$PATH" 
     - PATH=/home/gl/Projet_GL/src/test/script:"$PATH" 
     - PATH=/home/gl/Projet_GL/src/test/script/launchers:"$PATH" 
+    - PATH=/usr/local/ima/bin:"$PATH"
     - export PATH
-    - make test-python
+    - mvn test-compile
+    - mvn test
+    - mvn clean

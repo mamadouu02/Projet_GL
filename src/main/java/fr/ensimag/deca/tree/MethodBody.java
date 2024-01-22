@@ -37,9 +37,10 @@ public class MethodBody extends AbstractMethodBody {
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type typeReturn)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        decls.verifyListDeclVariable(compiler, localEnv, currentClass);
+        insts.verifyListInst(compiler, localEnv, currentClass,typeReturn);
     }
 
     @Override

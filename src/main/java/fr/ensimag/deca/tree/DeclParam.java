@@ -38,6 +38,21 @@ public class DeclParam extends AbstractDeclParam {
     }
 
     @Override
+    protected void verifyDeclParamBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+            throws ContextualError {
+        Type typeVer = type.verifyType(compiler);
+        ParamDefinition paramDefinition = new ParamDefinition(typeVer, getLocation());
+        try {
+            type.setType(typeVer);
+            name.setDefinition(paramDefinition);
+            localEnv.declare(name.getName(), paramDefinition);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Paramètre dèjà utilisé", getLocation());
+        }
+
+    }
+
+    @Override
     public void decompile(IndentPrintStream s) {
         type.decompile(s);
         s.print(" ");

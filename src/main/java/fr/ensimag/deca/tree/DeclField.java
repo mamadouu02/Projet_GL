@@ -26,7 +26,10 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print(visibility.toString().toLowerCase() + " ");
+        if (visibility == Visibility.PROTECTED) {
+            s.print(visibility.toString().toLowerCase() + " ");
+        }
+        
         type.decompile(s);
         s.print(" ");
         name.decompile(s);
@@ -66,6 +69,15 @@ public class DeclField extends AbstractDeclField {
         // init.verifyInitialization(compiler, typeVerified, currentClass.getMembers(),
         // currentClass);
     }
+    protected void verifyDeclFieldBody(DecacCompiler compiler, ClassDefinition currentClass)
+            throws ContextualError {
+
+        Type typeVerified = this.type.verifyType(compiler);
+        init.verifyInitialization(compiler, typeVerified, currentClass.getMembers(), currentClass);
+
+        //name.setDefinition();
+    }
+
 
     @Override
     protected void iterChildren(TreeFunction f) {

@@ -33,9 +33,10 @@ public class MethodBodyAsm extends AbstractMethodBody {
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
+    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type type_return)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
+
     }
 
     @Override
@@ -52,7 +53,7 @@ public class MethodBodyAsm extends AbstractMethodBody {
     public void decompile(IndentPrintStream s) {
         s.print(" asm(");
         code.decompile(s);
-        s.println("};");
+        s.println(");");
     }
 
 }

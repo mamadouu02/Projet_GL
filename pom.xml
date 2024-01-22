@@ -190,9 +190,19 @@
                 <!-- One <execution> per executable to launch. Execution
                     failure (exit status != 0) will stop the tests. -->
                     <execution>
-                        <id>basic-lex</id>
+                        <id>common-tests</id>
                         <configuration>
-                            <executable>./src/test/script/basic-lex.sh</executable>
+                            <executable>./src/test/script/common-tests.sh</executable>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-lex</id>
+                        <configuration>
+                            <executable>./src/test/script/test-lex.sh</executable>
                             <!-- If we need to pass arguments :
                                  <arguments>
                                  <argument>...</argument>
@@ -205,9 +215,9 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>basic-synt</id>
+                        <id>test-synt</id>
                         <configuration>
-                            <executable>./src/test/script/basic-synt.sh</executable>
+                            <executable>./src/test/script/test-synt.sh</executable>
                         </configuration>
                         <phase>test</phase>
                         <goals>
@@ -229,9 +239,9 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>basic-context</id>
+                        <id>test-context</id>
                         <configuration>
-                            <executable>./src/test/script/basic-context.sh</executable>
+                            <executable>./src/test/script/test-context.sh</executable>
                         </configuration>
                         <phase>test</phase>
                         <goals>
@@ -239,9 +249,9 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>basic-gencode</id>
+                        <id>test-gencode</id>
                         <configuration>
-                            <executable>./src/test/script/basic-gencode.sh</executable>
+                            <executable>./src/test/script/test-gencode.sh</executable>
                         </configuration>
                         <phase>test</phase>
                         <goals>
@@ -249,26 +259,16 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>basic-decac</id>
+                        <id>test-decac</id>
                         <configuration>
-                            <executable>./src/test/script/basic-decac.sh</executable>
+                            <executable>./src/test/script/test-decac.sh</executable>
                         </configuration>
                         <phase>test</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>common-tests</id>
-                        <configuration>
-                            <executable>./src/test/script/common-tests.sh</executable>
-                        </configuration>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                    <execution>
+                    <!-- <execution>
                         <id>python-test</id>
                         <configuration>
                             <executable>./src/test/script/tests.py</executable>
@@ -277,7 +277,7 @@
                         <goals>
                             <goal>exec</goal>
                         </goals>
-                    </execution>
+                    </execution> -->
                 </executions>
             </plugin>
 
