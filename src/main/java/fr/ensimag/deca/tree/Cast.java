@@ -26,7 +26,32 @@ public class Cast extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
+        Type type = ident.verifyType(compiler);
+        Type type2 = expr.verifyExpr(compiler, localEnv, currentClass);
+
+        if(type.isClass() && type2.isClass() )
+        {
+            if (type2.asClassType("", getLocation()).isSubClassOf(type.asClassType("", getLocation()))) {
+                setType(type.asClassType("", getLocation()));
+                return type.asClassType("", getLocation());
+            }
+            else if(type.asClassType("", getLocation()).isSubClassOf(type2.asClassType("", getLocation()))) {
+                setType(type.asClassType("", getLocation()));
+                return type.asClassType("", getLocation());
+        }
+        throw new ContextualError("Cast impossible", getLocation());
+        }
+        else if(type.isFloat() && type2.isInt()) {
+            setType(compiler.environmentType.FLOAT);
+            return compiler.environmentType.FLOAT;
+        }
+        else if(type.isInt() && type2.isFloat()){
+            setType(compiler.environmentType.INT);
+            return compiler.environmentType.INT;
+
+        }
+        throw new ContextualError("Cast impossible", getLocation());
 
     }
 
