@@ -17,18 +17,18 @@ FAILED="[${RED}FAILED${NC}]"
 
 for f in $DIR/valid/*/*.deca; do
     if $LAUNCHER "$f" 2>&1 | grep -q -e ":[0-9][0-9]*:"; then
-        echo "$FAILED Echec inattendu: $LAUNCHER $f"
+        echo "$FAILED Erreur inattendue: $LAUNCHER $f"
         exit 1
     else
-        echo "$PASSED Succes attendu: $LAUNCHER $f"
+        echo "$PASSED Analyse reussie: $LAUNCHER $f"
     fi
 done
 
 for f in $DIR/invalid/*/*.deca; do
     if $LAUNCHER "$f" 2>&1 | grep -q -e "$f:[0-9][0-9]*:[0-9][0-9]*:"; then
-        echo "$PASSED Echec attendu: $LAUNCHER $f"
+        echo "$PASSED Erreur bien detectee: $LAUNCHER $f"
     else
-        echo "$FAILED Succes inattendu: $LAUNCHER $f"
+        echo "$FAILED Erreur non detectee: $LAUNCHER $f"
         exit 1
     fi
 done
