@@ -79,6 +79,10 @@ class TestSon extends Test{
             return 0;
         }
     }
+
+    int product2(){
+        return product() * d;
+    }
 }
     
 {
