@@ -1,3 +1,8 @@
+test:
+	mvn test-compile
+	mvn test
+	mvn clean
+
 test-python:
 	src/test/script/install-python.sh
 	mvn clean

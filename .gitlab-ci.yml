@@ -20,6 +20,4 @@ deploy-prod:
     - PATH=/home/gl/Projet_GL/src/test/script:"$PATH" 
     - PATH=/home/gl/Projet_GL/src/test/script/launchers:"$PATH" 
     - export PATH
-    - mvn test-compile
-    - mvn test
-    - mvn clean
+    - make test
