@@ -28,9 +28,12 @@ public class ObjectClass {
         compiler.addComment("--------------------------------------------------");
         compiler.addComment("                   Classe Object");
         compiler.addComment("--------------------------------------------------");
-        compiler.addComment("Code de la méthode equals dans la classe Object");
+        compiler.addComment("---------- Initialisation des champs de Object ----------");
+        compiler.addLabel(new Label("init.Object"));
+        compiler.addInstruction(new RTS());
+        compiler.addComment("---------- Code de la méthode equals dans la classe Object ----------");
         compiler.addLabel(new Label("code.Object.equals"));
-        compiler.addInstruction(new TSTO(2));
+        /*compiler.addInstruction(new TSTO(2));
 
         if (compiler.getCompilerOptions().getCheck()) {
             compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
@@ -53,7 +56,7 @@ public class ObjectClass {
         compiler.addComment("Restauration des registres");
         compiler.addInstruction(new POP(Register.getR(2)));
         compiler.addInstruction(new POP(Register.getR(3)));
-        compiler.addInstruction(new RTS());
+        compiler.addInstruction(new RTS());*/
     }
 
     public static void codeGenMethodTable(DecacCompiler compiler) {

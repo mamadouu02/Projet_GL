@@ -5,6 +5,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 
 import org.apache.log4j.Logger;
 
@@ -47,8 +49,10 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
 
     public void codeGenListField(DecacCompiler compiler, Symbol className) {
         compiler.addComment("---------- Initialisation des champs de la classe " + className + " ----------");
+        compiler.addLabel(new Label("init." + className));
         for (AbstractDeclField f : getList()) {
             f.codeGenDeclField(compiler);
         }
+        compiler.addInstruction(new RTS());
     }
 }
