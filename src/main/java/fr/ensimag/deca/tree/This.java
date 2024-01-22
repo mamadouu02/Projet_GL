@@ -8,7 +8,6 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
-import org.apache.commons.lang.Validate;
 
 /**
  * 
@@ -18,16 +17,33 @@ import org.apache.commons.lang.Validate;
  */
 public class This extends AbstractExpr {
 
+    private boolean implicit;
+
+    public This(boolean implicit) {
+        this.implicit = implicit;
+    }
+
+    @Override
+    boolean isImplicit() {
+        return implicit;
+    }
+
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
-
+        if (currentClass == null) {
+            throw new ContextualError("Vous ne pouvez pas utilisez This dans le Main", getLocation());
+        }
+        Type returnType = currentClass.getType().asClassType("", getLocation());
+        setType(returnType);
+        return returnType;
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("this");
+        if (!implicit) {
+            s.print("this");
+        }
     }
 
     @Override

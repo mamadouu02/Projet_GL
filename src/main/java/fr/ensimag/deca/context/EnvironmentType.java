@@ -42,7 +42,7 @@ public class EnvironmentType {
 
         Signature signature = new Signature();
         signature.add(OBJECT);
-        MethodDefinition method = new MethodDefinition(BOOLEAN, Location.BUILTIN, signature, 0);
+        MethodDefinition method = new MethodDefinition(BOOLEAN, Location.BUILTIN, signature, 1);
         Symbol equalsSymb = compiler.createSymbol("equals");
 
         try {

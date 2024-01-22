@@ -5,6 +5,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 
 import org.apache.log4j.Logger;
 
@@ -15,7 +17,6 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     public void decompile(IndentPrintStream s) {
         for (AbstractDeclField f : getList()) {
             f.decompile(s);
-            s.println();
         }
     }
 
@@ -38,15 +39,20 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
      * Pass 3 of [SyntaxeContextuelle]
      */
     public void verifyListFieldBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        for (AbstractDeclField declfield : this.getList()) {
+            declfield.verifyDeclFieldBody(compiler, currentClass);
+            // envExpR.declare();
+        }
 
     }
 
 
     public void codeGenListField(DecacCompiler compiler, Symbol className) {
         compiler.addComment("---------- Initialisation des champs de la classe " + className + " ----------");
+        compiler.addLabel(new Label("init." + className));
         for (AbstractDeclField f : getList()) {
             f.codeGenDeclField(compiler);
         }
+        compiler.addInstruction(new RTS());
     }
 }

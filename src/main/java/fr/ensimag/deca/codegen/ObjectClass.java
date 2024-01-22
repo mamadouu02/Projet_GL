@@ -28,28 +28,35 @@ public class ObjectClass {
         compiler.addComment("--------------------------------------------------");
         compiler.addComment("                   Classe Object");
         compiler.addComment("--------------------------------------------------");
-        compiler.addComment("Code de la méthode equals dans la classe Object");
-        compiler.addLabel(new Label("code.Object.equals"));
-        compiler.addInstruction(new TSTO(2));
-        compiler.addInstruction(new BOV(new Label("null_dereferencing_error")));
-        compiler.addComment("Sauvegarde des registres");
-        compiler.addInstruction(new PUSH(Register.getR(2)));
-        compiler.addInstruction(new PUSH(Register.getR(3)));
-        compiler.addComment("Corps de la méthode");
-        compiler.addComment("TODO: this == object");
-        compiler.addInstruction(new BEQ(new Label("egalite")));
-        compiler.addInstruction(new LOAD(0, Register.R0));
-        compiler.addInstruction(new BRA(new Label("fin.Object.equals")));
-        compiler.addLabel(new Label("egalite"));
-        compiler.addInstruction(new LOAD(1, Register.R0));
-        compiler.addInstruction(new BRA(new Label("fin.Object.equals")));
-        compiler.addInstruction(new WSTR("Erreur : sortie de la méthode Object.equals sans return"));
-        compiler.addInstruction(new WNL());
-        compiler.addLabel(new Label("fin.Object.equals"));
-        compiler.addComment("Restauration des registres");
-        compiler.addInstruction(new POP(Register.getR(2)));
-        compiler.addInstruction(new POP(Register.getR(3)));
+        compiler.addComment("---------- Initialisation des champs de Object ----------");
+        compiler.addLabel(new Label("init.Object"));
         compiler.addInstruction(new RTS());
+        compiler.addComment("---------- Code de la méthode equals dans la classe Object ----------");
+        compiler.addLabel(new Label("code.Object.equals"));
+        // compiler.addInstruction(new TSTO(2));
+
+        // if (compiler.getCompilerOptions().getCheck()) {
+        //     compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
+        // }
+        
+        // compiler.addComment("Sauvegarde des registres");
+        // compiler.addInstruction(new PUSH(Register.getR(2)));
+        // compiler.addInstruction(new PUSH(Register.getR(3)));
+        // compiler.addComment("Corps de la méthode");
+        // compiler.addComment("TODO: this == object");
+        // compiler.addInstruction(new BEQ(new Label("egalite")));
+        // compiler.addInstruction(new LOAD(0, Register.R0));
+        // compiler.addInstruction(new BRA(new Label("fin.Object.equals")));
+        // compiler.addLabel(new Label("egalite"));
+        // compiler.addInstruction(new LOAD(1, Register.R0));
+        // compiler.addInstruction(new BRA(new Label("fin.Object.equals")));
+        // compiler.addInstruction(new WSTR("Erreur : sortie de la méthode Object.equals sans return"));
+        // compiler.addInstruction(new WNL());
+        // compiler.addLabel(new Label("fin.Object.equals"));
+        // compiler.addComment("Restauration des registres");
+        // compiler.addInstruction(new POP(Register.getR(2)));
+        // compiler.addInstruction(new POP(Register.getR(3)));
+        // compiler.addInstruction(new RTS());
     }
 
     public static void codeGenMethodTable(DecacCompiler compiler) {
@@ -59,11 +66,11 @@ public class ObjectClass {
         compiler.getClassAdresses().put(name, new RegisterOffset(compiler.getD(), Register.GB));
 
         compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), new RegisterOffset(compiler.getD(), Register.GB)));
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(compiler.getD(), Register.GB)));
         compiler.incrD();
 
         compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), new RegisterOffset(compiler.getD(), Register.GB)));
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(compiler.getD(), Register.GB)));
         compiler.incrD();
     }
 }

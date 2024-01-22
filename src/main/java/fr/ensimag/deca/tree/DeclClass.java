@@ -3,6 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ClassType;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.VTable;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentType;
@@ -50,10 +51,8 @@ public class DeclClass extends AbstractDeclClass {
     public void decompile(IndentPrintStream s) {
         s.print("class ");
         name.decompile(s);
-        if (superClass != null) {
-            s.print(" extends ");
-            superClass.decompile(s);
-        }
+        s.print(" extends ");
+        superClass.decompile(s);
         s.println(" {");
         s.indent();
         fields.decompile(s);
@@ -64,8 +63,8 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
-        EnvironmentType env_types = compiler.environmentType;
-        TypeDefinition def = env_types.defOfType(superClass.getName());
+        EnvironmentType envTypes = compiler.environmentType;
+        TypeDefinition def = envTypes.defOfType(superClass.getName());
 
         if (def == null) {
             throw new ContextualError("La classe mère n'existe pas", getLocation());
@@ -79,10 +78,10 @@ public class DeclClass extends AbstractDeclClass {
             ClassDefinition cdef  = (ClassDefinition) def;
             ClassType ct = new ClassType(name.getName(), getLocation(),cdef);
 
-            ct.getDefinition().setNumberOfMethods(cdef.getNumberOfMethods());
-            ct.getDefinition().setNumberOfFields(cdef.getNumberOfFields());
+            // ct.getDefinition().setNumberOfMethods(cdef.getNumberOfMethods());
+            // ct.getDefinition().setNumberOfFields(cdef.getNumberOfFields());
 
-            env_types.declare_type(name.getName(), ct.getDefinition());
+            envTypes.declare_type(name.getName(), ct.getDefinition());
             name.setDefinition(ct.getDefinition());
             superClass.setDefinition(def);
             name.setType(ct);
@@ -96,8 +95,8 @@ public class DeclClass extends AbstractDeclClass {
             throws ContextualError {
         ClassDefinition def = (ClassDefinition) compiler.environmentType.defOfType(name.getName());
 
-        // def.setNumberOfFields(def.getSuperClass().getNumberOfFields());
-        // def.setNumberOfMethods(def.getSuperClass().getNumberOfMethods());
+        def.setNumberOfFields(def.getSuperClass().getNumberOfFields());
+        def.setNumberOfMethods(def.getSuperClass().getNumberOfMethods());
 
         fields.verifyListFieldMembers(compiler, def);
         methods.verifyListMethodMembers(compiler, def);
@@ -111,7 +110,16 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+
+        ClassDefinition currentDef = (ClassDefinition) compiler.environmentType.defOfType(name.getName());
+
+        //EnvironmentExp envExp = currentDef.getMembers();
+
+        fields.verifyListFieldBody(compiler, currentDef);
+        methods.verifyListMethodBody(compiler, currentDef);
+
+
+
     }
 
     @Override
@@ -139,23 +147,42 @@ public class DeclClass extends AbstractDeclClass {
         DAddr classAddr = compiler.getClassAdresses().get(name.getName());
         DAddr superclassAddr = compiler.getClassAdresses().get(superClass.getName());
         compiler.addInstruction(new LEA(superclassAddr, Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), classAddr));
-        
-        compiler.addInstruction(new LOAD(new LabelOperand(new Label("code.Object.equals")), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), new RegisterOffset(compiler.getD(), Register.GB)));
+        compiler.addInstruction(new STORE(Register.R0, classAddr));
         compiler.incrD();
-
-        compiler.setADDSP(compiler.getADDSP() + 2);
-        compiler.setTSTOCurr(compiler.getTSTOCurr() + 2);
+        
+        compiler.setADDSP(compiler.getADDSP() + 1);
+        compiler.setTSTOCurr(compiler.getTSTOCurr() + 1);
         
         if (compiler.getTSTOCurr() > compiler.getTSTOMax()) {
             compiler.setTSTOMax(compiler.getTSTOCurr());
         }
+        
+        int n = name.getClassDefinition().getNumberOfMethods();
+        VTable vTable = compiler.getVTable();
+        vTable.put(name.getName(), new Label[n]);
+        Label list[] = vTable.get(superClass.getName());
 
-        for (AbstractDeclMethod i : methods.getList()) {
-            i.codeGenMethodTable(compiler, name.getName().getName());
+        for (int i = 0; i < list.length; i++) {
+            vTable.get(name.getName())[i] = list[i];
         }
 
+        for (AbstractDeclMethod i : methods.getList()) {
+            i.codeGenMethodTable(compiler, name.getName());
+        }
+
+        list = vTable.get(name.getName());
+
+        for (Label l : list) {
+            compiler.addInstruction(new LOAD(new LabelOperand(l), Register.R0));
+            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(compiler.getD(), Register.GB)));
+            compiler.incrD();
+            compiler.setADDSP(compiler.getADDSP() + 1);
+            compiler.setTSTOCurr(compiler.getTSTOCurr() + 1);
+            
+            if (compiler.getTSTOCurr() > compiler.getTSTOMax()) {
+                compiler.setTSTOMax(compiler.getTSTOCurr());
+            }
+        }
     }
 
     @Override

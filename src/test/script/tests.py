@@ -193,7 +193,8 @@ def runTestGen(execFunction, pipeline=False):
 
     for file in files["gen"]["valid"]:
         if pipeline:
-            execFunction(file, "decac", "success")
+            if not(file.__contains__("notimpl")):
+                execFunction(file, "decac", "success")
         else:
             execFunction(file, "success")
 

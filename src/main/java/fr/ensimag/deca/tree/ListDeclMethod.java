@@ -17,9 +17,8 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        for (AbstractDeclMethod f : getList()) {
-            f.decompile(s);
-            s.println();
+        for (AbstractDeclMethod m : getList()) {
+            m.decompile(s);
         }
     }
 
@@ -36,7 +35,9 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
      * Pass 3 of [SyntaxeContextuelle]
      */
     public void verifyListMethodBody(DecacCompiler compiler, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        for (AbstractDeclMethod method : this.getList()) {
+            method.verifyDeclMethodBody(compiler, currentClass);
+        }
 
     }
 
