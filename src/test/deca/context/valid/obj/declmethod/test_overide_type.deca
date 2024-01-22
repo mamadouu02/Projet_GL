@@ -2,13 +2,13 @@
 //    declaration d'une methode renvoyant un type incorrect
 //
 // Resultats:
-//   Override impossible, verifiez le type que renvoie votre fonction
-// 
+//   Override reussi
+//
 // Historique:
 //    cree le 01/01/2024
 
 class A{
-    int m(){
+    boolean m(){
     }
    }
 class B extends A {
