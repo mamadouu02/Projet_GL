@@ -1,30 +1,30 @@
-// // Description:
-// //    champs et methodes simples
-// //
-// // Resultats:
-// //    a.getX() = 1
-// //
-// // Historique:
-// //    cree le 01/01/2024
+// Description:
+//    champs et methodes simples
+//
+// Resultats:
+//    a.getX() = 1
+//
+// Historique:
+//    cree le 01/01/2024
 
-// // Un exemple de programme Deca
+// Un exemple de programme Deca
 
-// class A extends Object {
-//    protected int x, y = 1 ;
-//    float z = 1.0 ;
+class A extends Object {
+   protected int x, y = 1 ;
+   float z = 1.0 ;
 
-//    int getX(int y) {
-//       int x = 1 ;
-//       x = x + 1 ;
-//    }
-//    void setX(int x) {
-//       this.x = x ;
-//    }
-// }
+   int getX(int y) {
+      int x = 1 ;
+      x = x + 1 ;
+   }
+   void setX(int x) {
+      this.x = x ;
+   }
+}
 
-// {
-//    A a = new A() ;
+{
+   A a = new A() ;
 
-//    a.setX(1) ;
-//    println("a.getX() = ", a.getX()) ;
-// }
+   a.setX(1) ;
+   println("a.getX() = ", a.getX()) ;
+}
