@@ -2,15 +2,13 @@
 //    declaration d'une methode renvoyant un type incorrect
 //
 // Resultats:
-//   Override impossible, verifiez le type que renvoie votre fonction
-// 
+//   Parametre deja utilisée
+//
 // Historique:
 //    cree le 01/01/2024
 
 class A{
-    int m(){
+    void  m(float x, boolean x){
     }
    }
-class B extends A {
-    boolean m(){}
-}
+

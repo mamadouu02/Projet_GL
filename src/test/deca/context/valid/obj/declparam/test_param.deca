@@ -12,3 +12,7 @@ class A{
     void b(int a, float b, boolean c){
     }
 }
+
+class B{
+    A a = new A();
+}

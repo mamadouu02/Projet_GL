@@ -16,4 +16,15 @@ class A{
     }
     boolean d(){
     }
+
+    int test(int a, int b){
+
+    }
+}
+
+
+class B extends A{
+    int test(int a, int b){
+
+    }
 }
