@@ -32,7 +32,15 @@ public class MethodCall extends AbstractExpr {
         // je sais si j en ai vraiment besoin , je sais pas si ca me renvoie cce que je
         // pense vrmnt
         ExpDefinition def = cType2.getDefinition().getMembers().get(ident.getName());
-        if (def != null) {
+        if(def == null){
+            def = cType2.getDefinition().getSuperClass().getMembers().get(ident.getName());
+        }
+
+        if (def == null){
+            throw new ContextualError("Methode " + ident.getName() + " non définie dans la classe "
+                    + cType2.getDefinition().getType().getName().toString(), getLocation());
+        }
+        else  {
             MethodDefinition mDefVrai = def.asMethodDefinition("Ce n'est pas une méthode ", getLocation());
             Signature sigVrai = mDefVrai.getSignature();
             int len = sigVrai.size();
@@ -55,9 +63,6 @@ public class MethodCall extends AbstractExpr {
                 return mDefVrai.getType();
 
             }
-        } else {
-            throw new ContextualError("Methode " + ident.getName() + " non définie dans la classe "
-                    + cType2.getDefinition().getType().getName().toString(), getLocation());
         }
         // System.out.println(mDef.getSignature().isSameSignature(mDefVrai.getSignature()));
     }

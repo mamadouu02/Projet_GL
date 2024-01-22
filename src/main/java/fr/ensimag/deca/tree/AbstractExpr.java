@@ -95,6 +95,7 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass,
             Type expectedType)
             throws ContextualError {
+
         Type type2 = verifyExpr(compiler, localEnv, currentClass);
         if (type2.isClass() && expectedType.isClass()
                 && type2.asClassType("", getLocation()).isSubClassOf(expectedType.asClassType("", getLocation()))) {

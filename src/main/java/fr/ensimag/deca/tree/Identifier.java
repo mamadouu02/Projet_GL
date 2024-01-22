@@ -170,6 +170,10 @@ public class Identifier extends AbstractIdentifier {
         ExpDefinition vardef = localEnv.get(name);
 
         if (vardef == null) {
+            //throw new ContextualError("identifiant introuvable ", getLocation());
+            vardef = currentClass.getMembers().get(name);
+        }
+        if(vardef == null ){
             throw new ContextualError("identifiant introuvable ", getLocation());
         }
 

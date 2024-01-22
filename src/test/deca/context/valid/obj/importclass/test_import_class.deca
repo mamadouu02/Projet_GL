@@ -42,7 +42,7 @@ class Test{
             return x;
         }
         else{
-            return null;
+            return 0;
         }
     }
 }
@@ -76,10 +76,15 @@ class TestSon extends Test{
             return x;
         }
         else{
-            return null;
+            return 0;
         }
     }
 }
+//class testest extends TestSon{
+   // void testes(){
+  //  Test(a, b, c);
+ //   }
+//}
     
 {
     // Test t = new Test();
