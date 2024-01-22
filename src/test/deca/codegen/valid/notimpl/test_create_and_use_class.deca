@@ -47,7 +47,7 @@ class Test{
             return x;
         }
         else{
-            return null;
+            return 0;
         }
     }
 }
@@ -81,7 +81,7 @@ class TestSon extends Test{
             return x;
         }
         else{
-            return null;
+            return 0;
         }
     }
 }
