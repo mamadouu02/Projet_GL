@@ -14,7 +14,7 @@ NC='\033[0m'
 PASSED="[${GREEN}PASSED${NC}]"
 FAILED="[${RED}FAILED${NC}]"
 
-for f in $(find $DIR/valid -type f -name "*.deca" -not -path "$DIR/valid/provided/*" -not -path "$DIR/valid/notimpl/*"); do
+for f in $(find $DIR/valid -type f -name "*.deca" -not -path "$DIR/valid/provided/ex*" -not -path "$DIR/valid/notimpl/*"); do
     dst="${f%.deca}.ass"
     rm -f "$dst" 2>/dev/null
 

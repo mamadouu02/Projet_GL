@@ -5,7 +5,7 @@
 class Math {
     float pi =3.1415927410125732421875;
 
-        // return the ulp of f
+    // return the ulp of f
     float ulp(float f) {
         if (f == 0.0f) {
             return this._pow(2, -149);
@@ -15,11 +15,12 @@ class Math {
     
     // Calcul de pi à partir du cosinus
     float sin(float f) {
-        float f = this.recenter(f);
-        float ulp = this.ulp(f);
+        float ulp;
         float res = 0;
         float x = 1;
         int i = 0;
+        f = this.recenter(f);
+        ulp = this.ulp(f);
         while (this._abs(x) > ulp) {
             x = this._pow(-1, i) * (this._pow(f, 2 * i + 1) / this._fact(2 * i + 1));
             res = res + x;
@@ -29,11 +30,12 @@ class Math {
     }
 
     float cos(float f) {
-        float f = this.recenter(f);
-        float ulp = this.ulp(f);
+        float ulp;
         float res = 0;
         float x = 1;
         int i = 0;
+        ulp = this.ulp(f);
+        f = this.recenter(f);
         while (this._abs(x) > ulp) {
             x = this._pow(-1, i) * (this._pow(f, 2 * i)/ this._fact(2 * i));
             res = res + x;
@@ -93,7 +95,6 @@ class Math {
 
     float _pow(float a, float b) {
         float res = 1;
-        float b = b;
         int i;
         if (b == 0) {
             return 1;
@@ -180,6 +181,12 @@ class Math {
     int _floor(float a) {
         int res = (int) (a);
         return res;
+    }
+
+    float recenter(float x) {
+        float y = x / (2 * this.pi);
+        y = (y - this._floor(y + 0.5)) * 2 * this.pi;
+        return y;
     }
 
     int getRandomNumber()
