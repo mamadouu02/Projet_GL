@@ -1,5 +1,6 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.VTable;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.EnvironmentType;
 import fr.ensimag.deca.syntax.DecaLexer;
@@ -50,6 +51,7 @@ public class DecacCompiler {
     private int tstoMax;
     private int addSP;
     private Map<Symbol,DAddr> classAdresses;
+    private VTable vTable;
 
 	private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
 
@@ -62,19 +64,21 @@ public class DecacCompiler {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
+        setCurrentProgram(program);
         this.d = 1;
         this.idReg = 2;
-        this.errors = new boolean[4];
+        this.errors = new boolean[5];
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < errors.length; i++) {
             this.errors[i] = false;
         }
         
         this.numLabel = 0;
-        this.tstoCurr = 0;
-        this.tstoMax = 0;
-        this.addSP = 0;
+        this.tstoCurr = 2;
+        this.tstoMax = 2;
+        this.addSP = 2;
         this.classAdresses = new HashMap<>();
+        this.vTable= new VTable(this);
     }
 
     /**
@@ -143,6 +147,10 @@ public class DecacCompiler {
 		return classAdresses;
 	}
 
+    public VTable getVTable() {
+        return vTable;
+    }
+
     /**
      * Source file associated with this compiler instance.
      */
@@ -163,14 +171,14 @@ public class DecacCompiler {
      *      fr.ensimag.ima.pseudocode.IMAProgram#add(fr.ensimag.ima.pseudocode.AbstractLine)
      */
     public void add(AbstractLine line) {
-        program.add(line);
+        getCurrentProgram().add(line);
     }
 
     /**
      * @see fr.ensimag.ima.pseudocode.IMAProgram#addComment(java.lang.String)
      */
     public void addComment(String comment) {
-        program.addComment(comment);
+        getCurrentProgram().addComment(comment);
     }
 
     /**
@@ -178,7 +186,7 @@ public class DecacCompiler {
      *      fr.ensimag.ima.pseudocode.IMAProgram#addLabel(fr.ensimag.ima.pseudocode.Label)
      */
     public void addLabel(Label label) {
-        program.addLabel(label);
+        getCurrentProgram().addLabel(label);
     }
 
     /**
@@ -186,7 +194,7 @@ public class DecacCompiler {
      *      fr.ensimag.ima.pseudocode.IMAProgram#addInstruction(fr.ensimag.ima.pseudocode.Instruction)
      */
     public void addInstruction(Instruction instruction) {
-        program.addInstruction(instruction);
+        getCurrentProgram().addInstruction(instruction);
     }
 
     /**
@@ -195,15 +203,29 @@ public class DecacCompiler {
      *      java.lang.String)
      */
     public void addInstruction(Instruction instruction, String comment) {
-        program.addInstruction(instruction, comment);
+        getCurrentProgram().addInstruction(instruction, comment);
     }
 
+    /**
+     * @see
+     *      fr.ensimag.ima.pseudocode.IMAProgram#addFirst(java.lang.String)
+     */
+    public void addFirst(String comment) {
+        getCurrentProgram().addFirst(comment);
+    }
+    /**
+     * @see
+     *      fr.ensimag.ima.pseudocode.IMAProgram#addFirst(fr.ensimag.ima.pseudocode.Label)
+     */
+    public void addFirst(Label label) {
+        getCurrentProgram().addFirst(label);
+    }
     /**
      * @see
      *      fr.ensimag.ima.pseudocode.IMAProgram#addFirst(fr.ensimag.ima.pseudocode.Instruction)
      */
     public void addFirst(Instruction instruction) {
-        program.addFirst(instruction);
+        getCurrentProgram().addFirst(instruction);
     }
 
     /**
@@ -211,7 +233,7 @@ public class DecacCompiler {
      *      fr.ensimag.ima.pseudocode.IMAProgram#display()
      */
     public String displayIMAProgram() {
-        return program.display();
+        return getCurrentProgram().display();
     }
 
     private final CompilerOptions compilerOptions;
@@ -220,8 +242,27 @@ public class DecacCompiler {
      * The main program. Every instruction generated will eventually end up here.
      */
     private final IMAProgram program = new IMAProgram();
+    
+    private IMAProgram currentProgram;
 
-    /** The global environment for types (and the symbolTable) */
+    public IMAProgram getCurrentProgram() {
+		return currentProgram;
+	}
+
+	public void setCurrentProgram(IMAProgram currentProgram) {
+		this.currentProgram = currentProgram;
+	}
+
+    public void beginBlock() {
+        setCurrentProgram(new IMAProgram());
+    }
+
+    public void endBlock() {
+        program.append(getCurrentProgram());
+        setCurrentProgram(program);
+    }
+
+	/** The global environment for types (and the symbolTable) */
     public final SymbolTable symbolTable = new SymbolTable();
     public final EnvironmentType environmentType = new EnvironmentType(this);
 

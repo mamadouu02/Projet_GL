@@ -2,7 +2,9 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.VTable;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
@@ -53,36 +55,38 @@ public class DeclMethod extends AbstractDeclMethod {
         if (def != null && !def.isMethod()) {
             throw new ContextualError("methode déjà définie dans la classe mère en tant que field", getLocation());
         } else if (def != null && def.isMethod()) {
-            MethodDefinition defMethode = def.asMethodDefinition("ce n'est pas une définition de méthode",
-                    getLocation());
+            MethodDefinition defMethode = def.asMethodDefinition("ce n'est pas une définition de méthode", getLocation());
             Signature sig2 = defMethode.getSignature();
             Type type2 = defMethode.getType();
+
             if (sig.isSameSignature(sig2) && (type2.sameType(typeReturn) || typeReturn
                     .asClassType("Override impossible, verifiez  le type que renvoie votre fonction", getLocation())
                     .isSubClassOf(type2.asClassType("Override impossible, verifiez  type que renvoie votre fonction",
                             getLocation())))) {
                 try {
-                    currentClass.getMembers().declare(name.getName(), defMethode);
+                    //currentClass.setNumberOfMethods(currentClass.getNumberOfMethods()+2);
+                    MethodDefinition m_def = new MethodDefinition(typeReturn, getLocation(), sig, defMethode.getIndex());
+                    currentClass.getMembers().declare(name.getName(), m_def);
+                    
+                    
                     name.setDefinition(defMethode);
-                    // currentClass.incNumberOfFields();
+                    
                 } catch (EnvironmentExp.DoubleDefException e) {
                     throw new ContextualError("methode déjà definie", getLocation());
                 }
             } else if (!sig.isSameSignature(sig2)) {
-                throw new ContextualError("Override impossible, verifiez la signature de votre fonction",
-                        getLocation());
+                throw new ContextualError("Override impossible, verifiez la signature de votre fonction", getLocation());
             } else {
-                throw new ContextualError("Override impossible, verifiez le type que renvoie votre fonction",
-                        getLocation());
-
+                throw new ContextualError("Override impossible, verifiez le type que renvoie votre fonction", getLocation());
             }
         } else if (def == null) {
             try {
-                int indexPrevious = currentClass.getNumberOfFields();
-                MethodDefinition mDef = new MethodDefinition(typeReturn, getLocation(), sig, indexPrevious + 1);
-                currentClass.incNumberOfFields();
+                //System.out.println(name.getName()+" "+ (currentClass.getNumberOfMethods() + 1));
+                int indexPrevious = currentClass.getNumberOfMethods() + 1;
+                MethodDefinition mDef = new MethodDefinition(typeReturn, getLocation(), sig, indexPrevious );
+                currentClass.incNumberOfMethods();
                 currentClass.getMembers().declare(name.getName(), mDef);
-                // name.setDefinition(mDef);
+                name.setDefinition(mDef);
             } catch (EnvironmentExp.DoubleDefException e) {
                 throw new ContextualError("methode deja définie", getLocation());
             }
@@ -106,11 +110,25 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    public void codeGenMethodTable(DecacCompiler compiler, String className) {
-        compiler.addInstruction(new LOAD(
-                new LabelOperand(new Label("code." + className + "." + name.getName().getName())), Register.getR(0)));
-        compiler.addInstruction(new STORE(Register.getR(0), new RegisterOffset(compiler.getD(), Register.GB)));
-        compiler.incrD();
+    public void codeGenMethodTable(DecacCompiler compiler, Symbol className) {
+        MethodDefinition def = name.getMethodDefinition();
+        def.setLabel(new Label("code." + className + "." + name.getName()));
+        int i = def.getIndex();
+        VTable vTable = compiler.getVTable();
+        vTable.get(className)[i - 1] = def.getLabel();
+    }
+
+    @Override
+    public void codeGenMethod(DecacCompiler compiler, Symbol className) {
+        compiler.beginBlock();
+        // params.codeGenListDeclParam(compiler);
+        // body.codeGenMethodBody(compiler);
+        // Restauration des registres
+        // Sauvegarde des registres (addFirst)
+        // TSTO #d (addFirst)
+        compiler.addFirst(new Label("code." + className + "." + name.getName()));
+        compiler.addFirst("---------- Code de la methode " + name.getName() + " dans la classe " + className.getName() + " ----------");
+        compiler.endBlock();
     }
 
 }

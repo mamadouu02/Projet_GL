@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;
 
 public abstract class AbstractDeclMethod extends Tree {
 
@@ -11,6 +12,7 @@ public abstract class AbstractDeclMethod extends Tree {
             , ClassDefinition currentClass)
             throws ContextualError;
 
-    public abstract void codeGenMethodTable(DecacCompiler compiler, String className);
+    public abstract void codeGenMethodTable(DecacCompiler compiler, Symbol className);
 
+    public abstract void codeGenMethod(DecacCompiler compiler, Symbol className);
 }

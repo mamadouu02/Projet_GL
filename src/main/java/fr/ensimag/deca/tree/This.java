@@ -8,7 +8,6 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 
 import java.io.PrintStream;
-import org.apache.commons.lang.Validate;
 
 /**
  * 
@@ -17,6 +16,17 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2024
  */
 public class This extends AbstractExpr {
+
+    private boolean implicit;
+
+    public This(boolean implicit) {
+        this.implicit = implicit;
+    }
+
+    @Override
+    boolean isImplicit() {
+        return implicit;
+    }
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
@@ -27,7 +37,9 @@ public class This extends AbstractExpr {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("this");
+        if (!implicit) {
+            s.print("this");
+        }
     }
 
     @Override

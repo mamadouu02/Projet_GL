@@ -49,6 +49,22 @@ public class IMAProgram {
         lines.addFirst(l);
     }
 
+    public void addFirst(String s) {
+        addFirst(new Line(s));
+    }
+
+    public void addFirst(Label l) {
+        addFirst(new Line(l));
+    }
+
+    public void addFirst(Instruction i) {
+        addFirst(new Line(i));
+    }
+    
+    public void addFirst(Instruction i, String comment) {
+        addFirst(new Line(null, i, comment));
+    }
+
     /**
      * Display the program in a textual form readable by IMA to stream s.
      */
@@ -68,11 +84,4 @@ public class IMAProgram {
         return out.toString();
     }
 
-    public void addFirst(Instruction i) {
-        addFirst(new Line(i));
-    }
-    
-    public void addFirst(Instruction i, String comment) {
-        addFirst(new Line(null, i, comment));
-    }
 }

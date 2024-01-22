@@ -1,0 +1,18 @@
+// Description:
+//    test de l'inclusion de la classe Math
+//
+// Resultats:
+//
+// Historique:
+//  Cree le 12/01/2024
+
+
+#include "Math.decah"
+    
+{
+    Math math = new Math();
+
+    float cos3pi = math.cos(3 * math.pi);
+
+    print(cos3pi);
+}

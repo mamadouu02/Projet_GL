@@ -30,18 +30,19 @@ public class MethodCall extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
-
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        expr.decompile(s);
-        s.print(".");
+        if (!expr.isImplicit()) {
+            expr.decompile(s);
+            s.print(".");
+        }
+        
         ident.decompile(s);
         s.print("(");
         list.decompile(s);
         s.print(")");
-
     }
 
     @Override
