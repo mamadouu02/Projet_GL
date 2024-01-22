@@ -33,30 +33,30 @@ public class ObjectClass {
         compiler.addInstruction(new RTS());
         compiler.addComment("---------- Code de la méthode equals dans la classe Object ----------");
         compiler.addLabel(new Label("code.Object.equals"));
-        /*compiler.addInstruction(new TSTO(2));
+        // compiler.addInstruction(new TSTO(2));
 
-        if (compiler.getCompilerOptions().getCheck()) {
-            compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
-        }
+        // if (compiler.getCompilerOptions().getCheck()) {
+        //     compiler.addInstruction(new BOV(new Label("stack_overflow_error")));
+        // }
         
-        compiler.addComment("Sauvegarde des registres");
-        compiler.addInstruction(new PUSH(Register.getR(2)));
-        compiler.addInstruction(new PUSH(Register.getR(3)));
-        compiler.addComment("Corps de la méthode");
-        compiler.addComment("TODO: this == object");
-        compiler.addInstruction(new BEQ(new Label("egalite")));
-        compiler.addInstruction(new LOAD(0, Register.R0));
-        compiler.addInstruction(new BRA(new Label("fin.Object.equals")));
-        compiler.addLabel(new Label("egalite"));
-        compiler.addInstruction(new LOAD(1, Register.R0));
-        compiler.addInstruction(new BRA(new Label("fin.Object.equals")));
-        compiler.addInstruction(new WSTR("Erreur : sortie de la méthode Object.equals sans return"));
-        compiler.addInstruction(new WNL());
-        compiler.addLabel(new Label("fin.Object.equals"));
-        compiler.addComment("Restauration des registres");
-        compiler.addInstruction(new POP(Register.getR(2)));
-        compiler.addInstruction(new POP(Register.getR(3)));
-        compiler.addInstruction(new RTS());*/
+        // compiler.addComment("Sauvegarde des registres");
+        // compiler.addInstruction(new PUSH(Register.getR(2)));
+        // compiler.addInstruction(new PUSH(Register.getR(3)));
+        // compiler.addComment("Corps de la méthode");
+        // compiler.addComment("TODO: this == object");
+        // compiler.addInstruction(new BEQ(new Label("egalite")));
+        // compiler.addInstruction(new LOAD(0, Register.R0));
+        // compiler.addInstruction(new BRA(new Label("fin.Object.equals")));
+        // compiler.addLabel(new Label("egalite"));
+        // compiler.addInstruction(new LOAD(1, Register.R0));
+        // compiler.addInstruction(new BRA(new Label("fin.Object.equals")));
+        // compiler.addInstruction(new WSTR("Erreur : sortie de la méthode Object.equals sans return"));
+        // compiler.addInstruction(new WNL());
+        // compiler.addLabel(new Label("fin.Object.equals"));
+        // compiler.addComment("Restauration des registres");
+        // compiler.addInstruction(new POP(Register.getR(2)));
+        // compiler.addInstruction(new POP(Register.getR(3)));
+        // compiler.addInstruction(new RTS());
     }
 
     public static void codeGenMethodTable(DecacCompiler compiler) {
