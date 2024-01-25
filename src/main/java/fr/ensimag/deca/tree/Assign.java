@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -21,7 +22,7 @@ public class Assign extends AbstractBinaryExpr {
     public AbstractLValue getLeftOperand() {
         // The cast succeeds by construction, as the leftOperand has been set
         // as an AbstractLValue by the constructor.
-        return (AbstractLValue)super.getLeftOperand();
+        return (AbstractLValue) super.getLeftOperand();
     }
 
     public Assign(AbstractLValue leftOperand, AbstractExpr rightOperand) {
@@ -31,12 +32,11 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        Type type = getLeftOperand().verifyExpr(compiler,localEnv,currentClass);
-        getRightOperand().verifyRValue(compiler,localEnv,currentClass,type);
+        Type type = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        getRightOperand().verifyRValue(compiler, localEnv, currentClass, type);
         setType(type);
         return type;
     }
-
 
     @Override
     protected String getOperatorName() {
@@ -45,7 +45,11 @@ public class Assign extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        getRightOperand().codeGenInst(compiler);
+        if (getRightOperand().dVal() == null) {
+            getRightOperand().codeGenInst(compiler);
+        } else {
+            compiler.addInstruction(new LOAD(getRightOperand().dVal(), Register.getR(compiler.getIdReg())));
+        }
         compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), getLeftOperand().dVal()));
     }
 }
