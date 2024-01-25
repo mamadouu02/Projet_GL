@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -45,7 +46,11 @@ public class Assign extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        getRightOperand().codeGenInst(compiler);
+        if (getRightOperand().dVal() == null) {
+            getRightOperand().codeGenInst(compiler);
+        } else {
+            compiler.addInstruction(new LOAD(getRightOperand().dVal(), Register.getR(compiler.getIdReg())));
+        }
         compiler.addInstruction(new STORE(Register.getR(compiler.getIdReg()), getLeftOperand().dVal()));
     }
 }
