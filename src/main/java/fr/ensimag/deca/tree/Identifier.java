@@ -241,7 +241,7 @@ public class Identifier extends AbstractIdentifier {
     
     @Override
     public void codeGenInst(DecacCompiler compiler) {
-        if (this.getExpDefinition().getOperand() == null){
+        if (this.getExpDefinition().getOperand() == null) {
             this.getExpDefinition().setOperand(new RegisterOffset(compiler.getD(), Register.GB));
         }
     }

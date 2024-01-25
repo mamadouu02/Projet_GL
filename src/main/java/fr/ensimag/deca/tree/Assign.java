@@ -22,7 +22,7 @@ public class Assign extends AbstractBinaryExpr {
     public AbstractLValue getLeftOperand() {
         // The cast succeeds by construction, as the leftOperand has been set
         // as an AbstractLValue by the constructor.
-        return (AbstractLValue)super.getLeftOperand();
+        return (AbstractLValue) super.getLeftOperand();
     }
 
     public Assign(AbstractLValue leftOperand, AbstractExpr rightOperand) {
@@ -32,12 +32,11 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        Type type = getLeftOperand().verifyExpr(compiler,localEnv,currentClass);
-        getRightOperand().verifyRValue(compiler,localEnv,currentClass,type);
+        Type type = getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+        getRightOperand().verifyRValue(compiler, localEnv, currentClass, type);
         setType(type);
         return type;
     }
-
 
     @Override
     protected String getOperatorName() {

@@ -84,6 +84,9 @@ class Math {
         if (this._abs(f) > 1) {
             return this.pi / 2 - this.atan(1 / f);
         }
+        if(this._abs(f) > 1/2) {
+            return (this._a_atan_one(f) * f) / this._sqrt(1 + f * f);   
+        }
         ulp = this.ulp(f);
         while (this._abs(x) > ulp) {
             x = (this._pow(-1, i) * (this._pow(f, 2 * i + 1) / (2 * i + 1)));
@@ -91,6 +94,18 @@ class Math {
             i = i + 1;
         }
         return res;
+    }
+
+    float _a_atan_one(float x){
+        int i = 0;
+        float a = 1/_sqrt(1 + x * x);
+        float b = 1.0;
+        while(i < 13){
+            a = (a + b)/2;
+            b = _sqrt(a * b);
+            i = i + 1;
+        }
+        return a;
     }
 
     float _pow(float a, float b) {
