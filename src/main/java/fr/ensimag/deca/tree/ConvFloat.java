@@ -33,10 +33,15 @@ public class ConvFloat extends AbstractUnaryExpr {
     protected String getOperatorName() {
         return "/* conv float */";
     }
-
+    
     @Override
     protected void codeGenExpr(DecacCompiler compiler) {
-        compiler.addInstruction(mnemo(getOperand().dVal(), Register.getR(compiler.getIdReg())));
+        if (getOperand().dVal() != null) {
+            compiler.addInstruction(mnemo(getOperand().dVal(), Register.getR(compiler.getIdReg())));
+        } else {
+            getOperand().codeGenExpr(compiler);
+            compiler.addInstruction(mnemo(Register.getR(compiler.getIdReg()), Register.getR(compiler.getIdReg())));
+        }
     }
 
 	@Override
