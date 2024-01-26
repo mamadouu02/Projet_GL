@@ -92,15 +92,21 @@ class TestSon extends Test{
 
     int x;
     t.Test(1, 2, 3);
-    println("sum = " + t.sum());
-    println("product = " + t.product());
-    println("max = " + t.max());
+    println("sum = ");
+    println(t.sum());
+    println("product = ");
+    println(t.product());
+    println("max = ");
+    println(t.max());
     x = t.isGreaterThan(1);
 
 
     ts.TestSon(1, 2, 3, 4);
-    println("sum = " + ts.sum());
-    println("product = " + ts.product());
-    println("max = " + ts.max());
+    println("sum = ");
+    println(ts.sum());
+    println("product = ");
+    println(ts.product());
+    println("max = ");
+    println(ts.max());
     x = ts.isGreaterThan(1);
 }

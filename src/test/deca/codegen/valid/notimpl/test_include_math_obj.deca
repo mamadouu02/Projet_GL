@@ -13,7 +13,7 @@
 {
     Math math = new Math();
 
-    float cos3pi = math.cos(3 * math.pi);
+    float cos3 = math.cos(3);
 
-    print(cos3pi);
+    print(cos3);
 }
