@@ -56,7 +56,7 @@ public class ObjectClass {
         // compiler.addComment("Restauration des registres");
         // compiler.addInstruction(new POP(Register.getR(2)));
         // compiler.addInstruction(new POP(Register.getR(3)));
-        // compiler.addInstruction(new RTS());
+        compiler.addInstruction(new RTS());
     }
 
     public static void codeGenMethodTable(DecacCompiler compiler) {
