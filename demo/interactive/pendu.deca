@@ -1,5 +1,5 @@
 {
-    int nbMaxEssais = 5;
+    int nbMaxEssais = 10;
     int nbEssais = 0;
     int proposition;
     boolean lettre1 = false;
