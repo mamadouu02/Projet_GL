@@ -164,7 +164,7 @@
                 proposition = readInt();
             }
         }
-        if (lettre1 && lettre2 && lettre3 && lettre4 && lettre5) {
+        if (lettre1 && (lettre2 && (lettre3 && (lettre4 && lettre5)))) {
             nbEssais = nbMaxEssais;
             println("Vous avez trouvé le mot!");
         } else {
@@ -172,7 +172,7 @@
             println("");
         }
     }
-    if (lettre1 && lettre2 && lettre3 && lettre4 && lettre5) {
+    if (lettre1 && (lettre2 && (lettre3 && (lettre4 && lettre5)))) {
         println("Vous avez gagné!");
         println("Le mot était: LINUX");
     } else {

@@ -12,7 +12,7 @@ def comparer_valeurs(valeurs_deca):
 
     valeurs_math = []
     for i in range(10):
-        valeurs_math.append(math.sin(4 * math.pi /(i+1)));    
+        valeurs_math.append(math.cos(4 * math.pi /(i+1)));    
     # for i in range(0, 10):
     #     valeurs_math.append(math.atan(-(i /100.0 + 0.85)));
     
