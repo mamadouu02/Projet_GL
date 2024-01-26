@@ -164,17 +164,53 @@
                 proposition = readInt();
             }
         }
-        if (lettre1 && (lettre2 && (lettre3 && (lettre4 && lettre5)))) {
-            nbEssais = nbMaxEssais;
-            println("Vous avez trouvé le mot!");
+        if (lettre1) {
+            if(lettre2) {
+                if(lettre3) {
+                    if(lettre4) {
+                        if(lettre5) {
+                            nbEssais = nbMaxEssais;
+                            println("Vous avez trouvé le mot!");
+                        } else {
+                            println("Il vous reste ", (nbMaxEssais - nbEssais), " essais.");
+                            println("");
+                        }
+                    } else {
+                        println("Il vous reste ", (nbMaxEssais - nbEssais), " essais.");
+                        println("");
+                    }
+                } else {
+                    println("Il vous reste ", (nbMaxEssais - nbEssais), " essais.");
+                    println("");
+                }
+            } else {
+                println("Il vous reste ", (nbMaxEssais - nbEssais), " essais.");
+                println("");
+            }
         } else {
             println("Il vous reste ", (nbMaxEssais - nbEssais), " essais.");
             println("");
         }
     }
-    if (lettre1 && (lettre2 && (lettre3 && (lettre4 && lettre5)))) {
-        println("Vous avez gagné!");
-        println("Le mot était: LINUX");
+    if (lettre1) {
+        if(lettre2) {
+            if(lettre3) {
+                if(lettre4) {
+                    if(lettre5) {
+                        println("Vous avez gagné!");
+                        println("Le mot était: LINUX");
+                    } else {
+                        println("Vous avez perdu!");
+                    }
+                } else {
+                    println("Vous avez perdu!");
+                }
+            } else {
+                println("Vous avez perdu!");
+            }
+        } else {
+            println("Vous avez perdu!");
+        }
     } else {
         println("Vous avez perdu!");
     }
